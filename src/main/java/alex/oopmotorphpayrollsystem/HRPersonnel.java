@@ -10,7 +10,10 @@ import java.sql.SQLException;
 import java.util.*;
 
 /**
- *
+ * HRPersonnel class handles the core operations related to payroll processing, employee management,
+ * and leave requests within the Human Resources system.
+ * It implements PayrollProcessor and LeaveApprover interfaces.
+ * 
  * @author Alex Resurreccion
  */
 public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover {
@@ -21,6 +24,12 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
     }
     public HRPersonnel() {}
     
+    /**
+     * Approves a leave request for an employee.
+     * 
+     * @param leaveRequest The leave request to approve.
+     * @return true if leave request is approved, false otherwise.
+     */
     public boolean approveLeaveRequest(LeaveRequest leaveRequest) {
         leaveRequest.setApprovedBy(this);
         MySQL mySQL = new MySQL();
@@ -31,6 +40,12 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         
     }
     
+     /**
+     * Declines a leave request for an employee.
+     * 
+     * @param leaveRequest The leave request to decline.
+     * @return true if leave request is declined, false otherwise.
+     */
     public boolean declineLeaveRequest(LeaveRequest leaveRequest) {
         leaveRequest.setApprovedBy(this);
         MySQL mySQL = new MySQL();
@@ -40,6 +55,12 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return result;
     }
     
+    /**
+     * Adds a new employee to the system.
+     * 
+     * @param employee The employee to add.
+     * @return true if employee is added successfully, false otherwise.
+     */
     public boolean addNewEmployee(Employee employee) {
         MySQL mySQL = new MySQL();
         boolean result = mySQL.createEmployee(employee);
@@ -47,6 +68,12 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return result;
     }
     
+    /**
+     * Updates an existing employee's details in the system.
+     * 
+     * @param employee The employee to update.
+     * @return true if employee is updated successfully, false otherwise.
+     */
     public boolean updateEmployee(Employee employee) {
         MySQL mySQL = new MySQL();
         boolean result = mySQL.updateEmployee(employee);
@@ -55,6 +82,12 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return result;
     }
     
+    /**
+     * Deletes an employee from the system based on their employee ID.
+     * 
+     * @param employee The employee to delete.
+     * @return true if employee is deleted successfully, false otherwise.
+     */
     public boolean deleteEmployee(Employee employee) {
         MySQL mySQL = new MySQL();
         int result = mySQL.deleteEmployeeByNumber(employee.getEmployeeID());
@@ -62,6 +95,13 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return result == 1;
     }
     
+    /**
+     * Processes payroll for all employees in a specified date range.
+     * 
+     * @param startDate The start date for payroll processing.
+     * @param endDate The end date for payroll processing.
+     * @return true if payroll is successfully processed, false otherwise.
+     */
     public boolean processPayroll(Date startDate, Date endDate) {
         MySQL mySQL = new MySQL();
         ResultSet rs = mySQL.getPayslipList(
@@ -104,18 +144,30 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         // You can add logic to update database, generate payslip, etc.
     }
     
-    private boolean generatePayslip(List<Payroll> payroll){
+    /**
+     * Generates payslips in the system for the list of employees.
+     * 
+     * @param payroll The list of payrolls to generate.
+     * @return true if payslips are successfully generated, false otherwise.
+     */
+    public boolean generatePayslip(List<Payroll> payroll){
         MySQL mySQL = new MySQL();
         int result = mySQL.generatePayslips(payroll);
         mySQL.close();
         return result > 0;
     }
     
+    // Method implementations for LeaveApprover interface
     @Override
     public void approveLeave(LeaveRequest leaveRequest) {
         approveLeaveRequest(leaveRequest);
     }
     
+    /**
+     * Loads the list of employees from the database.
+     * 
+     * @return A list of employees.
+     */
     public List<User> loadEmployeeList(){
         MySQL mySQL = new MySQL();
         ResultSet result = mySQL.getEmployeeUsers();
@@ -125,6 +177,12 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return employees;
     }
     
+    /**
+     * Loads a filtered list of employees based on a search query.
+     * 
+     * @param search The search query for employee filtering.
+     * @return A list of filtered employees.
+     */
     public List<User> loadEmployeeList(String search){
         MySQL mySQL = new MySQL();
         ResultSet result = mySQL.getEmployeesWithSearch(search);
@@ -133,6 +191,11 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return employees;
     }
     
+    /**
+     * Loads the list of attendance records from the database.
+     * 
+     * @return A list of attendance records.
+     */
     public List<AttendanceRecord> loadAttendanceList(){
         MySQL mySQL = new MySQL();
         ResultSet result = mySQL.getAttendanceList(0);
@@ -141,6 +204,13 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return attendances;
     }
     
+    /**
+     * Loads the attendance records for a specific date range.
+     * 
+     * @param startDate The start date for the attendance records.
+     * @param endDate The end date for the attendance records.
+     * @return A list of attendance records for the given date range.
+     */
     public List<AttendanceRecord> loadAttendanceList(
             Date startDate, Date endDate){
         MySQL mySQL = new MySQL();
@@ -152,6 +222,11 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return attendances;
     }
     
+    /**
+     * Loads the summary payroll report from the database.
+     * 
+     * @return A list of payroll summary records.
+     */
     public List<Payroll> loadSummaryReport(){
         MySQL mySQL = new MySQL();
         ResultSet result = mySQL.getSummaryList();
@@ -160,6 +235,13 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return payrolls;
     }
     
+     /**
+     * Loads the summary payroll report for a specific month and year.
+     * 
+     * @param month The month for the payroll summary.
+     * @param year The year for the payroll summary.
+     * @return A list of payroll summary records for the given month and year.
+     */
     public List<Payroll> loadSummaryReport(int month, int year){
         MySQL mySQL = new MySQL();
         ResultSet result = mySQL.getSummaryList(month, year);

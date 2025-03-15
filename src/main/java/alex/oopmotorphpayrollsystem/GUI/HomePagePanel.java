@@ -56,6 +56,9 @@ public class HomePagePanel extends javax.swing.JPanel {
         timeIn.setVisible(false);
         timeOut.setVisible(false);
         timeInTimeOutRecordedLabel.setVisible(false);
+        fileALeave.setVisible(false);
+        jSeparator5.setVisible(false);
+        jSeparator9.setVisible(false);
     }
     
     private void setUserInfo(){

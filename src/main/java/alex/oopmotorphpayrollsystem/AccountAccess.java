@@ -55,15 +55,15 @@ public class AccountAccess {
         this.employeeNumber = employeeNumber;
     }
     
-    private void setPermissions(List<String> permissions) {
+    public void setPermissions(List<String> permissions) {
         this.permissions = permissions;
     }
     
-    private void setIsAuthenticated(boolean authenticated) {
+    public void setIsAuthenticated(boolean authenticated) {
         this.isAuthenticated = authenticated;
     }
     
-    private void setRole(String role) {
+    public void setRole(String role) {
         this.role = role;
     }
     

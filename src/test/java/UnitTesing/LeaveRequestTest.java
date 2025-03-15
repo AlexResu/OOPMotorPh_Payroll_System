@@ -1,0 +1,57 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package UnitTesing;
+
+import alex.oopmotorphpayrollsystem.Employee;
+import alex.oopmotorphpayrollsystem.HRPersonnel;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import java.util.Date;
+import alex.oopmotorphpayrollsystem.LeaveRequest;
+
+/**
+ *
+ * @author Alex Resurreccion
+ */
+public class LeaveRequestTest {
+    
+    @Test
+    public void testLeaveRequestSettersAndGetters() {
+        Employee employee = new Employee();
+        HRPersonnel hrPersonnel = new HRPersonnel();
+        Date startDate = new Date();
+        Date endDate = new Date();
+        Date dateCreated = new Date();
+        int leaveID = 101;
+        String leaveType = "Sick Leave";
+        int duration = 3;
+        String leaveStatus = "Pending";
+        String reason = "Flu";
+        
+        LeaveRequest leaveRequest = new LeaveRequest();
+        leaveRequest.setEmployee(employee);
+        leaveRequest.setApprovedBy(hrPersonnel);
+        leaveRequest.setStartDate(startDate);
+        leaveRequest.setEndDate(endDate);
+        leaveRequest.setDateCreated(dateCreated);
+        leaveRequest.setLeaveID(leaveID);
+        leaveRequest.setLeaveType(leaveType);
+        leaveRequest.setDuration(duration);
+        leaveRequest.setLeaveStatus(leaveStatus);
+        leaveRequest.setReason(reason);
+        
+        assertEquals(employee, leaveRequest.getEmployee());
+        assertEquals(hrPersonnel, leaveRequest.getApprovedBy());
+        assertEquals(startDate, leaveRequest.getStartDate());
+        assertEquals(endDate, leaveRequest.getEndDate());
+        assertEquals(dateCreated, leaveRequest.getDateCreated());
+        assertEquals(leaveID, leaveRequest.getLeaveID());
+        assertEquals(leaveType, leaveRequest.getLeaveType());
+        assertEquals(duration, leaveRequest.getDuration());
+        assertEquals(leaveStatus, leaveRequest.getLeaveStatus());
+        assertEquals(reason, leaveRequest.getReason());
+    }
+}
+

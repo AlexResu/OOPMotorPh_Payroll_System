@@ -4,6 +4,9 @@
 
 package alex.oopmotorphpayrollsystem;
 
+import alex.oopmotorphpayrollsystem.GUI.LoginGui;
+import java.util.Scanner;
+
 /**
  *
  * @author Alex Resurreccion
@@ -11,6 +14,13 @@ package alex.oopmotorphpayrollsystem;
 public class OOPMotorPhPayrollSystem {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+          // Create an instance of your JFrame subclass
+        LoginGui frame = new LoginGui();
+        
+        // Display the frame
+        frame.setVisible(true);
+        Scanner scanner = new Scanner(System.in);
     }
 }
+
+

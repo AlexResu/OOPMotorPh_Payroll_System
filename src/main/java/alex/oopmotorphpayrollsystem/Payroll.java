@@ -8,7 +8,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
+ * The Payroll class represents an employee's payroll information.
+ * It includes details like hours worked, overtime hours, deductions,
+ * gross income, net pay, and more. The class uses composition to 
+ * associate deductions with payroll.
  * @author Alex Resurreccion
  */
 public class Payroll {
@@ -23,6 +26,7 @@ public class Payroll {
     private double netPay;
     private Date paymentDate;
 
+    // Getter and Setter Methods
     public void setHoursWorked(double hoursWorked) {
         this.hoursWorked = hoursWorked;
     }
@@ -105,6 +109,7 @@ public class Payroll {
     
     public Payroll() {}
     
+    // Constructor with payroll ID, employee, and pay period start and end
     public Payroll(int payrollID, Employee employee, Date weekPeriodStart, Date weekPeriodEnd) {
         this.payrollID = payrollID;
         this.employee = employee;
@@ -112,7 +117,8 @@ public class Payroll {
         this.weekPeriodEnd = weekPeriodEnd;
     }
     
-    // For HRPersonnel Payroll Generation
+    // Constructor for payroll generation based on worked hours and employee
+    // This constructor is used by HR Personnel to generate a payroll
     public Payroll(Employee employee, double workedHours, Date weekPeriodStart, Date weekPeriodEnd) {
         this.employee = employee;
         this.hoursWorked = workedHours;
@@ -120,22 +126,26 @@ public class Payroll {
         this.weekPeriodStart = weekPeriodStart;
         this.weekPeriodEnd = weekPeriodEnd;
         
+        // Call helper methods to calculate benefits, deductions, gross pay, and net pay
         checkBenefits();
         generateDeductions();
         calculateGrossPay();
         calculateNetPay();
     }
     
+    // Calculate the gross income based on hours worked and hourly rate
     public void calculateGrossPay() {
         this.grossIncome = this.hoursWorked * employee.getBenefitsHourlyRate();
     }
     
+    // Calculate the net pay by deducting deductions from the gross income and adding benefits
     public void calculateNetPay() {
         this.netPay =  this.deductions != null 
                 ? this.grossIncome + this.employee.calculateTotalBenefits()- deductions.calculateTotalDeductions()
                 : 0;
     }
     
+    // Ensure deductions can be loaded, returns false if no salary information is set
     public boolean loadAllDeductions(){
         if(employee.getBenefitsBasicSalary() == 0.0){
             // employee not set yet
@@ -145,7 +155,9 @@ public class Payroll {
         return true;
     }
     
-    protected void checkBenefits(){
+    // Check and ensure that benefits are correctly set based on hours worked
+    // If no benefits are applicable (no worked hours or no basic salary), set allowances to 0
+    public void checkBenefits(){
         // no benefits if no worked hours
         if(employee.getBenefitsBasicSalary() == 0.0 || this.hoursWorked == 0.0){
             this.employee.setBenefitsClothingAllowance(0);
@@ -154,17 +166,20 @@ public class Payroll {
         }
     }
     
+    // Generate the deductions based on the employee's basic salary and worked hours
     protected void generateDeductions(){
         // no deductions if no worked hours
         if(employee.getBenefitsBasicSalary() == 0.0 || this.hoursWorked == 0.0){
             this.deductions = new Deductions();
             return;
         }
-        
+        // Create new deductions based on the basic salary
         this.deductions = new Deductions(employee.getBenefitsBasicSalary());
+        // Calculate taxable income (gross income minus existing deductions)
         double taxableIncome = this.employee.getBenefitsHourlyRate() * this.hoursWorked - 
                 (this.deductions.getSssDeduction() + this.deductions.getPhilhealthDeduction()
                 + this.deductions.getPagIbigDeduction());
+        // Calculate tax deduction based on taxable income
         this.deductions.calculateTaxDeduction(taxableIncome);
     }
 }

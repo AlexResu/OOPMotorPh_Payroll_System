@@ -7,10 +7,14 @@ package alex.oopmotorphpayrollsystem;
 import java.util.Date;
 
 /**
- *
+ * LeaveRequest class represents a request for an employee's leave.
+ * It stores details about the leave request including the employee,
+ * leave type, dates, status, approval details, and reason for the leave.
+ * 
  * @author Alex Resurreccion
  */
 public class LeaveRequest {
+    // Instance variables
     private Employee employee;
     private int leaveID;
     private String leaveType;
@@ -22,8 +26,10 @@ public class LeaveRequest {
     private HRPersonnel approvedBy;
     private String reason;
     
+    // Default constructor
     public LeaveRequest() {}
     
+    // Parameterized constructor for initializing the LeaveRequest object.
     public LeaveRequest(Employee employee, int leaveID, String leaveType, 
             Date startDate, Date endDate, int duration, 
             String leaveStatus, HRPersonnel approvedBy) {
@@ -37,6 +43,7 @@ public class LeaveRequest {
         this.approvedBy = approvedBy;
     }
     
+    // Getter and Setter methods for all instance variables
     public Employee getEmployee() {
         return employee;
     }

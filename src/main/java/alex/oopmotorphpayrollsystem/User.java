@@ -9,7 +9,10 @@ import java.sql.SQLException;
 import java.util.Date;
 
 /**
- *
+ * This is the abstract User class representing the common properties and behaviors
+ * for any type of user in the system. It can be extended by specific user types
+ * like SystemAdministrator, HRPersonnel, and Employee.
+ * 
  * @author Alex Resurreccion
  */
 public abstract class User {
@@ -124,6 +127,7 @@ public abstract class User {
         this.pagibigNumber = pagibigNumber;
     }
     
+    // Method to get the role ID of the user by querying the database
     public int getAccountRole(){
         MySQL mySQL = new MySQL();
         ResultSet result = mySQL.getUserRole(this);
@@ -134,10 +138,11 @@ public abstract class User {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        mySQL.close();
+        mySQL.close(); // Always ensure to close the connection
         return 0;
     }
     
+    // Method to get the role name of the user by querying the database
     public String getRoleName(){
         MySQL mySQL = new MySQL();
         ResultSet result = mySQL.getUserRole(this);

@@ -8,7 +8,8 @@ import alex.oopmotorphpayrollsystem.GUI.LoginGui;
 import java.util.Scanner;
 
 /**
- *
+ * Main class to run the OOPMotorPhPayrollSystem application.
+ * It initializes and displays the login GUI when the program starts.
  * @author Alex Resurreccion
  */
 public class OOPMotorPhPayrollSystem {

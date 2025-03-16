@@ -250,6 +250,7 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return payrolls;
     }
     
+    // Maps a ResultSet containing employee data to a List of User objects.
     private List<User> mapEmployees(ResultSet result){
         List<User> employees = new ArrayList<>();
         try {
@@ -264,6 +265,7 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return employees;
     }
     
+    // Maps a single row of ResultSet to an Employee object
     private Employee mapEmployee(ResultSet result){
         Employee emp = new Employee();
         try { 
@@ -297,6 +299,7 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return emp;
     }
     
+    // Maps a ResultSet containing payroll data to a List of Payroll objects.
     private List<Payroll> mapPayrolls(ResultSet result){
         List<Payroll> payroll = new ArrayList<>();
         try {
@@ -311,6 +314,7 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return payroll;
     }
     
+    // Maps a single row of ResultSet to a Payroll object
     private Payroll mapPayroll(ResultSet result){
         Payroll pr = new Payroll();
         try { 
@@ -354,6 +358,7 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return pr;
     }
     
+    // Maps a ResultSet containing attendance data to a List of AttendanceRecord objects
     private List<AttendanceRecord> mapAttendance(ResultSet result){
         List<AttendanceRecord> attendance = new ArrayList<>();
         try { 
@@ -371,6 +376,7 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return attendance;
     }
     
+    // Loads payroll list within a date range and specific status into a list of Maps
     public List<Map<String, Object>> loadPayrollList(Date startDate, Date endDate, String status){
         List payroll = new ArrayList<>();
         MySQL mySQL = new MySQL();
@@ -402,6 +408,7 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return payroll;
     }
     
+    // Loads all leave requests
     public List<LeaveRequest> loadLeaveRequest(){
         MySQL mySQL = new MySQL();
         ResultSet result = mySQL.getLeaveRequests();
@@ -411,6 +418,7 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return leaves;
     }
     
+    // Loads leave requests based on a search filter
     public List<LeaveRequest> loadLeaveRequest(String search){
         MySQL mySQL = new MySQL();
         ResultSet result = mySQL.getLeaveRequests(search);
@@ -419,6 +427,7 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return leaves;
     }
     
+    // Maps a ResultSet containing leave requests to a List of LeaveRequest objects
     private List<LeaveRequest> mapLeaveRequest(ResultSet result){
         List<LeaveRequest> leaves = new ArrayList<>();
         try { 
@@ -458,6 +467,7 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return leaves;
     }
     
+    // Loads a specific payslip for an employee within a date range
     public Payroll loadPayslip(Date startDate, Date endDate, Employee employee){
         Payroll payslip = new Payroll();
         MySQL mySQL = new MySQL();

@@ -18,7 +18,7 @@ import java.util.List;
  * @author Alex Resurreccion
  */
 public class SystemAdministrator extends User {
-    private List<String> roles;
+    private List<String> roles = new ArrayList<>();
     
     // Constructor with employeeID, calls the superclass (User) constructor
     public SystemAdministrator(int employeeID) {

@@ -191,6 +191,14 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         return employees;
     }
     
+    public List<User> loadNewEmployees(){
+        MySQL mySQL = new MySQL();
+        ResultSet result = mySQL.getNewUsers(this);
+        List<User> employees = mapEmployees(result);
+        mySQL.close();
+        return employees;
+    }
+    
     /**
      * Loads the list of attendance records from the database.
      * 
@@ -282,6 +290,7 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
             emp.setStatus(result.getString("status"));
             emp.setPosition(result.getString("position"));
             emp.setImmediateSupervisor(result.getString("immediate_supervisor"));
+            emp.setDateHired(result.getDate("date_hired"));
 
             Benefits benefit = new Benefits(
                     result.getInt("basic_salary"),
@@ -485,5 +494,21 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
         
         mySQL.close();
         return payslip;
+    }
+    
+    public List<Integer> loadDashboard(){
+        MySQL mySQL = new MySQL();
+        ResultSet result = mySQL.getDashboard(this);
+        List<Integer> dashboardInfo = new ArrayList<>();
+        try { 
+            if (result.next()) {
+                dashboardInfo.add(result.getInt("total"));
+                dashboardInfo.add(result.getInt("new_employees"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        mySQL.close();
+        return dashboardInfo;
     }
 }

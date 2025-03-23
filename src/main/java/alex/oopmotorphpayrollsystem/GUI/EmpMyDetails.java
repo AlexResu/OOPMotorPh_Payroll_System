@@ -531,6 +531,7 @@ public class EmpMyDetails extends javax.swing.JPanel {
         empRoleValue.setBackground(new java.awt.Color(227, 227, 227));
         empRoleValue.setForeground(new java.awt.Color(0, 0, 0));
         empRoleValue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "System Administrator", "HR Personnel", "Employee" }));
+        empRoleValue.setLightWeightPopupEnabled(false);
         empRoleValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 empRoleValueActionPerformed(evt);

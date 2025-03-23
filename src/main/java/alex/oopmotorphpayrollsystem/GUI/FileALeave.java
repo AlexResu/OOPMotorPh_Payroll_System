@@ -8,6 +8,11 @@ import alex.oopmotorphpayrollsystem.LeaveRequest;
 import alex.oopmotorphpayrollsystem.Employee;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Calendar;
+import java.util.Date;
+import com.toedter.calendar.JDateChooser;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -16,6 +21,7 @@ import java.util.TimerTask;
 public class FileALeave extends javax.swing.JFrame {
     private Employee user;
     private HomePagePanel parentPanel;
+    private List<Map<String, Object>> leaveCredits;
     /**
      * Creates new form FileALeave
      */
@@ -32,6 +38,114 @@ public class FileALeave extends javax.swing.JFrame {
         lastName.setText(user.getLastName());
         empNumber.setText(Integer.toString(user.getEmployeeID()));
         phoneNumber.setText(user.getPhoneNumber());
+
+        setDefaultDateRange();
+        dateFrom.getDateEditor().addPropertyChangeListener("date", new java.beans.PropertyChangeListener() {
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                Date selectedDateFrom = dateFrom.getDate();
+                if (selectedDateFrom != null) {
+                    updateDateUntilRange();
+                }
+            }
+        });
+        dateUntil.getDateEditor().addPropertyChangeListener("date", new java.beans.PropertyChangeListener() {
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                updateDaysApplied();
+            }
+        });
+        leaveCredits = ((Employee) user).loadLeaveCredits();
+        days.setVisible(false);
+    }
+    
+    // Set initial default date range for 'dateFrom' and 'dateUntil'
+    private void setDefaultDateRange() {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.add(Calendar.DAY_OF_MONTH, -7); 
+        Date minDate = calendar.getTime();
+        calendar.add(Calendar.YEAR, 1);
+        Date maxDateForDateFrom = calendar.getTime();
+
+        dateFrom.setSelectableDateRange(minDate, maxDateForDateFrom);
+        dateUntil.setSelectableDateRange(minDate, maxDateForDateFrom);
+    }
+
+    private void updateDateUntilRange() {
+        Calendar calendar = Calendar.getInstance();
+        Date selectedDateFrom = dateFrom.getDate();
+        Date selectedDateUntil = dateUntil.getDate();
+
+        if (selectedDateUntil != null && selectedDateUntil.before(selectedDateFrom)) {
+            dateUntil.setDate(null);
+        }
+
+        dateUntil.setMinSelectableDate(selectedDateFrom);
+
+        calendar.setTime(selectedDateFrom);
+        calendar.add(Calendar.YEAR, 1); 
+        dateUntil.setMaxSelectableDate(calendar.getTime());
+
+        if (selectedDateUntil != null) {
+            updateDaysApplied();
+        }
+    }
+    
+    private void updateDaysApplied(){
+        Date selectedDateFrom = dateFrom.getDate();
+        long diffInDays = 0;
+    
+        // Loop through the days from selectedDateFrom to the calculated maxDateForDateUntil
+        Calendar startCalendar = Calendar.getInstance();
+        startCalendar.setTime(selectedDateFrom);
+        
+        if(dateUntil.getDate() != null){
+            while (!startCalendar.getTime().after(dateUntil.getDate())) {
+                // Check if the current day is not Saturday (6) or Sunday (7)
+                if (startCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY 
+                        && startCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+                    diffInDays++; // Count this day if it's not a weekend
+                }
+                startCalendar.add(Calendar.DAY_OF_MONTH, 1);  // Move to the next day
+            }
+        }
+        
+
+        // Set the day difference in the JTextField
+        // If the dates are the same, display 1. If 1 day difference, display 2, and so on.
+        dayApplied.setText(String.valueOf(diffInDays));
+        String selectedLeaveType = (String) type.getSelectedItem();
+    
+        // Find the selected leave type in leaveCredits
+        Map<String, Object> selectedLeave = findLeaveByType(selectedLeaveType);
+
+        if (selectedLeave != null) {
+            // Get the available leave for the selected leave type
+            int availableLeave = (int) selectedLeave.get("Available");
+
+            if(diffInDays > availableLeave){
+                days.setText("You only have " + availableLeave 
+                        + " of days left for this leave type.");
+                days.setVisible(true);
+                submit.setEnabled(false);
+            } else {
+                days.setVisible(false);
+                submit.setEnabled(true);
+            }
+        } else {
+            days.setVisible(false);
+            submit.setEnabled(true);
+        }
+    }
+    
+    private Map<String, Object> findLeaveByType(String leaveType) {
+        for (Map<String, Object> leave : leaveCredits) {
+            if (leave.get("Type").equals(leaveType)) {
+                return leave;
+            }
+        }
+        return null; // Return null if no matching leave type found
     }
 
     /**
@@ -75,6 +189,7 @@ public class FileALeave extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
+        days = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -177,6 +292,7 @@ public class FileALeave extends javax.swing.JFrame {
         jLabel2.setText("Last Name");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, -1, -1));
 
+        dayApplied.setEditable(false);
         dayApplied.setForeground(new java.awt.Color(0, 0, 0));
         dayApplied.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,6 +324,7 @@ public class FileALeave extends javax.swing.JFrame {
         type.setBackground(new java.awt.Color(255, 255, 255));
         type.setForeground(new java.awt.Color(0, 0, 0));
         type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please select", "EL - Emergency Leave", "SL - Sick Leave", "VL - Vacation Leave" }));
+        type.setLightWeightPopupEnabled(false);
         type.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 typeActionPerformed(evt);
@@ -268,6 +385,10 @@ public class FileALeave extends javax.swing.JFrame {
         jLabel3.setText("Successfully leave request submitted");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 630, 240, -1));
         jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 650, 10));
+
+        days.setForeground(new java.awt.Color(255, 0, 51));
+        days.setText("You only have # of days left for this leave type.");
+        jPanel2.add(days, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 320, 20));
 
         jScrollPane3.setViewportView(jPanel2);
 
@@ -376,6 +497,7 @@ public class FileALeave extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dateFrom;
     private com.toedter.calendar.JDateChooser dateUntil;
     private javax.swing.JTextField dayApplied;
+    private javax.swing.JLabel days;
     private javax.swing.JTextField empNumber;
     private javax.swing.JTextField firstName;
     private javax.swing.JLabel jLabel1;

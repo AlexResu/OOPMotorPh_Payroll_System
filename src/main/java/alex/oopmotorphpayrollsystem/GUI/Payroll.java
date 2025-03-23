@@ -203,6 +203,7 @@ public class Payroll extends javax.swing.JPanel {
         selectPeriodValue.setBackground(new java.awt.Color(255, 255, 255));
         selectPeriodValue.setForeground(new java.awt.Color(0, 0, 0));
         selectPeriodValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        selectPeriodValue.setLightWeightPopupEnabled(false);
         selectPeriodValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectPeriodValueActionPerformed(evt);
@@ -219,6 +220,7 @@ public class Payroll extends javax.swing.JPanel {
         selectStatusValue.setForeground(new java.awt.Color(0, 0, 0));
         selectStatusValue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Completed", "Pending" }));
         selectStatusValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        selectStatusValue.setLightWeightPopupEnabled(false);
         selectStatusValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectStatusValueActionPerformed(evt);

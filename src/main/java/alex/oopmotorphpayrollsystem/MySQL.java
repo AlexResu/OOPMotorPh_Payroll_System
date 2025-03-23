@@ -20,6 +20,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import alex.oopmotorphpayrollsystem.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
 
 
 /**
@@ -58,6 +62,57 @@ public class MySQL {
             e.printStackTrace();
         }
     }
+    
+//    public MySQL() {
+//        System.out.println("Connecting to H2 Database...");
+//
+//        try {
+//            // Load H2 driver
+//            Class.forName("org.h2.Driver");
+//
+//            // File-based H2 Database URL (will create motorph_db.mv.db file in the current directory)
+//            String url = "jdbc:h2:./motorph_db"; // Relative path to store database file locally
+//            String username = "sa";  // H2 default username
+//            String password = "";    // H2 default password (empty)
+//
+//            // Open connection to H2 Database
+//            connection = DriverManager.getConnection(url, username, password);
+//            System.out.println("Connected to H2 Database!");
+//
+//            // Execute the SQL script to initialize the database (if needed)
+//            executeSqlScript("resources/motorph_db.sql");
+//
+//        } catch (ClassNotFoundException e) {
+//            System.err.println("H2 JDBC driver not found!");
+//            e.printStackTrace();
+//        } catch (SQLException e) {
+//            System.err.println("Failed to connect to H2 database!");
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    // Execute SQL script from a file
+//    private void executeSqlScript(String filePath) {
+//        try {
+//            String sql = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
+//            sql = sql.replaceAll("(?m)^--.*\n", ""); // Remove comments
+//
+//            try (Statement stmt = connection.createStatement()) {
+//                String[] queries = sql.split(";"); // Split statements
+//                for (String query : queries) {
+//                    query = query.trim();
+//                    if (!query.isEmpty()) {
+//                        System.out.println("Executing: " + query); // Debugging output
+//                        stmt.execute(query);
+//                    }
+//                }
+//                System.out.println("SQL script executed successfully!");
+//            }
+//        } catch (IOException | SQLException e) {
+//            System.err.println("Error while executing SQL script: " + e.getMessage());
+//            e.printStackTrace();
+//        }
+//    }
     
     /**
     * Closes the database resources including the result set, connection, statement, and prepared statement.
@@ -164,7 +219,7 @@ public class MySQL {
                     + "ON e.employee_number = a.employee_number "
                     + "WHERE date BETWEEN ? AND ? ";
             if(employeeNumber != 0){
-                query += "WHERE a.employee_number = ? ";
+                query += "AND a.employee_number = ? ";
             }
             query += "ORDER BY date DESC";
 
@@ -178,6 +233,7 @@ public class MySQL {
             }
 
             // Execute the query
+            System.out.println("Executing Query: " + preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
 
         } catch (SQLException e) {
@@ -225,11 +281,8 @@ public class MySQL {
                     + "e.department, e.position FROM payslip p "
                     + "INNER JOIN employees e "
                     + "ON e.employee_number = p.employee_id "
-                    + "WHERE MONTH(payment_date) = ? AND YEAR(payment_date) = ? ";
+                    + "WHERE MONTH(period_start) = ? AND YEAR(period_start) = ? ";
             query += "ORDER BY payment_date DESC";
-            System.out.println(query);
-            System.out.println(month);
-            System.out.println(year);
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             
@@ -282,14 +335,16 @@ public class MySQL {
     }
     
     public ResultSet getUsers() {
+        System.err.println("Get users");
         try {
             // Create a statement object
             statement = connection.createStatement();
 
             // Define the query
             String query = "SELECT e.*, uc.role_id FROM employees e "
-                    + "INNER JOIN user_credentials uc "
-                    + "ON e.employee_number = uc.employee_number ";
+                    + "LEFT JOIN user_credentials uc "
+                    + "ON e.employee_number = uc.employee_number "
+                    + "WHERE e.is_deleted = False";
 
             // Execute the query
             resultSet = statement.executeQuery(query);
@@ -309,15 +364,16 @@ public class MySQL {
     * @return A ResultSet containing the employee records matching the search query.
     */
     public ResultSet getUsers(String search) {
+        System.err.println("Get users");
         try {
             // Create a statement object
             statement = connection.createStatement();
 
             // Define the query
-            String query = "SELECT e.*, uc.role_id FROM employees e INNER JOIN user_credentials uc "
+            String query = "SELECT e.*, uc.role_id FROM employees e LEFT JOIN user_credentials uc "
                     + "ON e.employee_number = uc.employee_number WHERE "
                     + "(e.employee_number LIKE ? OR first_name LIKE ? OR "
-                    + "last_name LIKE ?)";
+                    + "last_name LIKE ?) AND e.is_deleted = False";
             
             preparedStatement = connection.prepareStatement(query);
 
@@ -339,6 +395,7 @@ public class MySQL {
     }
     
     public ResultSet getEmployeeUsers() {
+        System.err.println("Get employee users");
         try {
             // Create a statement object
             statement = connection.createStatement();
@@ -367,6 +424,7 @@ public class MySQL {
     * @return A ResultSet containing the employee records matching the search query.
     */
     public ResultSet getEmployeesWithSearch(String search) {
+        System.err.println("Get employee users");
         try {
             // Create a statement object
             statement = connection.createStatement();
@@ -444,6 +502,57 @@ public class MySQL {
             e.printStackTrace();
         }
         // Return the result set containing the employee records
+        return resultSet;
+    }
+    
+    public ResultSet getDashboard(User user) {
+        try {
+            // Create a statement object
+            statement = connection.createStatement();
+
+            // Define the query
+            String query = "SELECT COUNT(*) AS total, " 
+                    + " COUNT(CASE WHEN date_hired >= NOW() - INTERVAL 1 WEEK THEN 1 END) "
+                    + " AS new_employees FROM employees e ";
+            if(user instanceof HRPersonnel){
+                query += "INNER JOIN user_credentials uc "
+                    + " ON e.employee_number = uc.employee_number "
+                    + "WHERE role_id = 1";
+            }
+            
+            resultSet = statement.executeQuery(query);
+
+        } catch (SQLException e) {
+            System.err.println("Error while executing SQL query!");
+            e.printStackTrace();
+        }
+        
+        // Return the result set containing the employee records matching the search query
+        return resultSet;
+    }
+    
+    public ResultSet getNewUsers(User user) {
+        try {
+            // Create a statement object
+            statement = connection.createStatement();
+
+            // Define the query
+            String query = "SELECT e.*, uc.role_id FROM employees e "
+                    + "LEFT JOIN user_credentials uc "
+                    + " ON e.employee_number = uc.employee_number "
+                    + "WHERE date_hired >= CURDATE() - INTERVAL 7 DAY ";
+            if(user instanceof HRPersonnel){
+                query += "AND role_id = 1 ";
+            }
+            
+            resultSet = statement.executeQuery(query);
+
+        } catch (SQLException e) {
+            System.err.println("Error while executing SQL query!");
+            e.printStackTrace();
+        }
+        
+        // Return the result set containing the employee records matching the search query
         return resultSet;
     }
     
@@ -1413,11 +1522,14 @@ public class MySQL {
         try {
             // Define the query
             String query = "SELECT " +
-               "SUM(CASE WHEN leave_type = 'EL - Emergency Leave' THEN 1 ELSE 0 END) AS emergency_leave_count, " +
-               "SUM(CASE WHEN leave_type = 'SL - Sick Leave' THEN 1 ELSE 0 END) AS sick_leave_count, " +
-               "SUM(CASE WHEN leave_type = 'VL - Vacation Leave' THEN 1 ELSE 0 END) AS vacation_leave_count " +
-               "FROM leave_records " +
-               "WHERE YEAR(date_filed) = ? AND employee_number = ? AND remarks = 'APPROVED'";
+                "COALESCE(SUM(CASE WHEN leave_type = 'EL - Emergency Leave' THEN 1 ELSE 0 END), "
+                + " 0) AS emergency_leave_count, " +
+                "COALESCE(SUM(CASE WHEN leave_type = 'SL - Sick Leave' THEN 1 ELSE 0 END), "
+                + "0) AS sick_leave_count, " +
+                "COALESCE(SUM(CASE WHEN leave_type = 'VL - Vacation Leave' THEN 1 ELSE 0 END), "
+                + "0) AS vacation_leave_count " +
+                "FROM leave_records " +
+                "WHERE YEAR(date_filed) = ? AND employee_number = ? AND remarks = 'APPROVED'";
 
             // Prepare the statement
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -1427,6 +1539,7 @@ public class MySQL {
             preparedStatement.setInt(2, employeeNumber);
             
             // Execute the query
+            System.out.println("Executing Query: " + preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
 
         } catch (SQLException e) {

@@ -71,25 +71,28 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     }
     
     private void initializeForm(){
-        
-        fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpLastNameValue), addNewEmpWarnLN));
-        fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpFirstNameValue), addNewEmpWarnFN));
-        fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpBirthValue), addNewEmpWarnBirth));
-        fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPhoneNumValue), addNewEmpWarnPhone));
-        fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpAddressValue), addNewEmpWarnAdd));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpStatusValue), addNewEmpWarnStat));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPositionValue), addNewEmpWarnPos));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpImmediateSupValue), addNewEmpWarnISup));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpBasicSalaryValue), addNewEmpWarnBSal));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpGrossSemiValue), addNewEmpWarnGSMR));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpHourlyRateValue), addNewEmpWarnHRate));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpRiceSubValue), addNewEmpWarnRSub));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPhoneAllowValue), addNewEmpWarnPAllow));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpClothingAllowValue), addNewEmpWarnCAllow));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpSssValue), addNewEmpWarnSss));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpTinValue), addNewEmpWarnTin));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPhilhealthValue), addNewEmpWarnPhil));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPagIbigValue), addNewEmpWarnPag));
+        List<String> validation1 = Arrays.asList("Required", "AlphabetsAndDash");
+        List<String> validation2 = Arrays.asList("Required", "AlphabetsAndSpecialChars");
+        List<String> validation3 = Arrays.asList("Required", "NumbersAndDash");
+        List<String> validation4 = Arrays.asList("Required", "NumbersOnly");
+        List<String> validation5 = Arrays.asList("Required", "WorkingAge");
+        List<String> validation6 = Arrays.asList("Required");
+        fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpLastNameValue), addNewEmpWarnLN, validation2));
+        fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpFirstNameValue), addNewEmpWarnFN, validation2));
+        fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpBirthValue), addNewEmpWarnBirth, validation5));
+        fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPhoneNumValue), addNewEmpWarnPhone, validation3));
+        fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpAddressValue), addNewEmpWarnAdd, validation6));
+        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpImmediateSupValue), addNewEmpWarnISup, validation1));
+        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpBasicSalaryValue), addNewEmpWarnBSal, validation4));
+        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpGrossSemiValue), addNewEmpWarnGSMR, validation4));
+        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpHourlyRateValue), addNewEmpWarnHRate, validation4));
+        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpRiceSubValue), addNewEmpWarnRSub, validation4));
+        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPhoneAllowValue), addNewEmpWarnPAllow, validation4));
+        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpClothingAllowValue), addNewEmpWarnCAllow, validation4));
+        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpSssValue), addNewEmpWarnSss, validation3));
+        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpTinValue), addNewEmpWarnTin, validation3));
+        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPhilhealthValue), addNewEmpWarnPhil, validation3));
+        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPagIbigValue), addNewEmpWarnPag, validation3));
         
         addNewEmpSuccessCreatedLabel.setVisible(false);
         addNewEmpErrorFill.setVisible(false);
@@ -113,9 +116,9 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         newEmpLastNameValue.setText(editableUser.getLastName());
         newEmpFirstNameValue.setText(editableUser.getFirstName());
         newEmpBirthValue.setDate(editableUser.getBirthday());
-        newEmpStatusValue.setText(((Employee) editableUser).getStatus());
-        newEmpDateHiredValue.setText("01/01/2025");
-        newEmpPositionValue.setText(editableUser.getPosition());
+        newEmpStatusValue.setSelectedItem(((Employee) editableUser).getStatus());
+        newEmpDateHiredValue.setDate(editableUser.getDateHired());
+        newEmpPositionValue.setSelectedItem(editableUser.getPosition());
         newEmpImmediateSupValue.setText(((Employee) editableUser).getImmediateSupervisor());
         newEmpPhoneNumValue.setText(editableUser.getPhoneNumber());
         newEmpPersonalEmailValue.setText("@example.motorph.com.ph");
@@ -137,8 +140,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         addNewEmpWarnLN.setVisible(false);
         addNewEmpWarnFN.setVisible(false);
         addNewEmpWarnBirth.setVisible(false);
-        addNewEmpWarnStat.setVisible(false);
-        addNewEmpWarnPos.setVisible(false);
         addNewEmpWarnISup.setVisible(false);
         addNewEmpWarnPhone.setVisible(false);
         addNewEmpWarnAdd.setVisible(false);
@@ -168,7 +169,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         AddNewEmpGradientPanel = new keeptoo.KGradientPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         addNewEmpForm = new javax.swing.JPanel();
-        newEmpImmediateSupValue = new javax.swing.JTextField();
         newEmpImmediateSup = new javax.swing.JLabel();
         newEmpLastNameValue = new javax.swing.JTextField();
         newEmpBirth = new javax.swing.JLabel();
@@ -179,9 +179,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         newEmpPersonalEmailValue = new javax.swing.JTextField();
         newEmpID = new javax.swing.JLabel();
         newEmpDateHired = new javax.swing.JLabel();
-        newEmpDateHiredValue = new javax.swing.JTextField();
-        newEmpStatusValue = new javax.swing.JTextField();
-        newEmpPositionValue = new javax.swing.JTextField();
         newEmpAddInfo = new javax.swing.JLabel();
         newEmpLastName = new javax.swing.JLabel();
         newEmpIDValue = new javax.swing.JTextField();
@@ -225,9 +222,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         addNewEmpWarnLN = new javax.swing.JLabel();
         addNewEmpWarnFN = new javax.swing.JLabel();
         addNewEmpWarnBirth = new javax.swing.JLabel();
-        addNewEmpWarnStat = new javax.swing.JLabel();
-        addNewEmpWarnPos = new javax.swing.JLabel();
-        addNewEmpWarnISup = new javax.swing.JLabel();
         addNewEmpWarnPhone = new javax.swing.JLabel();
         addNewEmpWarnAdd = new javax.swing.JLabel();
         addNewEmpWarnBSal = new javax.swing.JLabel();
@@ -248,6 +242,11 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         jSeparator8 = new javax.swing.JSeparator();
         newEmpPhoneNumValue = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
+        newEmpStatusValue = new javax.swing.JComboBox<>();
+        newEmpPositionValue = new javax.swing.JComboBox<>();
+        newEmpImmediateSupValue = new javax.swing.JTextField();
+        addNewEmpWarnISup = new javax.swing.JLabel();
+        newEmpDateHiredValue = new com.toedter.calendar.JDateChooser();
         exitButton = new javax.swing.JLabel();
         addNewEmpLabel = new javax.swing.JLabel();
 
@@ -266,17 +265,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         addNewEmpForm.setForeground(new java.awt.Color(0, 0, 0));
         addNewEmpForm.setPreferredSize(new java.awt.Dimension(800, 1360));
         addNewEmpForm.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        newEmpImmediateSupValue.setBackground(new java.awt.Color(255, 255, 255));
-        newEmpImmediateSupValue.setForeground(new java.awt.Color(0, 0, 0));
-        newEmpImmediateSupValue.setToolTipText("");
-        newEmpImmediateSupValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        newEmpImmediateSupValue.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newEmpImmediateSupValueActionPerformed(evt);
-            }
-        });
-        addNewEmpForm.add(newEmpImmediateSupValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 190, 30));
 
         newEmpImmediateSup.setBackground(new java.awt.Color(255, 255, 255));
         newEmpImmediateSup.setForeground(new java.awt.Color(0, 0, 0));
@@ -297,7 +285,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
 
         newEmpBirth.setBackground(new java.awt.Color(255, 255, 255));
         newEmpBirth.setForeground(new java.awt.Color(0, 0, 0));
-        newEmpBirth.setText(" Date of Brith*");
+        newEmpBirth.setText(" Date of Birth*");
         newEmpBirth.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         addNewEmpForm.add(newEmpBirth, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 190, 30));
 
@@ -349,36 +337,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         newEmpDateHired.setText(" Date hired");
         newEmpDateHired.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         addNewEmpForm.add(newEmpDateHired, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 190, 30));
-
-        newEmpDateHiredValue.setBackground(new java.awt.Color(255, 255, 255));
-        newEmpDateHiredValue.setForeground(new java.awt.Color(0, 0, 0));
-        newEmpDateHiredValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        newEmpDateHiredValue.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newEmpDateHiredValueActionPerformed(evt);
-            }
-        });
-        addNewEmpForm.add(newEmpDateHiredValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 190, 30));
-
-        newEmpStatusValue.setBackground(new java.awt.Color(255, 255, 255));
-        newEmpStatusValue.setForeground(new java.awt.Color(0, 0, 0));
-        newEmpStatusValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        newEmpStatusValue.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newEmpStatusValueActionPerformed(evt);
-            }
-        });
-        addNewEmpForm.add(newEmpStatusValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 180, 190, 30));
-
-        newEmpPositionValue.setBackground(new java.awt.Color(255, 255, 255));
-        newEmpPositionValue.setForeground(new java.awt.Color(0, 0, 0));
-        newEmpPositionValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        newEmpPositionValue.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newEmpPositionValueActionPerformed(evt);
-            }
-        });
-        addNewEmpForm.add(newEmpPositionValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 230, 190, 30));
 
         newEmpAddInfo.setBackground(new java.awt.Color(255, 255, 255));
         newEmpAddInfo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -634,10 +592,10 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         addNewEmpForm.add(newEmpPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 230, 190, 30));
 
         newEmpRoleValue.setBackground(new java.awt.Color(227, 227, 227));
-        newEmpRoleValue.setEditable(true);
         newEmpRoleValue.setForeground(new java.awt.Color(0, 0, 0));
         newEmpRoleValue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Employee", "HR Personnel", "System Administrator" }));
         newEmpRoleValue.setEnabled(false);
+        newEmpRoleValue.setLightWeightPopupEnabled(false);
         newEmpRoleValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newEmpRoleValueActionPerformed(evt);
@@ -695,21 +653,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         addNewEmpWarnBirth.setForeground(new java.awt.Color(204, 0, 51));
         addNewEmpWarnBirth.setText("This is required.");
         addNewEmpForm.add(addNewEmpWarnBirth, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, -1, 20));
-
-        addNewEmpWarnStat.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        addNewEmpWarnStat.setForeground(new java.awt.Color(204, 0, 51));
-        addNewEmpWarnStat.setText("This is required.");
-        addNewEmpForm.add(addNewEmpWarnStat, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 210, -1, 20));
-
-        addNewEmpWarnPos.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        addNewEmpWarnPos.setForeground(new java.awt.Color(204, 0, 51));
-        addNewEmpWarnPos.setText("This is required.");
-        addNewEmpForm.add(addNewEmpWarnPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 260, -1, 20));
-
-        addNewEmpWarnISup.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        addNewEmpWarnISup.setForeground(new java.awt.Color(204, 0, 51));
-        addNewEmpWarnISup.setText("This is required.");
-        addNewEmpForm.add(addNewEmpWarnISup, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, -1, 20));
 
         addNewEmpWarnPhone.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         addNewEmpWarnPhone.setForeground(new java.awt.Color(204, 0, 51));
@@ -806,6 +749,51 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         jSeparator5.setForeground(new java.awt.Color(204, 204, 204));
         addNewEmpForm.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 810, 20));
 
+        newEmpStatusValue.setBackground(new java.awt.Color(227, 227, 227));
+        newEmpStatusValue.setEditable(true);
+        newEmpStatusValue.setForeground(new java.awt.Color(0, 0, 0));
+        newEmpStatusValue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Regular", "Probationary" }));
+        newEmpStatusValue.setLightWeightPopupEnabled(false);
+        newEmpStatusValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newEmpStatusValueActionPerformed(evt);
+            }
+        });
+        addNewEmpForm.add(newEmpStatusValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 180, 190, 30));
+
+        newEmpPositionValue.setBackground(new java.awt.Color(227, 227, 227));
+        newEmpPositionValue.setEditable(true);
+        newEmpPositionValue.setForeground(new java.awt.Color(0, 0, 0));
+        newEmpPositionValue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chief Executive Officer", "Chief Operating Officer", "Chief Finance Officer", "Chief Marketing Officer", "IT Operations and Systems", "HR Manager", "HR Team Leader", "HR Rank and File", "Accounting Head", "Payroll Manager", "Payroll Team Leader", "Payroll Rank and File", "Account Manager", "Account Team Leader", "Account Rank and File", "Sales & Marketing", "Supply Chain and Logistics", "Customer Service and Relations" }));
+        newEmpPositionValue.setLightWeightPopupEnabled(false);
+        newEmpPositionValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newEmpPositionValueActionPerformed(evt);
+            }
+        });
+        addNewEmpForm.add(newEmpPositionValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 230, 190, 30));
+
+        newEmpImmediateSupValue.setBackground(new java.awt.Color(255, 255, 255));
+        newEmpImmediateSupValue.setForeground(new java.awt.Color(0, 0, 0));
+        newEmpImmediateSupValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        newEmpImmediateSupValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newEmpImmediateSupValueActionPerformed(evt);
+            }
+        });
+        addNewEmpForm.add(newEmpImmediateSupValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 190, 30));
+
+        addNewEmpWarnISup.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        addNewEmpWarnISup.setForeground(new java.awt.Color(204, 0, 51));
+        addNewEmpWarnISup.setText("This is required.");
+        addNewEmpForm.add(addNewEmpWarnISup, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, -1, 20));
+
+        newEmpDateHiredValue.setBackground(new java.awt.Color(255, 255, 255));
+        newEmpDateHiredValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        newEmpDateHiredValue.setForeground(new java.awt.Color(0, 0, 0));
+        newEmpDateHiredValue.setDateFormatString("MM/dd/yyyy");
+        addNewEmpForm.add(newEmpDateHiredValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 190, 30));
+
         jScrollPane1.setViewportView(addNewEmpForm);
 
         AddNewEmpGradientPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 62, 820, 500));
@@ -864,8 +852,8 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
                 : isFormClear;
         boolean result = false;
         
+        addNewEmpErrorFill.setVisible(!isClear);
         if(isClear){
-            
             editableUser.setLastName(newEmpLastNameValue.getText());
             editableUser.setFirstName(newEmpFirstNameValue.getText());
             editableUser.setBirthday(newEmpBirthValue.getDate());
@@ -884,8 +872,8 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
                     return;
                 }
                 
-                ((Employee) editableUser).setStatus(newEmpStatusValue.getText());
-                ((Employee) editableUser).setPosition(newEmpPositionValue.getText());
+                ((Employee) editableUser).setStatus((String) newEmpStatusValue.getSelectedItem());
+                ((Employee) editableUser).setPosition((String) newEmpPositionValue.getSelectedItem());
                 ((Employee) editableUser).setImmediateSupervisor(newEmpImmediateSupValue.getText());
                 
                 Benefits benefit = new Benefits();
@@ -898,38 +886,39 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
                 
                 ((Employee) editableUser).setBenefits(benefit);
             }
-        }
-        if(action.equals("Create")){
-            if(user instanceof HRPersonnel){
-                result = ((HRPersonnel) user).addNewEmployee((Employee) editableUser);
-            } else {
-                result = ((SystemAdministrator) user).addNewEmployee(editableUser);
-            }
-        } else {
-            editableUser.setEmployeeID(Integer.parseInt(newEmpIDValue.getText()));
-            if(user instanceof HRPersonnel){
-                result = ((HRPersonnel) user).updateEmployee((Employee) editableUser);
-            } else {
-                result = ((SystemAdministrator) user).updateEmployee(editableUser);
-            }
-        }
-        
-        if(result){
-            addNewEmpSuccessCreatedLabel.setVisible(true);
-            newEmpSubmitButton.setEnabled(false);
-//            adminHomePage.refreshEmployeeListTable();
-            Timer timer = new Timer();
-
-            // Schedule a task to run dispose after 3 seconds.
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    dispose();
-                    parentPanel.loadEmployeeList();
+            
+            if(action.equals("Create")){
+                if(user instanceof HRPersonnel){
+                    result = ((HRPersonnel) user).addNewEmployee((Employee) editableUser);
+                } else {
+                    result = ((SystemAdministrator) user).addNewEmployee(editableUser);
                 }
-            }, 3000);
-        } else {
-            addNewEmpErrorFill.setVisible(true);
+            } else {
+                editableUser.setEmployeeID(Integer.parseInt(newEmpIDValue.getText()));
+                if(user instanceof HRPersonnel){
+                    result = ((HRPersonnel) user).updateEmployee((Employee) editableUser);
+                } else {
+                    result = ((SystemAdministrator) user).updateEmployee(editableUser);
+                }
+            }
+
+            if(result){
+                addNewEmpSuccessCreatedLabel.setVisible(true);
+                newEmpSubmitButton.setEnabled(false);
+    //            adminHomePage.refreshEmployeeListTable();
+                Timer timer = new Timer();
+
+                // Schedule a task to run dispose after 3 seconds.
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        dispose();
+                        parentPanel.loadEmployeeList();
+                    }
+                }, 3000);
+            } else {
+                addNewEmpErrorFill.setVisible(true);
+            }
         }
     }//GEN-LAST:event_newEmpSubmitButtonActionPerformed
 
@@ -981,18 +970,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_newEmpIDValueActionPerformed
 
-    private void newEmpPositionValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpPositionValueActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_newEmpPositionValueActionPerformed
-
-    private void newEmpStatusValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpStatusValueActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_newEmpStatusValueActionPerformed
-
-    private void newEmpDateHiredValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpDateHiredValueActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_newEmpDateHiredValueActionPerformed
-
     private void newEmpPersonalEmailValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpPersonalEmailValueActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_newEmpPersonalEmailValueActionPerformed
@@ -1005,13 +982,21 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_newEmpLastNameValueActionPerformed
 
-    private void newEmpImmediateSupValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpImmediateSupValueActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_newEmpImmediateSupValueActionPerformed
-
     private void newEmpPhoneNumValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpPhoneNumValueActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_newEmpPhoneNumValueActionPerformed
+
+    private void newEmpStatusValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpStatusValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newEmpStatusValueActionPerformed
+
+    private void newEmpPositionValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpPositionValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newEmpPositionValueActionPerformed
+
+    private void newEmpImmediateSupValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpImmediateSupValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newEmpImmediateSupValueActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1068,10 +1053,8 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     private javax.swing.JLabel addNewEmpWarnPag;
     private javax.swing.JLabel addNewEmpWarnPhil;
     private javax.swing.JLabel addNewEmpWarnPhone;
-    private javax.swing.JLabel addNewEmpWarnPos;
     private javax.swing.JLabel addNewEmpWarnRSub;
     private javax.swing.JLabel addNewEmpWarnSss;
-    private javax.swing.JLabel addNewEmpWarnStat;
     private javax.swing.JLabel addNewEmpWarnTin;
     private javax.swing.JLabel empInfo;
     private javax.swing.JLabel exitButton;
@@ -1096,7 +1079,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     private javax.swing.JTextField newEmpClothingAllowValue;
     private javax.swing.JLabel newEmpContact;
     private javax.swing.JLabel newEmpDateHired;
-    private javax.swing.JTextField newEmpDateHiredValue;
+    private com.toedter.calendar.JDateChooser newEmpDateHiredValue;
     private javax.swing.JLabel newEmpFirstName;
     private javax.swing.JTextField newEmpFirstNameValue;
     private javax.swing.JLabel newEmpGrossSemi;
@@ -1121,7 +1104,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     private javax.swing.JLabel newEmpPhoneNum;
     private javax.swing.JTextField newEmpPhoneNumValue;
     private javax.swing.JLabel newEmpPosition;
-    private javax.swing.JTextField newEmpPositionValue;
+    private javax.swing.JComboBox<String> newEmpPositionValue;
     private javax.swing.JLabel newEmpRiceSub;
     private javax.swing.JTextField newEmpRiceSubValue;
     private javax.swing.JComboBox<String> newEmpRoleValue;
@@ -1129,7 +1112,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     private javax.swing.JLabel newEmpSss;
     private javax.swing.JTextField newEmpSssValue;
     private javax.swing.JLabel newEmpStatus;
-    private javax.swing.JTextField newEmpStatusValue;
+    private javax.swing.JComboBox<String> newEmpStatusValue;
     private javax.swing.JButton newEmpSubmitButton;
     private javax.swing.JLabel newEmpTin;
     private javax.swing.JTextField newEmpTinValue;

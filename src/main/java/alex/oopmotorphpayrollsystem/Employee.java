@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
  */
 public class Employee extends User {
     private String status;
-    private String position;
     private String immediateSupervisor;
     private String department;
     private Benefits benefits; // Composition: Employee "HAS-A" Benefits
@@ -194,41 +193,41 @@ public class Employee extends User {
             if (result.next()) {
                 System.out.println(result.getInt("emergency_leave_count"));
                 Map<String, Object> el = new HashMap<>();
-                el.put("Type", "EL");
+                el.put("Type", "EL - Emergency Leave");
                 el.put("Allowable", maxEmergency); // Hardcoded allowable limit
                 el.put("Available", maxEmergency - result.getInt("emergency_leave_count"));
                 leaveCredits.add(el);
 
                 // Map for SL
                 Map<String, Object> sl = new HashMap<>();
-                sl.put("Type", "SL");
+                sl.put("Type", "SL - Sick Leave");
                 sl.put("Allowable", maxSick);
                 sl.put("Available", maxSick - result.getInt("sick_leave_count"));
                 leaveCredits.add(sl);
 
                 // Map for VL
                 Map<String, Object> vl = new HashMap<>();
-                vl.put("Type", "VL");
+                vl.put("Type", "VL - Vaction Leave");
                 vl.put("Allowable", maxVacation);
                 vl.put("Available", maxVacation - result.getInt("vacation_leave_count"));
                 leaveCredits.add(vl);
             } else {
                 Map<String, Object> el = new HashMap<>();
-                el.put("Type", "EL");
-                el.put("Allowable", maxEmergency); // Hardcoded allowable limit
+                el.put("Type", "EL - Emergency Leave");
+                el.put("Allowable", maxEmergency); 
                 el.put("Available", maxEmergency);
                 leaveCredits.add(el);
                 
                 // Map for SL
                 Map<String, Object> sl = new HashMap<>();
-                sl.put("Type", "SL");
+                sl.put("Type", "SL - Sick Leave");
                 sl.put("Allowable", maxSick);
                 sl.put("Available", maxSick);
                 leaveCredits.add(sl);
 
                 // Map for VL
                 Map<String, Object> vl = new HashMap<>();
-                vl.put("Type", "VL");
+                vl.put("Type", "VL - Vacation Leave");
                 vl.put("Allowable", maxVacation);
                 vl.put("Available", maxVacation);
                 leaveCredits.add(vl);

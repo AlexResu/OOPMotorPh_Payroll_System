@@ -1442,6 +1442,7 @@
             </LineBorder>
           </Border>
         </Property>
+        <Property name="lightWeightPopupEnabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchEmpValueActionPerformed"/>
@@ -1522,6 +1523,7 @@
             </LineBorder>
           </Border>
         </Property>
+        <Property name="lightWeightPopupEnabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectPeriodValueActionPerformed"/>

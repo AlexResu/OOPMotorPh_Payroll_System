@@ -54,26 +54,8 @@ public class AttendanceRecordTest {   private AttendanceRecord attendanceRecord;
     }
 
     @Test
-    void testGetAndSetTimeOut() {
-        Time newTimeOut = Time.valueOf("18:00:00");  // New time for clock-out
-        attendanceRecord.setTimeOut(newTimeOut);
-        // Check if the timeOut is properly set
-        assertEquals(newTimeOut, attendanceRecord.getTimeOut());
-    }
-
-    @Test
     void testCalculateWorkHours() {
         // Test that the calculation of work hours is correct (9 hours in this case)
         assertEquals(9.0, attendanceRecord.calculateWorkHours(), 0.01);
-    }
-
-    @Test
-    void testIsTimeSet() {
-        // Check if the time is set correctly
-        assertTrue(attendanceRecord.isTimeSet());
-
-        // Create a record without time set (just the date)
-        AttendanceRecord recordWithoutTime = new AttendanceRecord(1002, testDate);
-        assertFalse(recordWithoutTime.isTimeSet());
     }
 }

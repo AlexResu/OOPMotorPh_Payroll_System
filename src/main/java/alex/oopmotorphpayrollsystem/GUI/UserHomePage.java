@@ -47,7 +47,7 @@ public class UserHomePage extends javax.swing.JFrame {
         //Set default content
         javax.swing.JPanel homepage;
         if(!(user instanceof Employee)){
-            homepage = new HomePagePanel(account, user);
+            homepage = new Dashboard(account, user);
         } else {
             homepage = new HomePagePanel(account, ((Employee) user));
         }
@@ -63,7 +63,10 @@ public class UserHomePage extends javax.swing.JFrame {
         // Add menu items for the selected user type
         List<String> menuItems = this.account.getPermissions();
         int baseYCoordinate = 220;
-        int buttonYMargin = 50;
+        int buttonYMargin = 60;
+        
+        boolean isEmployee = user instanceof Employee;
+
         for (String item : menuItems) {
             com.k33ptoo.components.KButton sideBarButton = new com.k33ptoo.components.KButton();
             sideBarButton.setText(item);
@@ -86,20 +89,30 @@ public class UserHomePage extends javax.swing.JFrame {
             sideBarButton.setRequestFocusEnabled(false);
             sideBarButton.setRolloverEnabled(false);
             sideBarButton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-            if(item.equals("Home")){
-                sideBarButton.setkStartColor(new java.awt.Color(255, 102, 0));
-                sideBarButton.setkEndColor(new java.awt.Color(255, 102, 0));
+
+            // Set default active button based on user type
+            if (isEmployee && item.equals("Home")) {
+                sideBarButton.setkStartColor(new java.awt.Color(255, 102, 0));  // Active color for Home (if Employee)
+                sideBarButton.setkEndColor(new java.awt.Color(255, 102, 0));    // Active color for Home (if Employee)
+                activeButton = sideBarButton;
+            } else if (!isEmployee && item.equals("Dashboard")) {
+                sideBarButton.setkStartColor(new java.awt.Color(255, 102, 0));  // Active color for Dashboard (if not Employee)
+                sideBarButton.setkEndColor(new java.awt.Color(255, 102, 0));    // Active color for Dashboard (if not Employee)
+                activeButton = sideBarButton;
             }
+
             sideBarButton.addActionListener(e -> {
                 // Reset previous active button
                 if (activeButton != null) {
                     activeButton.setkStartColor(new java.awt.Color(153, 51, 255)); // Restore purple
-                    activeButton.setkEndColor(new java.awt.Color(0, 0, 205)); // Restore blue
+                    activeButton.setkEndColor(new java.awt.Color(0, 0, 205));     // Restore blue
                 }
-                
+
+                // Set new active button color
                 sideBarButton.setkStartColor(new java.awt.Color(255, 102, 0));
                 sideBarButton.setkEndColor(new java.awt.Color(255, 102, 0));
 
+                // Set the active button
                 activeButton = sideBarButton;
                 onMenuItemClick(item);
             });
@@ -116,6 +129,9 @@ public class UserHomePage extends javax.swing.JFrame {
         switch (menuItem) {
             case "Home":
                 newPanel = new HomePagePanel(account, user);
+                break;
+            case "Dashboard":
+                newPanel = new Dashboard(account, user);
                 break;
             case "Employee Management":
                 newPanel = new UserManagement(account, user);

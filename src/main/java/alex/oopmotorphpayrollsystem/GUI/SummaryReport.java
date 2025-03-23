@@ -210,6 +210,7 @@ public class SummaryReport extends javax.swing.JPanel {
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
         loadPayrollData();
+        
     }//GEN-LAST:event_searchActionPerformed
 
     private void downloadSummaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadSummaryActionPerformed

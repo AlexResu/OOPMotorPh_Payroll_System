@@ -66,10 +66,10 @@ public class HomePagePanel extends javax.swing.JPanel {
         lastNameValue.setText(user.getLastName());
         positionLabelValue1.setText(user.getPosition());
         firstNameValue.setText(user.getFirstName());
-        if(user instanceof Employee){
-            positionLabelValue.setText(((Employee) user).getDepartment());
-        }
-        
+        departmentLabelValue.setText(user.getDepartment());
+        Date dateHired = user.getDateHired();
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM d, yyyy");
+        dateHiredLabelValue.setText(formatter.format(dateHired));
     }
     
     protected void loadLeaveRecords(){
@@ -81,7 +81,7 @@ public class HomePagePanel extends javax.swing.JPanel {
             Object data[] = {
                 record.getLeaveType(), record.getStartDate(), 
                 record.getDuration(), record.getLeaveStatus(), 
-                record.getApprovedBy().getEmployeeID() != 0 ? 
+                !("PENDING".equals(record.getLeaveStatus())) ? 
                     record.getApprovedBy().getFirstName() + " " 
                     + record.getApprovedBy().getLastName() : "--"};
 
@@ -93,10 +93,13 @@ public class HomePagePanel extends javax.swing.JPanel {
         model = (DefaultTableModel) leaveCreditsTable.getModel();
         model.setRowCount(0);
         System.out.println(leaveCredits.size());
+        System.out.println("Leave credits");
+        
         for (Map<String, Object> leave : leaveCredits) {
             Object data[] = {leave.get("Type"), leave.get("Allowable"),
                 leave.get("Available")
             };
+            System.out.println(leave.get("Available"));
             model.addRow(data);
         }
     }
@@ -143,7 +146,7 @@ public class HomePagePanel extends javax.swing.JPanel {
         departmentLabel1 = new javax.swing.JLabel();
         positionLabelValue1 = new javax.swing.JLabel();
         departmentLabel = new javax.swing.JLabel();
-        positionLabelValue = new javax.swing.JLabel();
+        departmentLabelValue = new javax.swing.JLabel();
         dateHiredLabel = new javax.swing.JLabel();
         dateHiredLabelValue = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
@@ -221,7 +224,7 @@ public class HomePagePanel extends javax.swing.JPanel {
         empHomePage.add(departmentLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, -1, -1));
 
         positionLabelValue1.setForeground(new java.awt.Color(0, 0, 0));
-        positionLabelValue1.setText("  Human Resourse");
+        positionLabelValue1.setText("  Human Resource");
         positionLabelValue1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         positionLabelValue1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         empHomePage.add(positionLabelValue1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 140, 26));
@@ -230,11 +233,11 @@ public class HomePagePanel extends javax.swing.JPanel {
         departmentLabel.setText("Department");
         empHomePage.add(departmentLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, -1, -1));
 
-        positionLabelValue.setForeground(new java.awt.Color(0, 0, 0));
-        positionLabelValue.setText("  Human Resourse");
-        positionLabelValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        positionLabelValue.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        empHomePage.add(positionLabelValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, 140, 26));
+        departmentLabelValue.setForeground(new java.awt.Color(0, 0, 0));
+        departmentLabelValue.setText("  Human Resource");
+        departmentLabelValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        departmentLabelValue.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        empHomePage.add(departmentLabelValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, 140, 26));
 
         dateHiredLabel.setForeground(new java.awt.Color(0, 0, 0));
         dateHiredLabel.setText("Date Hired");
@@ -316,7 +319,6 @@ public class HomePagePanel extends javax.swing.JPanel {
                 "Leave Type", "Date from", "Days", "Remarks", "Approved by"
             }
         ));
-        recordsTable.setColumnSelectionAllowed(false);
         recordsTable.setGridColor(new java.awt.Color(102, 102, 102));
         recordsTable.setSelectionBackground(new java.awt.Color(0, 0, 153));
         recordsTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
@@ -525,6 +527,7 @@ public class HomePagePanel extends javax.swing.JPanel {
     private javax.swing.JLabel dateTimeOutValue;
     private javax.swing.JLabel departmentLabel;
     private javax.swing.JLabel departmentLabel1;
+    private javax.swing.JLabel departmentLabelValue;
     private javax.swing.JLabel emailLabel;
     private javax.swing.JLabel emailLabelValue;
     private javax.swing.JPanel empHomePage;
@@ -543,7 +546,6 @@ public class HomePagePanel extends javax.swing.JPanel {
     private javax.swing.JLabel lastNameValue;
     private javax.swing.JLabel leaveCreditsLabel;
     private javax.swing.JTable leaveCreditsTable;
-    private javax.swing.JLabel positionLabelValue;
     private javax.swing.JLabel positionLabelValue1;
     private javax.swing.JLabel recordsLabel;
     private javax.swing.JTable recordsTable;

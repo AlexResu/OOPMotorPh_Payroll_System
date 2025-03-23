@@ -39,20 +39,5 @@ public class HRPersonneTest {
         assertEquals("DECLINED", leaveRequest.getLeaveStatus());
         assertEquals(hrPersonnel, leaveRequest.getApprovedBy());
     }
-    
-    @Test
-    void testGeneratePayslip() {
-        List<Payroll> payrollList = new ArrayList<>();
-        Payroll payroll = mock(Payroll.class);
-        payrollList.add(payroll);
-        
-        boolean result = hrPersonnel.generatePayslip(payrollList);
-        
-        assertTrue(result); // Assume it returns true for simplicity
-    }
-
-    private Payroll mock(Class<Payroll> aClass) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
 

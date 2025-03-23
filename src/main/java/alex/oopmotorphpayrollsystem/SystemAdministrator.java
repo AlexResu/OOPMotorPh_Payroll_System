@@ -113,7 +113,31 @@ public class SystemAdministrator extends User {
         return employees;
     }
     
-    // Private helper method to map ResultSet to a list of User objects
+    public List<User> loadNewUsers(){
+        MySQL mySQL = new MySQL();
+        ResultSet result = mySQL.getNewUsers(this);
+        List<User> employees = mapEmployees(result);
+        mySQL.close();
+        return employees;
+    }
+    
+    public List<Integer> loadDashboard(){
+        MySQL mySQL = new MySQL();
+        ResultSet result = mySQL.getDashboard(this);
+        List<Integer> dashboardInfo = new ArrayList<>();
+        try { 
+            if (result.next()) {
+                dashboardInfo.add(result.getInt("total"));
+                dashboardInfo.add(result.getInt("new_employees"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        mySQL.close();
+        return dashboardInfo;
+    }
+    
+    // Private helper method to map ResultSet to a list of User objectsHR
     private List<User> mapEmployees(ResultSet result){
         List<User> employees = new ArrayList<>();
         try { 
@@ -122,6 +146,7 @@ public class SystemAdministrator extends User {
                         ? new SystemAdministrator() : 
                         result.getInt("role_id") == 2 ? 
                         new HRPersonnel() : new Employee();
+                System.out.println(result.getInt("employee_number"));
                 user.setEmployeeID(result.getInt("employee_number"));
                 user.setLastName(result.getString("last_name"));
                 user.setFirstName(result.getString("first_name"));
@@ -132,6 +157,7 @@ public class SystemAdministrator extends User {
                 user.setPhilhealthNumber(result.getString("philhealth_number"));
                 user.setTinNumber(result.getString("tin_number"));
                 user.setPagibigNumber(result.getString("pagibig_number"));
+                user.setDateHired(result.getDate("date_hired"));
                 
                 if (user instanceof Employee){
                     ((Employee) user).setStatus(result.getString("status"));
@@ -147,10 +173,8 @@ public class SystemAdministrator extends User {
                             result.getInt("clothing_allowance")
                         );
                     ((Employee) user).setBenefits(benefit);
-
-                    employees.add(user);
                 }
-                
+                employees.add(user);
             }
         } catch (SQLException ex) {
             System.out.println(ex);

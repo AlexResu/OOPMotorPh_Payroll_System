@@ -40,6 +40,11 @@ public class UserManagement extends javax.swing.JPanel {
         initComponents();
         loadEmployeeList();
         initListeners();
+        if(user instanceof SystemAdministrator){
+            employeeList.setText("User List");
+            searchEmp.setText("Search User");
+            addNew.setText("Add new user");
+        }
     }
     
     private void initListeners(){
@@ -70,7 +75,7 @@ public class UserManagement extends javax.swing.JPanel {
                 } else {
                     employees = hrUser.loadEmployeeList(searchEmpValue.getText());  // With search term
                 }
-            } else if (user instanceof SystemAdministrator) {
+            } else {
                 SystemAdministrator adminUser = (SystemAdministrator) user;  // Cast to SystemAdministrator
                 if (searchEmpValue.getText().trim().isEmpty()) {
                     employees = adminUser.loadEmployeeList();  // No search term
@@ -89,7 +94,7 @@ public class UserManagement extends javax.swing.JPanel {
                 emp.getSssNumber(),
                 emp.getPhilhealthNumber(),
                 emp.getTinNumber(),
-                emp.getTinNumber()
+                emp.getPagibigNumber()
             };
 
             // Add the row to the table model
@@ -214,6 +219,76 @@ public class UserManagement extends javax.swing.JPanel {
             new Object [][] {
                 {"10001", "Garcia", "Manuel III", "10/11/1983", "966-860-270", "Regular", "Chief Executive Officer"},
                 {"10002", "Lim", "Antonio", "06/19/1988", "171-867-411", "Regular", "Chief Operating Officer"},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},

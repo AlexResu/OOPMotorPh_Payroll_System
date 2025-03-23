@@ -1189,6 +1189,7 @@
                     <StringItem index="2" value="Employee"/>
                   </StringArray>
                 </Property>
+                <Property name="lightWeightPopupEnabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="empRoleValueActionPerformed"/>

@@ -28,13 +28,19 @@ public abstract class User {
     protected String sssNumber;
     protected String philhealthNumber;
     protected String tinNumber;
-    protected String pagibigNumber; 
+    protected String pagibigNumber;
+    protected String department;
+    protected Date dateHired;
     
     public User(){}
     
     //Constuctor
     public User(int employeeID){
         this.employeeID = employeeID;
+    }
+
+    public Date getDateHired() {
+        return dateHired;
     }
     
     // Encapsulation - Getters and Setters
@@ -83,6 +89,14 @@ public abstract class User {
         return pagibigNumber;
     }
     
+    public String getDepartment() {
+        return department;
+    }
+    
+    public void setDateHired(Date dateHired) {
+        this.dateHired = dateHired;
+    }
+    
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
     }
@@ -125,6 +139,10 @@ public abstract class User {
     
     public void setPagibigNumber(String pagibigNumber) {
         this.pagibigNumber = pagibigNumber;
+    }
+    
+    public void setDepartment(String department) {
+        this.department = department;
     }
     
     // Method to get the role ID of the user by querying the database

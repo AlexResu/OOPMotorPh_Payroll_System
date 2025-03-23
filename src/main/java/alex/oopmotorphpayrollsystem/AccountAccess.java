@@ -186,7 +186,8 @@ public class AccountAccess {
                 user.setTinNumber(result.getString("tin_number"));
                 user.setPagibigNumber(result.getString("pagibig_number"));
                 user.setPosition(result.getString("position"));
-                
+                user.setDepartment(result.getString("department"));
+                user.setDateHired(result.getDate("date_hired"));
             } else {
                 System.out.println("No user");
             }

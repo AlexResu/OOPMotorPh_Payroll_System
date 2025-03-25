@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2025 at 03:20 PM
+-- Generation Time: Mar 23, 2025 at 06:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,40 +18,40 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `motorph_db`
+-- Database: motorph_db
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `announcement`
+-- Table structure for table announcement
 --
 
-CREATE TABLE `announcement` (
-  `id` int(11) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `date_created` date NOT NULL,
-  `created_by` int(11) NOT NULL
+CREATE TABLE announcement (
+  id int(11) NOT NULL,
+  description varchar(255) NOT NULL,
+  date_created date NOT NULL,
+  created_by int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attendance_record`
+-- Table structure for table attendance_record
 --
 
-CREATE TABLE `attendance_record` (
-  `employee_number` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `time_in` datetime DEFAULT NULL,
-  `time_out` datetime DEFAULT NULL
+CREATE TABLE attendance_record (
+  employee_number int(11) NOT NULL,
+  date date NOT NULL,
+  time_in datetime DEFAULT NULL,
+  time_out datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `attendance_record`
+-- Dumping data for table attendance_record
 --
 
-INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out`) VALUES
+INSERT INTO attendance_record (employee_number, date, time_in, time_out) VALUES
 (10001, '2024-01-09', '2024-01-09 08:00:00', '2024-01-09 17:00:00'),
 (10002, '2024-01-09', '2024-01-09 08:00:00', '2024-01-09 17:00:00'),
 (10003, '2024-01-09', '2024-01-09 08:00:00', '2024-01-09 17:00:00'),
@@ -795,9 +795,9 @@ INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out
 (10016, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
 (10017, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
 (10018, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
-(10019, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00');
-INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out`) VALUES
-(10020, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
+(10019, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
+(10020, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00');
+INSERT INTO attendance_record (employee_number, date, time_in, time_out) VALUES
 (10021, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
 (10022, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
 (10023, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
@@ -1540,10 +1540,10 @@ INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out
 (10010, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
 (10011, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
 (10012, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
-(10013, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00');
-INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out`) VALUES
+(10013, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
 (10014, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
-(10015, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
+(10015, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00');
+INSERT INTO attendance_record (employee_number, date, time_in, time_out) VALUES
 (10016, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
 (10017, '2024-11-23', '2024-11-23 08:05:00', '2024-11-23 17:00:00'),
 (10018, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
@@ -2227,129 +2227,112 @@ INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out
 (10001, '2024-03-10', '2024-03-10 03:19:26', '2024-03-10 13:07:12'),
 (10001, '2024-03-10', '2024-03-10 07:51:23', '2024-03-10 13:07:12'),
 (0, '2024-03-13', '2024-03-13 22:47:07', '2024-03-13 22:47:17'),
-(10001, '2024-03-15', '2024-03-15 00:04:54', '2024-03-15 19:56:56');
+(10001, '2024-03-15', '2024-03-15 00:04:54', '2024-03-15 19:56:56'),
+(10008, '2025-03-23', '2025-03-23 19:25:48', '2025-03-23 19:25:50');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employees`
+-- Table structure for table employees
 --
 
-CREATE TABLE `employees` (
-  `employee_number` int(11) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `phone_number` varchar(255) NOT NULL,
-  `sss_number` varchar(255) NOT NULL,
-  `philhealth_number` varchar(255) NOT NULL,
-  `tin_number` varchar(255) NOT NULL,
-  `pagibig_number` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `position` varchar(255) NOT NULL,
-  `immediate_supervisor` varchar(255) NOT NULL,
-  `basic_salary` double NOT NULL,
-  `gross_semi_monthly_rate` double NOT NULL,
-  `hourly_rate` double NOT NULL,
-  `rice_subsidy` double NOT NULL,
-  `phone_allowance` double NOT NULL,
-  `clothing_allowance` double NOT NULL,
-  `birthdate` date DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
-  `department` varchar(150) DEFAULT NULL
+CREATE TABLE employees (
+  employee_number int(11) NOT NULL,
+  last_name varchar(255) NOT NULL,
+  first_name varchar(255) NOT NULL,
+  address varchar(255) DEFAULT NULL,
+  phone_number varchar(255) NOT NULL,
+  sss_number varchar(255) NOT NULL,
+  philhealth_number varchar(255) NOT NULL,
+  tin_number varchar(255) NOT NULL,
+  pagibig_number varchar(255) NOT NULL,
+  status varchar(255) NOT NULL,
+  position varchar(255) NOT NULL,
+  immediate_supervisor varchar(255) NOT NULL,
+  basic_salary double NOT NULL,
+  gross_semi_monthly_rate double NOT NULL,
+  hourly_rate double NOT NULL,
+  rice_subsidy double NOT NULL,
+  phone_allowance double NOT NULL,
+  clothing_allowance double NOT NULL,
+  birthdate date DEFAULT NULL,
+  is_deleted tinyint(1) NOT NULL DEFAULT 0,
+  department varchar(150) DEFAULT NULL,
+  date_hired date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `employees`
+-- Dumping data for table employees
 --
 
-INSERT INTO `employees` (`employee_number`, `last_name`, `first_name`, `address`, `phone_number`, `sss_number`, `philhealth_number`, `tin_number`, `pagibig_number`, `status`, `position`, `immediate_supervisor`, `basic_salary`, `gross_semi_monthly_rate`, `hourly_rate`, `rice_subsidy`, `phone_allowance`, `clothing_allowance`, `birthdate`, `is_deleted`, `department`) VALUES
-(10001, 'Garcia', 'Manuel III', '', '999554', '44-4506057-3', '820126853951', '442-605-657-000', '691295330870', 'Regular', 'Chief Executive Officer', 'N/A', 90000, 45000, 535.71, 1500, 2000, 1000, '1983-10-11', 0, 'Administration'),
-(10002, 'Lim', 'Antonio', 'San Antonio De Padua 2, Block 1 Lot 8 and 2, Dasmarinas, Cavite', '171-867-411', '52-2061274-9', '331735646338', '683-102-776-000', '663904995411', 'Regular', 'Chief Operating Officer', 'Garcia, Manuel III', 60000, 30000, 357.14, 1500, 2000, 1000, '1988-06-19', 0, 'Administration'),
-(10003, 'Aquinotest', 'Bianca Sofia', 'Rm. 402 4/F Jiao Building Timog Avenue Cor. Quezon Avenue 1100, Quezon City', '966-889-370', '30-8870406-2', '177451189665', '971-711-280-000', '171519773969', 'Regular', 'Chief Finance Officer', 'Garcia, Manuel III', 60000, 30000, 357.14, 1500, 2000, 1000, '1989-08-04', 0, 'Administration'),
-(10004, 'Reyes', 'Isabella', '460 Solanda Street Intramuros 1000, Manila', '786-868-477', '40-2511815-0', '341911411254', '876-809-437-000', '416946776041', 'Regular', 'Chief Marketing Officer', 'Garcia, Manuel III', 60000, 30000, 357.14, 1500, 2000, 1000, '1994-06-16', 0, 'Administration'),
-(10005, 'Hernandez', 'Eduard', 'National Highway, Gingoog,  Misamis Occidental', '088-861-012', '50-5577638-1', '957436191812', '031-702-374-000', '952347222457', 'Regular', 'IT Operations and Systems', 'Lim, Antonio', 52670, 26335, 313.51, 1500, 1000, 1000, '1989-09-23', 0, 'IT'),
-(10006, 'Villanueva', 'Andrea Mae', '17/85 Stracke Via Suite 042, Poblacion, Las Piñas 4783 Dinagat Islands ', '918-621-603', '49-1632020-8', '382189453145', '317-674-022-000', '441093369646', 'Regular', 'HR Manager', 'Lim, Antonio', 52670, 26335, 313.51, 1500, 1000, 1000, '1988-02-14', 0, 'HR'),
-(10007, 'San Jose', 'Brad ', '99 Strosin Hills, Poblacion, Bislig 5340 Tawi-Tawi', '797-009-261', '40-2400714-1', '239192926939', '672-474-690-000', '210850209964', 'Regular', 'HR Team Leader', 'Villanueva, Andrea Mae', 42975, 21488, 255.8, 1500, 800, 800, '1996-03-15', 0, 'HR'),
-(10008, 'Romualdez', 'Alice', '12A/33 Upton Isle Apt. 420, Roxas City 1814 Surigao del Norte Test', '983-606-797', '55-4476527-2', '545652640232', '888-572-294-000', '211385556888', 'Regular', 'HR Rank and File', 'San, Jose Brad', 22500, 11250, 133.93, 1500, 500, 500, '1992-05-14', 0, 'HR'),
-(10009, 'Atienza', 'Rosie ', '90A Dibbert Terrace Apt. 190, San Lorenzo 6056 Davao del Norte', '266-036-427', '41-0644692-3', '708988234853', '604-997-793-000', '260107732354', 'Regular', 'HR Rank and File', 'San, Jose Brad', 22500, 11250, 133, 1500, 500, 500, '1948-09-24', 0, 'HR'),
-(10010, 'Alvaro', 'Roderick', '#284 T. Morato corner, Scout Rallos Street, Quezon City', '053-381-386', '64-7605054-4', '578114853194', '525-420-419-000', '799254095212', 'Regular', 'Accounting Head', 'Aquino, Bianca Sofia ', 52670, 26335, 313.51, 1500, 1000, 1000, '1988-03-30', 0, 'Finance'),
-(10011, 'Salcedo', 'Anthony', '93/54 Shanahan Alley Apt. 183, Santo Tomas 1572 Masbate', '070-766-300', '26-9647608-3', '126445315651', '210-805-911-000', '218002473454', 'Regular', 'Payroll Manager', 'Alvaro, Roderick', 50825, 25413, 302.53, 1500, 1000, 1000, '1993-09-14', 0, 'HR/Finance'),
-(10012, 'Lopez', 'Josie ', '49 Springs Apt. 266, Poblacion, Taguig 3200 Occidental Mindoro', '478-355-427', '44-8563448-3', '431709011012', '218-489-737-000', '113071293354', 'Regular', 'Payroll Team Leader', 'Salcedo, Anthony', 38475, 19238, 229.02, 1500, 800, 800, '1987-01-14', 0, 'HR/Finance'),
-(10013, 'FaralaTest', 'Martha', '42/25 Sawayn Stream, Ubay 1208 Zamboanga del Norte ', '329-034-366', '45-5656375-0', '233693897247', '210-835-851-000', '631130283546', 'Regular', 'Payroll Rank and File', 'Salcedo, Anthony', 24000, 12000, 142.86, 1500, 500, 500, '1942-01-11', 0, 'HR/Finance'),
-(10014, 'Martinez', 'Leila', '37/46 Kulas Roads, Maragondon 0962 Quirino ', '877-110-749', '27-2090996-4', '515741057496', '275-792-513-000', '101205445886', 'Regular', 'Payroll Rank and File', 'Salcedo, Anthony', 24000, 12000, 142.86, 1500, 500, 500, '1970-07-11', 0, 'HR/Finance'),
-(10015, 'Romualdez', 'Fredrick ', '22A/52 Lubowitz Meadows, Pililla 4895 Zambales', '023-079-009', '26-8768374-1', '308366860059', '598-065-761-000', '223057707853', 'Regular', 'Account Manager', 'Lim, Antonio', 53500, 26750, 318.45, 1500, 1000, 1000, '1985-03-10', 0, 'Sales'),
-(10016, 'Mata', 'Christian', '90 O\'Keefe Spur Apt. 379, Catigbian 2772 Sulu ', '783-776-744', '49-2959312-6', '824187961962', '103-100-522-000', '631052853464', 'Regular', 'Account Team Leader', 'Romualdez, Fredrick ', 42975, 21488, 255.8, 1500, 800, 800, '1987-10-21', 0, 'Sales'),
-(10017, 'De Leon', 'Selena ', '89A Armstrong Trace, Compostela 7874 Maguindanao', '975-432-139', '27-2090208-8', '587272469938', '482-259-498-000', '719007608464', 'Regular', 'Account Team Leader', 'Romualdez, Fredrick ', 41850, 20925, 249.11, 1500, 800, 800, '1975-02-20', 0, 'Sales'),
-(10018, 'San Jose', 'Allison ', '08 Grant Drive Suite 406, Poblacion, Iloilo City 9186 La Union', '179-075-129', '45-3251383-0', '745148459521', '121-203-336-000', '114901859343', 'Regular', 'Account Rank and File', 'Mata, Christian', 22500, 11250, 133.93, 1500, 500, 500, '1986-06-24', 0, 'Sales'),
-(10019, 'Rosario', 'Cydney ', '93A/21 Berge Points, Tapaz 2180 Quezon', '868-819-912', '49-1629900-2', '579253435499', '122-244-511-000', '265104358643', 'Regular', 'Account Rank and File', 'Mata, Christian', 22500, 11250, 133.93, 1500, 500, 500, '1996-10-06', 0, 'Sales'),
-(10020, 'Bautista', 'Mark ', '65 Murphy Center Suite 094, Poblacion, Palayan 5636 Quirino', '683-725-348', '49-1647342-5', '399665157135', '273-970-941-000', '260054585575', 'Regular', 'Account Rank and File', 'Mata, Christian', 23250, 11625, 138.39, 1500, 500, 500, '1991-02-12', 0, 'Sales'),
-(10021, 'Lazaro', 'Darlene ', '47A/94 Larkin Plaza Apt. 179, Poblacion, Caloocan 2751 Quirino', '740-721-558', '45-5617168-2', '606386917510', '354-650-951-000', '104907708845', 'Probationary', 'Account Rank and File', 'Mata, Christian', 23250, 11625, 138.39, 1500, 500, 500, '1985-11-25', 0, 'Sales'),
-(10022, 'Delos Santos', 'Kolby ', '06A Gulgowski Extensions, Bongabon 6085 Zamboanga del Sur', '739-443-033', '52-0109570-6', '357451271274', '187-500-345-000', '113017988667', 'Probationary', 'Account Rank and File', 'Mata, Christian', 24000, 12000, 142.86, 1500, 500, 500, '1980-02-26', 0, 'Sales'),
-(10023, 'Santos', 'Vella ', '99A Padberg Spring, Poblacion, Mabalacat 3959 Lanao del Sur', '955-879-269', '52-9883524-3', '548670482885', '101-558-994-000', '360028104576', 'Probationary', 'Account Rank and File', 'Mata, Christian', 22500, 11250, 133.93, 1500, 500, 500, '1983-12-31', 0, 'Sales'),
-(10024, 'Del Rosario', 'Tomas', '80A/48 Ledner Ridges, Poblacion, Kabankalan 8870 Marinduque', '882-550-989', '45-5866331-6', '953901539995', '560-735-732-000', '913108649964', 'Probationary', 'Account Rank and File', 'Mata, Christian', 22500, 11250, 133.93, 1500, 500, 500, '1978-12-18', 0, 'Sales'),
-(10025, 'Tolentino', 'Jacklyn ', '96/48 Watsica Flats Suite 734, Poblacion, Malolos 1844 Ifugao', '675-757-366', '47-1692793-0', '753800654114', '841-177-857-000', '210546661243', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 24000, 12000, 142.86, 1500, 500, 500, '1984-05-19', 0, 'Sales'),
-(10026, 'Gutierrez', 'Percival ', '58A Wilderman Walks, Poblacion, Digos 5822 Davao del Sur', '512-899-876', '40-9504657-8', '797639382265', '502-995-671-000', '210897095686', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 24750, 12375, 147.32, 1500, 500, 500, '1970-12-18', 0, 'Sales'),
-(10027, 'Manalaysay', 'Garfield ', '60 Goyette Valley Suite 219, Poblacion, Tabuk 3159 Lanao del Sur', '948-628-136', '45-3298166-4', '810909286264', '336-676-445-000', '211274476563', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 24750, 12375, 147.32, 1500, 500, 500, '1986-08-28', 0, 'Sales'),
-(10028, 'Villegas', 'Lizeth ', '66/77 Mann Views, Luisiana 1263 Dinagat Islands', '332-372-215', '40-2400719-4', '934389652994', '210-395-397-000', '122238077997', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 24000, 12000, 142.86, 1500, 500, 500, '1981-12-12', 0, 'Sales'),
-(10029, 'Ramos', 'Carol ', '72/70 Stamm Spurs, Bustos 4550 Iloilo', '250-700-389', '60-1152206-4', '351830469744', '395-032-717-000', '212141893454', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 22500, 11250, 133.93, 1500, 500, 500, '1978-08-20', 0, 'Sales'),
-(10030, 'Maceda', 'Emelia ', '50A/83 Bahringer Oval Suite 145, Kiamba 7688 Nueva Ecija', '973-358-041', '54-1331005-0', '465087894112', '215-973-013-000', '515012579765', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 22500, 11250, 133, 1500, 500, 500, '1973-04-14', 0, 'Sales'),
-(10031, 'Aguilar', 'Delia ', '95 Cremin Junction, Surallah 2809 Cotabato', '529-705-439', '52-1859253-1', '136451303068', '599-312-588-000', '110018813465', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 22500, 11250, 133.93, 1500, 500, 500, '1989-01-27', 1, 'Sales'),
-(10032, 'Castro', 'John Rafael1', 'Hi-way, Yati, Liloan Cebu', '332-424-955 ', '26-7145133-4', '601644902402', '404-768-309-000', '697764069311', 'Regular', 'Sales & Marketing', 'Reyes, Isabella', 52670, 26335, 313, 1500, 1000, 1000, '1992-02-09', 1, 'Sales'),
-(10033, 'Martinez', 'Carlos Ian', 'Bulala, Camalaniugan', '078-854-208', '11-5062972-7', '380685387212', '256-436-296-000', '993372963726', 'Regular', 'Supply Chain and Logistics', 'Reyes, Isabella', 52670, 26335, 313.51, 1500, 1000, 1000, '1990-11-16', 1, 'Logistic'),
-(10034, 'Santos', 'Beatriz', 'Agapita Building, Metro Manila', '526-639-511', '20-2987501-5', '918460050077', '911-529-713-000', '874042259378', 'Regular', 'Customer Service and Relations', 'Reyes, Isabella', 52670, 26335, 313.51, 1500, 1000, 1000, '1990-08-07', 1, 'Sales'),
-(10035, 'Test', 'Alex', '', '', '44-4506011-3', '820126853123', '442-605-657-156', '691295330627', 'Regular', 'Sales & Marketing2', 'Reyes, Isabella', 90000, 45000, 535.71, 1500, 2000, 1000, '2000-01-01', 0, ''),
-(10036, 'Test2', 'Alex', '', '', '44-4506057-8', '820126853312', '442-605-657-645', '691295330972', 'Regular', 'Sales & Marketing', 'Reyes, Isabella', 90100, 47000, 535.71, 1000, 2100, 1700, '2000-01-01', 1, ''),
-(10037, 'Test3', 'Alex3', '', '', '44-4532131057-3', '832132853951', '442-605-632157-000', '691295321312330870', 'Regular', 'Sales & Marketing', 'Reyes, Isabella', 90000, 45000, 535.71, 1500, 2000, 1000, '2000-01-01', 1, ''),
-(10038, 'Test4', 'Alex4', '', '', '44-4532106057-3', '820126834553951', '442-623405-657-000', '6965341295330870', 'Regular', 'Sales & Marketing', 'Reyes, Isabella', 90000, 45000, 535.71, 1500, 2000, 1000, '2000-01-01', 1, 'Sales'),
-(10039, 'Test', 'Tes', 'las pinas city', '090909', '12345612', '123456', '12312312', '125799', 'Probi', 'Test', 'Test', 90000, 90000, 90000, 1000, 1000, 1000, '1994-01-02', 1, ''),
-(10042, 'Test', 'Tes', 'las pinas city', '090909', '13547895255', '952753', '4312124', '15935486', 'Probi', 'Test', 'Test', 90000, 90000, 90000, 1000, 1000, 1000, '1994-01-02', 1, ''),
-(10043, 'test', 'test', 'Las pinas City', '099999', '15145785', '12254', '254869', '66852', 'Regular', 'Test', 'Test', 90000, 9000, 1000, 0, 0, 0, NULL, 1, ''),
-(10044, 'Test again', 'test', 'Las Pinas City', '09999', '1852467', '9978526', '1258624', '4552688', 'Regular', 'Manager', 'Test', 90000, 9000, 1000, 1000, 1000, 1000, '2024-05-02', 1, ''),
-(10045, 'Test9', 'Test9', 'Las Pinas City', '09999', '356487', '21215469', '22542876', '25572016', 'Regular', 'Test', 'Test', 90000, 900, 9000, 900, 900, 900, '2024-05-04', 1, ''),
-(10048, 'Test', 'Test', 'Las Pinas City', '09999', '153647', '255663', '2558875', '17575662', 'Single', 'Manager', 'Alex', 98000, 22554, 2253, 2222, 222, 2222, '2024-05-09', 1, ''),
-(10049, 'test', 'test', 'Las Pinas City', '14654', '554678', '25684712', '322884', '682245', 'test', 'test', 'test', 99999, 999, 999, 99, 99, 99, '2024-05-03', 1, ''),
-(10050, 'test', 'test', 'Las pinas City', '15541', '325468', '62543698', '6997212', '6015451245', 'test', 'test', 'test', 9999, 999, 99, 99, 99, 99, '2024-05-10', 1, ''),
-(10051, 'test llldjdh', 'test', 'Las pinas city', '225545', '698214', '65225', '5258742', '6682121', 'test', 'test', 'test', 22555, 65884, 56542, 55, 22, 52, '2024-05-01', 1, ''),
-(10052, 'Testtest', 'test', 'test', '0999255', '2254587', '12547', '214586', '6685214', 'Regular', 'test', 'test', 90000, 900, 900, 100, 100, 100, '2024-07-01', 1, ''),
-(10053, 'testtest', 'test', 'test', '099922', '235584', '2125546', '69872169', '2645125', 'test', 'test', 'test', 9000, 9000, 9000, 900, 9000, 900, '2024-07-05', 1, ''),
-(10054, 'test', 'test', 'test', '099228', '2581258', '32554872', '0151285401', '626551', 'test', 'test', 'test', 900, 900, 900, 900, 900, 9000, '2024-07-01', 1, ''),
-(10055, 'test', 'test', 'test', '099225', '0652485', '2024546', '22511585', '0251147', 'test', 'test', 'test', 9000, 9000, 900, 900, 9000, 9000, '2024-07-01', 1, ''),
-(10056, 'Test', 'test', 'test', '022559', '11255', '4885', '44785', '5747855', 'test', 'test', 'test', 100, 100, 100, 100, 100, 100, '2025-03-15', 0, NULL),
-(10057, 'test', 'test', 'test', '115525', '256552', '5521', '125247', '2254', 'test', 'test', 'test', 111, 111, 111, 111, 111, 111, '2025-03-12', 0, NULL),
-(10058, 'test', 'test', 'test', 'test', '115', '12256', '4175', '2244', 'test', 'test', 'test', 115, 255, 125, 12, 22, 22, '2025-03-19', 0, NULL),
-(10059, 'test', 'test', 'test', '12122', '116', '15464', '12451', '1534', 'test', 'test', 'test', 22, 1222, 22, 22, 22, 22, '2025-03-06', 0, NULL),
-(10060, 'test', 'test', 'test', '125', '1', '523', '126', '185', 'test', 'test', 'test', 256, 1212512, 51251, 155151, 155120, 15, '2025-03-20', 0, NULL);
+INSERT INTO employees (employee_number, last_name, first_name, address, phone_number, sss_number, philhealth_number, tin_number, pagibig_number, status, position, immediate_supervisor, basic_salary, gross_semi_monthly_rate, hourly_rate, rice_subsidy, phone_allowance, clothing_allowance, birthdate, is_deleted, department, date_hired) VALUES
+(10001, 'Garcia', 'Manuel III', '', '999554', '44-4506057-3', '820126853951', '442-605-657-000', '691295330870', 'Regular', 'Chief Executive Officer', 'N/A', 90000, 45000, 535.71, 1500, 2000, 1000, '1983-10-11', 0, 'Administration', '2025-03-01'),
+(10002, 'Lim', 'Antonio', 'San Antonio De Padua 2, Block 1 Lot 8 and 2, Dasmarinas, Cavite', '171-867-411', '52-2061274-9', '331735646338', '683-102-776-000', '663904995411', 'Regular', 'Chief Operating Officer', 'Garcia, Manuel III', 60000, 30000, 357.14, 1500, 2000, 1000, '1988-06-19', 0, 'Administration', '2025-03-01'),
+(10003, 'Aquinotest', 'Bianca Sofia', 'Rm. 402 4/F Jiao Building Timog Avenue Cor. Quezon Avenue 1100, Quezon City', '966-889-370', '30-8870406-2', '177451189665', '971-711-280-000', '171519773969', 'Regular', 'Chief Finance Officer', 'Garcia, Manuel III', 60000, 30000, 357.14, 1500, 2000, 1000, '1989-08-04', 0, 'Administration', '2025-03-01'),
+(10004, 'Reyes', 'Isabella', '460 Solanda Street Intramuros 1000, Manila', '786-868-477', '40-2511815-0', '341911411254', '876-809-437-000', '416946776041', 'Regular', 'Chief Marketing Officer', 'Garcia, Manuel III', 60000, 30000, 357.14, 1500, 2000, 1000, '1994-06-16', 0, 'Administration', '2025-03-01'),
+(10005, 'Hernandez', 'Eduard', 'National Highway, Gingoog,  Misamis Occidental', '088-861-012', '50-5577638-1', '957436191812', '031-702-374-000', '952347222457', 'Regular', 'IT Operations and Systems', 'Lim, Antonio', 52670, 26335, 313.51, 1500, 1000, 1000, '1989-09-23', 0, 'IT', '2025-03-01'),
+(10006, 'Villanueva', 'Andrea Mae', '17/85 Stracke Via Suite 042, Poblacion, Las Piñas 4783 Dinagat Islands ', '918-621-603', '49-1632020-8', '382189453145', '317-674-022-000', '441093369646', 'Regular', 'HR Manager', 'Lim, Antonio', 52670, 26335, 313.51, 1500, 1000, 1000, '1988-02-14', 0, 'HR', '2025-03-01'),
+(10007, 'San Jose', 'Brad ', '99 Strosin Hills, Poblacion, Bislig 5340 Tawi-Tawi', '797-009-261', '40-2400714-1', '239192926939', '672-474-690-000', '210850209964', 'Regular', 'HR Team Leader', 'Villanueva, Andrea Mae', 42975, 21488, 255.8, 1500, 800, 800, '1996-03-15', 0, 'HR', '2025-03-01'),
+(10008, 'Romualdez', 'Alice', '12A/33 Upton Isle Apt. 420, Roxas City 1814 Surigao del Norte', '983-606-797', '55-4476527-2', '545652640232', '888-572-294-000', '211385556888', 'Regular', 'HR Rank and File', 'San, Jose Brad', 22500, 11250, 133.93, 1500, 500, 500, '1992-05-14', 0, 'HR', '2025-03-01'),
+(10009, 'Atienza', 'Rosie ', '90A Dibbert Terrace Apt. 190, San Lorenzo 6056 Davao del Norte', '266-036-427', '41-0644692-3', '708988234853', '604-997-793-000', '260107732354', 'Regular', 'HR Rank and File', 'San, Jose Brad', 22500, 11250, 133, 1500, 500, 500, '1948-09-24', 0, 'HR', '2025-03-01'),
+(10010, 'Alvaro', 'Roderick', '#284 T. Morato corner, Scout Rallos Street, Quezon City', '053-381-386', '64-7605054-4', '578114853194', '525-420-419-000', '799254095212', 'Regular', 'Accounting Head', 'Aquino, Bianca Sofia ', 52670, 26335, 313.51, 1500, 1000, 1000, '1988-03-30', 0, 'Finance', '2025-03-01'),
+(10011, 'Salcedo', 'Anthony', '93/54 Shanahan Alley Apt. 183, Santo Tomas 1572 Masbate', '070-766-300', '26-9647608-3', '126445315651', '210-805-911-000', '218002473454', 'Regular', 'Payroll Manager', 'Alvaro, Roderick', 50825, 25413, 302.53, 1500, 1000, 1000, '1993-09-14', 0, 'HR/Finance', '2025-03-01'),
+(10012, 'Lopez', 'Josie ', '49 Springs Apt. 266, Poblacion, Taguig 3200 Occidental Mindoro', '478-355-427', '44-8563448-3', '431709011012', '218-489-737-000', '113071293354', 'Regular', 'Payroll Team Leader', 'Salcedo, Anthony', 38475, 19238, 229.02, 1500, 800, 800, '1987-01-14', 0, 'HR/Finance', '2025-03-01'),
+(10013, 'FaralaTest', 'Martha', '42/25 Sawayn Stream, Ubay 1208 Zamboanga del Norte ', '329-034-366', '45-5656375-0', '233693897247', '210-835-851-000', '631130283546', 'Regular', 'Payroll Rank and File', 'Salcedo, Anthony', 24000, 12000, 142.86, 1500, 500, 500, '1942-01-11', 0, 'HR/Finance', '2025-03-01'),
+(10014, 'Martinez', 'Leila', '37/46 Kulas Roads, Maragondon 0962 Quirino ', '877-110-749', '27-2090996-4', '515741057496', '275-792-513-000', '101205445886', 'Regular', 'Payroll Rank and File', 'Salcedo, Anthony', 24000, 12000, 142.86, 1500, 500, 500, '1970-07-11', 0, 'HR/Finance', '2025-03-01'),
+(10015, 'Romualdez', 'Fredrick ', '22A/52 Lubowitz Meadows, Pililla 4895 Zambales', '023-079-009', '26-8768374-1', '308366860059', '598-065-761-000', '223057707853', 'Regular', 'Account Manager', 'Lim, Antonio', 53500, 26750, 318.45, 1500, 1000, 1000, '1985-03-10', 0, 'Sales', '2025-03-01'),
+(10016, 'Mata', 'Christian', '90 O\'Keefe Spur Apt. 379, Catigbian 2772 Sulu ', '783-776-744', '49-2959312-6', '824187961962', '103-100-522-000', '631052853464', 'Regular', 'Account Team Leader', 'Romualdez, Fredrick ', 42975, 21488, 255.8, 1500, 800, 800, '1987-10-21', 0, 'Sales', '2025-03-21'),
+(10017, 'De Leon', 'Selena ', '89A Armstrong Trace, Compostela 7874 Maguindanao', '975-432-139', '27-2090208-8', '587272469938', '482-259-498-000', '719007608464', 'Regular', 'Account Team Leader', 'Romualdez, Fredrick ', 41850, 20925, 249.11, 1500, 800, 800, '1975-02-20', 0, 'Sales', '2025-03-01'),
+(10018, 'San Jose', 'Allison ', '08 Grant Drive Suite 406, Poblacion, Iloilo City 9186 La Union', '179-075-129', '45-3251383-0', '745148459521', '121-203-336-000', '114901859343', 'Regular', 'Account Rank and File', 'Mata, Christian', 22500, 11250, 133.93, 1500, 500, 500, '1986-06-24', 0, 'Sales', '2025-03-01'),
+(10019, 'Rosario', 'Cydney ', '93A/21 Berge Points, Tapaz 2180 Quezon', '868-819-912', '49-1629900-2', '579253435499', '122-244-511-000', '265104358643', 'Regular', 'Account Rank and File', 'Mata, Christian', 22500, 11250, 133.93, 1500, 500, 500, '1996-10-06', 0, 'Sales', '2025-03-01'),
+(10020, 'Bautista', 'Mark ', '65 Murphy Center Suite 094, Poblacion, Palayan 5636 Quirino', '683-725-348', '49-1647342-5', '399665157135', '273-970-941-000', '260054585575', 'Regular', 'Account Rank and File', 'Mata, Christian', 23250, 11625, 138.39, 1500, 500, 500, '1991-02-12', 0, 'Sales', '2025-03-01'),
+(10021, 'Lazaro', 'Darlene ', '47A/94 Larkin Plaza Apt. 179, Poblacion, Caloocan 2751 Quirino', '740-721-558', '45-5617168-2', '606386917510', '354-650-951-000', '104907708845', 'Probationary', 'Account Rank and File', 'Mata, Christian', 23250, 11625, 138.39, 1500, 500, 500, '1985-11-25', 0, 'Sales', '2025-03-01'),
+(10022, 'Delos Santos', 'Kolby ', '06A Gulgowski Extensions, Bongabon 6085 Zamboanga del Sur', '739-443-033', '52-0109570-6', '357451271274', '187-500-345-000', '113017988667', 'Probationary', 'Account Rank and File', 'Mata, Christian', 24000, 12000, 142.86, 1500, 500, 500, '1980-02-26', 0, 'Sales', '2025-03-01'),
+(10023, 'Santos', 'Vella ', '99A Padberg Spring, Poblacion, Mabalacat 3959 Lanao del Sur', '955-879-269', '52-9883524-3', '548670482885', '101-558-994-000', '360028104576', 'Probationary', 'Account Rank and File', 'Mata, Christian', 22500, 11250, 133.93, 1500, 500, 500, '1983-12-31', 0, 'Sales', '2025-03-01'),
+(10024, 'Del Rosario', 'Tomas', '80A/48 Ledner Ridges, Poblacion, Kabankalan 8870 Marinduque', '882-550-989', '45-5866331-6', '953901539995', '560-735-732-000', '913108649964', 'Probationary', 'Account Rank and File', 'Mata, Christian', 22500, 11250, 133.93, 1500, 500, 500, '1978-12-18', 0, 'Sales', '2025-03-01'),
+(10025, 'Tolentino', 'Jacklyn ', '96/48 Watsica Flats Suite 734, Poblacion, Malolos 1844 Ifugao', '675-757-366', '47-1692793-0', '753800654114', '841-177-857-000', '210546661243', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 24000, 12000, 142.86, 1500, 500, 500, '1984-05-19', 0, 'Sales', '2025-03-01'),
+(10026, 'Gutierrez', 'Percival ', '58A Wilderman Walks, Poblacion, Digos 5822 Davao del Sur', '512-899-876', '40-9504657-8', '797639382265', '502-995-671-000', '210897095686', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 24750, 12375, 147.32, 1500, 500, 500, '1970-12-18', 0, 'Sales', '2025-03-01'),
+(10027, 'Manalaysay', 'Garfield ', '60 Goyette Valley Suite 219, Poblacion, Tabuk 3159 Lanao del Sur', '948-628-136', '45-3298166-4', '810909286264', '336-676-445-000', '211274476563', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 24750, 12375, 147.32, 1500, 500, 500, '1986-08-28', 0, 'Sales', '2025-03-01'),
+(10028, 'Villegas', 'Lizeth ', '66/77 Mann Views, Luisiana 1263 Dinagat Islands', '332-372-215', '40-2400719-4', '934389652994', '210-395-397-000', '122238077997', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 24000, 12000, 142.86, 1500, 500, 500, '1981-12-12', 0, 'Sales', '2025-03-01'),
+(10029, 'Ramos', 'Carol ', '72/70 Stamm Spurs, Bustos 4550 Iloilo', '250-700-389', '60-1152206-4', '351830469744', '395-032-717-000', '212141893454', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 22500, 11250, 133.93, 1500, 500, 500, '1978-08-20', 0, 'Sales', '2025-03-01'),
+(10030, 'Maceda', 'Emelia ', '50A/83 Bahringer Oval Suite 145, Kiamba 7688 Nueva Ecija', '973-358-041', '54-1331005-0', '465087894112', '215-973-013-000', '515012579765', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 22500, 11250, 133, 1500, 500, 500, '1973-04-14', 0, 'Sales', '2025-03-01'),
+(10031, 'Aguilar', 'Delia ', '95 Cremin Junction, Surallah 2809 Cotabato', '529-705-439', '52-1859253-1', '136451303068', '599-312-588-000', '110018813465', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 22500, 11250, 133.93, 1500, 500, 500, '1989-01-27', 0, 'Sales', '2025-03-01'),
+(10032, 'Castro', 'John Rafael1', 'Hi-way, Yati, Liloan Cebu', '332-424-955 ', '26-7145133-4', '601644902402', '404-768-309-000', '697764069311', 'Regular', 'Sales & Marketing', 'Reyes, Isabella', 52670, 26335, 313, 1500, 1000, 1000, '1992-02-09', 0, 'Sales', '2025-03-01'),
+(10033, 'Martinez', 'Carlos Ian', 'Bulala, Camalaniugan', '078-854-208', '11-5062972-7', '380685387212', '256-436-296-000', '993372963726', 'Regular', 'Supply Chain and Logistics', 'Reyes, Isabella', 52670, 26335, 313.51, 1500, 1000, 1000, '1990-11-16', 0, 'Logistic', '2025-03-01'),
+(10034, 'Santos', 'Beatriz', 'Agapita Building, Metro Manila', '526-639-511', '20-2987501-5', '918460050077', '911-529-713-000', '874042259378', 'Regular', 'Customer Service and Relations', 'Reyes, Isabella', 52670, 26335, 313.51, 1500, 1000, 1000, '1990-08-07', 0, 'Sales', '2025-03-01'),
+(10062, 'AlexTest', 'Test', 'Test1', '55466', '1125488', '524878', '824426', '255422', 'Regular', 'Chief Operating Officer', 'Test', 50000, 5000, 5000, 500, 500, 500, '2000-06-20', 0, NULL, '2025-03-23'),
+(10063, 'AlexanderTest', 'Test', 'Test', '213412', '125748', '5158541', '3312485', '25441', 'Regular', 'Chief Executive Officer', 'Test', 500, 500, 500, 850, 520, 852, '2000-03-27', 1, NULL, '2025-03-23'),
+(10064, 'Alexistest', 'test', 'test', '2556', '20245', '635112', '2441', '2325211', 'Regular', 'Sales & Marketing', 'test', 500, 500, 500, 500, 500, 500, '2000-03-26', 0, NULL, '2025-03-23');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `leave_records`
+-- Table structure for table leave_records
 --
 
-CREATE TABLE `leave_records` (
-  `id` int(11) NOT NULL,
-  `employee_number` int(11) NOT NULL,
-  `leave_type` varchar(200) NOT NULL,
-  `date_filed` date NOT NULL DEFAULT current_timestamp(),
-  `date_from` date NOT NULL,
-  `date_until` date NOT NULL,
-  `number_of_days` int(11) NOT NULL,
-  `reason` varchar(200) NOT NULL,
-  `approved_by` int(11) DEFAULT NULL,
-  `remarks` enum('PENDING','APPROVED','DECLINED') NOT NULL DEFAULT 'PENDING'
+CREATE TABLE leave_records (
+  id int(11) NOT NULL,
+  employee_number int(11) NOT NULL,
+  leave_type varchar(200) NOT NULL,
+  date_filed date NOT NULL DEFAULT current_timestamp(),
+  date_from date NOT NULL,
+  date_until date NOT NULL,
+  number_of_days int(11) NOT NULL,
+  reason varchar(200) NOT NULL,
+  approved_by int(11) DEFAULT NULL,
+  remarks enum('PENDING','APPROVED','DECLINED') NOT NULL DEFAULT 'PENDING'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `leave_records`
+-- Dumping data for table leave_records
 --
 
-INSERT INTO `leave_records` (`id`, `employee_number`, `leave_type`, `date_filed`, `date_from`, `date_until`, `number_of_days`, `reason`, `approved_by`, `remarks`) VALUES
+INSERT INTO leave_records (id, employee_number, leave_type, date_filed, date_from, date_until, number_of_days, reason, approved_by, remarks) VALUES
 (2, 10001, 'SL - Sick Leave', '2024-06-22', '2024-06-24', '2024-06-25', 1, 'Edi Sick ano pa ba', 10002, 'APPROVED'),
 (3, 10001, 'VL - Vacation Leave', '2024-06-22', '2024-06-28', '2024-06-29', 1, 'Vacation to Palawan', 10002, 'DECLINED'),
 (4, 10001, 'VL - Vacation Leave', '2024-06-22', '2024-06-03', '2024-06-04', 1, 'Vacay', 10002, 'APPROVED'),
 (5, 10001, 'VL - Vacation Leave', '2024-06-22', '2024-06-28', '2024-06-26', 1, 'Vacay', 10002, 'APPROVED'),
-(6, 10009, 'VL - Vacation Leave', '2024-06-22', '2024-06-09', '2024-06-10', 1, 'Vacay', 10001, 'APPROVED'),
+(6, 10009, 'VL - Vacation Leave', '2025-02-22', '2024-02-09', '2024-02-10', 2, 'Vacay', 10001, 'APPROVED'),
 (7, 10001, 'VL - Vacation Leave', '2024-06-23', '2024-06-19', '2024-06-20', 1, 'Vacay', 10002, 'APPROVED'),
 (8, 10008, 'VL - Vacation Leave', '2024-06-26', '2024-06-27', '2024-06-28', 1, 'Vacay', 10001, 'APPROVED'),
 (9, 10008, 'VL - Vacation Leave', '2024-06-28', '2024-07-03', '2024-07-03', 1, 'VL', 10002, 'APPROVED'),
@@ -2362,41 +2345,44 @@ INSERT INTO `leave_records` (`id`, `employee_number`, `leave_type`, `date_filed`
 (18, 10001, 'VL - Vacation Leave', '2025-03-15', '2025-03-03', '2025-03-02', 1, 'Vacay', 10002, 'DECLINED'),
 (19, 10001, 'VL - Vacation Leave', '2025-03-15', '2025-03-03', '2025-03-02', 1, 'Vacay', 10002, 'APPROVED'),
 (20, 10001, 'VL - Vacation Leave', '2025-03-15', '2025-03-03', '2025-03-02', 1, 'Vacay', 10002, 'APPROVED'),
-(21, 10001, 'VL - Vacation Leave', '2025-03-15', '2025-03-10', '2025-03-11', 1, 'Vacay', 10002, 'APPROVED');
+(21, 10001, 'VL - Vacation Leave', '2025-03-15', '2025-03-10', '2025-03-11', 1, 'Vacay', 10002, 'APPROVED'),
+(22, 10008, 'VL - Vacation Leave', '2025-03-23', '2025-03-24', '2025-03-25', 2, 'Vacay', NULL, 'PENDING'),
+(23, 10008, 'VL - Vacation Leave', '2025-03-23', '2025-03-25', '2025-03-26', 2, '', 10006, 'APPROVED'),
+(24, 10008, 'VL - Vacation Leave', '2025-03-23', '2025-03-26', '2025-03-27', 2, 'Test', NULL, 'PENDING');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `payslip`
+-- Table structure for table payslip
 --
 
-CREATE TABLE `payslip` (
-  `id` int(15) NOT NULL,
-  `employee_id` int(11) NOT NULL,
-  `period_start` date NOT NULL,
-  `period_end` date NOT NULL,
-  `position` varchar(50) NOT NULL,
-  `monthly_rate` decimal(10,0) NOT NULL,
-  `hourly_rate` decimal(10,0) NOT NULL,
-  `hours_worked` decimal(10,0) DEFAULT 0,
-  `overtime_hours` decimal(10,0) DEFAULT 0,
-  `gross_income` decimal(10,0) NOT NULL,
-  `rice_subsidy` decimal(10,0) NOT NULL,
-  `phone_allowance` decimal(10,0) NOT NULL,
-  `clothing_allowance` decimal(10,0) NOT NULL,
-  `sss_deduction` decimal(10,0) NOT NULL,
-  `philhealth_deduction` decimal(10,0) NOT NULL,
-  `pagibig_deduction` decimal(10,0) NOT NULL,
-  `withholding_tax` decimal(10,0) NOT NULL,
-  `take_home_pay` decimal(10,0) NOT NULL,
-  `payment_date` date DEFAULT NULL
+CREATE TABLE payslip (
+  id int(15) NOT NULL,
+  employee_id int(11) NOT NULL,
+  period_start date NOT NULL,
+  period_end date NOT NULL,
+  position varchar(50) NOT NULL,
+  monthly_rate decimal(10,0) NOT NULL,
+  hourly_rate decimal(10,0) NOT NULL,
+  hours_worked decimal(10,0) DEFAULT 0,
+  overtime_hours decimal(10,0) DEFAULT 0,
+  gross_income decimal(10,0) NOT NULL,
+  rice_subsidy decimal(10,0) NOT NULL,
+  phone_allowance decimal(10,0) NOT NULL,
+  clothing_allowance decimal(10,0) NOT NULL,
+  sss_deduction decimal(10,0) NOT NULL,
+  philhealth_deduction decimal(10,0) NOT NULL,
+  pagibig_deduction decimal(10,0) NOT NULL,
+  withholding_tax decimal(10,0) NOT NULL,
+  take_home_pay decimal(10,0) NOT NULL,
+  payment_date date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `payslip`
+-- Dumping data for table payslip
 --
 
-INSERT INTO `payslip` (`id`, `employee_id`, `period_start`, `period_end`, `position`, `monthly_rate`, `hourly_rate`, `hours_worked`, `overtime_hours`, `gross_income`, `rice_subsidy`, `phone_allowance`, `clothing_allowance`, `sss_deduction`, `philhealth_deduction`, `pagibig_deduction`, `withholding_tax`, `take_home_pay`, `payment_date`) VALUES
+INSERT INTO payslip (id, employee_id, period_start, period_end, position, monthly_rate, hourly_rate, hours_worked, overtime_hours, gross_income, rice_subsidy, phone_allowance, clothing_allowance, sss_deduction, philhealth_deduction, pagibig_deduction, withholding_tax, take_home_pay, payment_date) VALUES
 (1, 10001, '2025-03-10', '2025-03-16', 'Chief Executive Officer', 90000, 535, 32, 0, 17120, 1500, 2000, 1000, 158, 1350, 100, 0, 20013, '2025-03-12'),
 (2, 10008, '2025-03-10', '2025-03-16', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
 (3, 10009, '2025-03-10', '2025-03-16', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
@@ -2420,14 +2406,6 @@ INSERT INTO `payslip` (`id`, `employee_id`, `period_start`, `period_end`, `posit
 (21, 10032, '2025-03-10', '2025-03-16', 'Sales & Marketing', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
 (22, 10033, '2025-03-10', '2025-03-16', 'Supply Chain and Logistics', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
 (23, 10034, '2025-03-10', '2025-03-16', 'Customer Service and Relations', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
-(24, 10038, '2025-03-10', '2025-03-16', 'Sales & Marketing', 90000, 535, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
-(25, 10039, '2025-03-10', '2025-03-16', 'Test', 90000, 90000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
-(26, 10042, '2025-03-10', '2025-03-16', 'Test', 90000, 90000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
-(27, 10048, '2025-03-10', '2025-03-16', 'Manager', 98000, 2253, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
-(28, 10052, '2025-03-10', '2025-03-16', 'test', 90000, 900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
-(29, 10053, '2025-03-10', '2025-03-16', 'test', 9000, 9000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
-(30, 10054, '2025-03-10', '2025-03-16', 'test', 900, 900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
-(31, 10055, '2025-03-10', '2025-03-16', 'test', 9000, 900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
 (32, 10001, '2025-03-03', '2025-03-09', 'Chief Executive Officer', 90000, 535, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-13'),
 (33, 10008, '2025-03-03', '2025-03-09', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-13'),
 (34, 10009, '2025-03-03', '2025-03-09', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-13'),
@@ -2451,34 +2429,247 @@ INSERT INTO `payslip` (`id`, `employee_id`, `period_start`, `period_end`, `posit
 (52, 10032, '2025-03-03', '2025-03-09', 'Sales & Marketing', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-13'),
 (53, 10033, '2025-03-03', '2025-03-09', 'Supply Chain and Logistics', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-13'),
 (54, 10034, '2025-03-03', '2025-03-09', 'Customer Service and Relations', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-13'),
-(55, 10038, '2025-03-03', '2025-03-09', 'Sales & Marketing', 90000, 535, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-13'),
-(56, 10039, '2025-03-03', '2025-03-09', 'Test', 90000, 90000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-13'),
-(57, 10042, '2025-03-03', '2025-03-09', 'Test', 90000, 90000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-13'),
-(58, 10048, '2025-03-03', '2025-03-09', 'Manager', 98000, 2253, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-13'),
-(59, 10052, '2025-03-03', '2025-03-09', 'test', 90000, 900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-13'),
-(60, 10053, '2025-03-03', '2025-03-09', 'test', 9000, 9000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-13'),
-(61, 10054, '2025-03-03', '2025-03-09', 'test', 900, 900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-13'),
-(62, 10055, '2025-03-03', '2025-03-09', 'test', 9000, 900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-13');
+(63, 10008, '2024-06-24', '2024-06-30', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(64, 10009, '2024-06-24', '2024-06-30', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(65, 10015, '2024-06-24', '2024-06-30', 'Account Manager', 53500, 318, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(66, 10016, '2024-06-24', '2024-06-30', 'Account Team Leader', 42975, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(67, 10017, '2024-06-24', '2024-06-30', 'Account Team Leader', 41850, 249, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(68, 10018, '2024-06-24', '2024-06-30', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(69, 10019, '2024-06-24', '2024-06-30', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(70, 10020, '2024-06-24', '2024-06-30', 'Account Rank and File', 23250, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(71, 10021, '2024-06-24', '2024-06-30', 'Account Rank and File', 23250, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(72, 10022, '2024-06-24', '2024-06-30', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(73, 10023, '2024-06-24', '2024-06-30', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(74, 10024, '2024-06-24', '2024-06-30', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(75, 10025, '2024-06-24', '2024-06-30', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(76, 10026, '2024-06-24', '2024-06-30', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(77, 10027, '2024-06-24', '2024-06-30', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(78, 10028, '2024-06-24', '2024-06-30', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(79, 10029, '2024-06-24', '2024-06-30', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(80, 10030, '2024-06-24', '2024-06-30', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(81, 10031, '2024-06-24', '2024-06-30', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(82, 10032, '2024-06-24', '2024-06-30', 'Sales & Marketing', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(83, 10033, '2024-06-24', '2024-06-30', 'Supply Chain and Logistics', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(84, 10034, '2024-06-24', '2024-06-30', 'Customer Service and Relations', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(93, 10008, '2024-01-22', '2024-01-28', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(94, 10009, '2024-01-22', '2024-01-28', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(95, 10015, '2024-01-22', '2024-01-28', 'Account Manager', 53500, 318, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(96, 10016, '2024-01-22', '2024-01-28', 'Account Team Leader', 42975, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(97, 10017, '2024-01-22', '2024-01-28', 'Account Team Leader', 41850, 249, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(98, 10018, '2024-01-22', '2024-01-28', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(99, 10019, '2024-01-22', '2024-01-28', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(100, 10020, '2024-01-22', '2024-01-28', 'Account Rank and File', 23250, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(101, 10021, '2024-01-22', '2024-01-28', 'Account Rank and File', 23250, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(102, 10022, '2024-01-22', '2024-01-28', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(103, 10023, '2024-01-22', '2024-01-28', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(104, 10024, '2024-01-22', '2024-01-28', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(105, 10025, '2024-01-22', '2024-01-28', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(106, 10026, '2024-01-22', '2024-01-28', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(107, 10027, '2024-01-22', '2024-01-28', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(108, 10028, '2024-01-22', '2024-01-28', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(109, 10029, '2024-01-22', '2024-01-28', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(110, 10030, '2024-01-22', '2024-01-28', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(111, 10031, '2024-01-22', '2024-01-28', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(112, 10032, '2024-01-22', '2024-01-28', 'Sales & Marketing', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(113, 10033, '2024-01-22', '2024-01-28', 'Supply Chain and Logistics', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(114, 10034, '2024-01-22', '2024-01-28', 'Customer Service and Relations', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(123, 10008, '2024-01-01', '2024-01-07', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(124, 10009, '2024-01-01', '2024-01-07', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(125, 10015, '2024-01-01', '2024-01-07', 'Account Manager', 53500, 318, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(126, 10016, '2024-01-01', '2024-01-07', 'Account Team Leader', 42975, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(127, 10017, '2024-01-01', '2024-01-07', 'Account Team Leader', 41850, 249, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(128, 10018, '2024-01-01', '2024-01-07', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(129, 10019, '2024-01-01', '2024-01-07', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(130, 10020, '2024-01-01', '2024-01-07', 'Account Rank and File', 23250, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(131, 10021, '2024-01-01', '2024-01-07', 'Account Rank and File', 23250, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(132, 10022, '2024-01-01', '2024-01-07', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(133, 10023, '2024-01-01', '2024-01-07', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(134, 10024, '2024-01-01', '2024-01-07', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(135, 10025, '2024-01-01', '2024-01-07', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(136, 10026, '2024-01-01', '2024-01-07', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(137, 10027, '2024-01-01', '2024-01-07', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(138, 10028, '2024-01-01', '2024-01-07', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(139, 10029, '2024-01-01', '2024-01-07', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(140, 10030, '2024-01-01', '2024-01-07', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(141, 10031, '2024-01-01', '2024-01-07', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(142, 10032, '2024-01-01', '2024-01-07', 'Sales & Marketing', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(143, 10033, '2024-01-01', '2024-01-07', 'Supply Chain and Logistics', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(144, 10034, '2024-01-01', '2024-01-07', 'Customer Service and Relations', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(153, 10008, '2024-01-08', '2024-01-14', 'HR Rank and File', 22500, 133, 17, 0, 2261, 1500, 500, 500, 158, 338, 100, 0, 4166, '2025-03-15'),
+(154, 10009, '2024-01-08', '2024-01-14', 'HR Rank and File', 22500, 133, 17, 0, 2261, 1500, 500, 500, 158, 338, 100, 0, 4166, '2025-03-15'),
+(155, 10015, '2024-01-08', '2024-01-14', 'Account Manager', 53500, 318, 18, 0, 5724, 1500, 1000, 1000, 158, 803, 100, 0, 8164, '2025-03-15'),
+(156, 10016, '2024-01-08', '2024-01-14', 'Account Team Leader', 42975, 255, 17, 0, 4335, 1500, 800, 800, 158, 645, 100, 0, 6533, '2025-03-15'),
+(157, 10017, '2024-01-08', '2024-01-14', 'Account Team Leader', 41850, 249, 18, 0, 4482, 1500, 800, 800, 158, 628, 100, 0, 6697, '2025-03-15'),
+(158, 10018, '2024-01-08', '2024-01-14', 'Account Rank and File', 22500, 133, 18, 0, 2394, 1500, 500, 500, 158, 338, 100, 0, 4299, '2025-03-15'),
+(159, 10019, '2024-01-08', '2024-01-14', 'Account Rank and File', 22500, 133, 18, 0, 2394, 1500, 500, 500, 158, 338, 100, 0, 4299, '2025-03-15'),
+(160, 10020, '2024-01-08', '2024-01-14', 'Account Rank and File', 23250, 138, 18, 0, 2484, 1500, 500, 500, 158, 349, 100, 0, 4378, '2025-03-15'),
+(161, 10021, '2024-01-08', '2024-01-14', 'Account Rank and File', 23250, 138, 12, 0, 1656, 1500, 500, 500, 158, 349, 100, 0, 3550, '2025-03-15'),
+(162, 10022, '2024-01-08', '2024-01-14', 'Account Rank and File', 24000, 142, 18, 0, 2556, 1500, 500, 500, 158, 360, 100, 0, 4439, '2025-03-15'),
+(163, 10023, '2024-01-08', '2024-01-14', 'Account Rank and File', 22500, 133, 18, 0, 2394, 1500, 500, 500, 158, 338, 100, 0, 4299, '2025-03-15'),
+(164, 10024, '2024-01-08', '2024-01-14', 'Account Rank and File', 22500, 133, 17, 0, 2261, 1500, 500, 500, 158, 338, 100, 0, 4166, '2025-03-15'),
+(165, 10025, '2024-01-08', '2024-01-14', 'Account Rank and File', 24000, 142, 18, 0, 2556, 1500, 500, 500, 158, 360, 100, 0, 4439, '2025-03-15'),
+(166, 10026, '2024-01-08', '2024-01-14', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(167, 10027, '2024-01-08', '2024-01-14', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(168, 10028, '2024-01-08', '2024-01-14', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(169, 10029, '2024-01-08', '2024-01-14', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(170, 10030, '2024-01-08', '2024-01-14', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(171, 10031, '2024-01-08', '2024-01-14', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(172, 10032, '2024-01-08', '2024-01-14', 'Sales & Marketing', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(173, 10033, '2024-01-08', '2024-01-14', 'Supply Chain and Logistics', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(174, 10034, '2024-01-08', '2024-01-14', 'Customer Service and Relations', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(183, 10008, '2024-01-15', '2024-01-21', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(184, 10009, '2024-01-15', '2024-01-21', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(185, 10015, '2024-01-15', '2024-01-21', 'Account Manager', 53500, 318, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(186, 10016, '2024-01-15', '2024-01-21', 'Account Team Leader', 42975, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(187, 10017, '2024-01-15', '2024-01-21', 'Account Team Leader', 41850, 249, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(188, 10018, '2024-01-15', '2024-01-21', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(189, 10019, '2024-01-15', '2024-01-21', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(190, 10020, '2024-01-15', '2024-01-21', 'Account Rank and File', 23250, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(191, 10021, '2024-01-15', '2024-01-21', 'Account Rank and File', 23250, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(192, 10022, '2024-01-15', '2024-01-21', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(193, 10023, '2024-01-15', '2024-01-21', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(194, 10024, '2024-01-15', '2024-01-21', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(195, 10025, '2024-01-15', '2024-01-21', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(196, 10026, '2024-01-15', '2024-01-21', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(197, 10027, '2024-01-15', '2024-01-21', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(198, 10028, '2024-01-15', '2024-01-21', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(199, 10029, '2024-01-15', '2024-01-21', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(200, 10030, '2024-01-15', '2024-01-21', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(201, 10031, '2024-01-15', '2024-01-21', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(202, 10032, '2024-01-15', '2024-01-21', 'Sales & Marketing', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(203, 10033, '2024-01-15', '2024-01-21', 'Supply Chain and Logistics', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(204, 10034, '2024-01-15', '2024-01-21', 'Customer Service and Relations', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(213, 10008, '2024-01-29', '2024-02-04', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(214, 10009, '2024-01-29', '2024-02-04', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(215, 10015, '2024-01-29', '2024-02-04', 'Account Manager', 53500, 318, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(216, 10016, '2024-01-29', '2024-02-04', 'Account Team Leader', 42975, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(217, 10017, '2024-01-29', '2024-02-04', 'Account Team Leader', 41850, 249, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(218, 10018, '2024-01-29', '2024-02-04', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(219, 10019, '2024-01-29', '2024-02-04', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(220, 10020, '2024-01-29', '2024-02-04', 'Account Rank and File', 23250, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(221, 10021, '2024-01-29', '2024-02-04', 'Account Rank and File', 23250, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(222, 10022, '2024-01-29', '2024-02-04', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(223, 10023, '2024-01-29', '2024-02-04', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(224, 10024, '2024-01-29', '2024-02-04', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(225, 10025, '2024-01-29', '2024-02-04', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(226, 10026, '2024-01-29', '2024-02-04', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(227, 10027, '2024-01-29', '2024-02-04', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(228, 10028, '2024-01-29', '2024-02-04', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(229, 10029, '2024-01-29', '2024-02-04', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(230, 10030, '2024-01-29', '2024-02-04', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(231, 10031, '2024-01-29', '2024-02-04', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(232, 10032, '2024-01-29', '2024-02-04', 'Sales & Marketing', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(233, 10033, '2024-01-29', '2024-02-04', 'Supply Chain and Logistics', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(234, 10034, '2024-01-29', '2024-02-04', 'Customer Service and Relations', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(243, 10008, '2024-02-05', '2024-02-11', 'HR Rank and File', 22500, 133, 18, 0, 2394, 1500, 500, 500, 158, 338, 100, 0, 4299, '2025-03-15'),
+(244, 10009, '2024-02-05', '2024-02-11', 'HR Rank and File', 22500, 133, 18, 0, 2394, 1500, 500, 500, 158, 338, 100, 0, 4299, '2025-03-15'),
+(245, 10015, '2024-02-05', '2024-02-11', 'Account Manager', 53500, 318, 18, 0, 5724, 1500, 1000, 1000, 158, 803, 100, 0, 8164, '2025-03-15'),
+(246, 10016, '2024-02-05', '2024-02-11', 'Account Team Leader', 42975, 255, 18, 0, 4590, 1500, 800, 800, 158, 645, 100, 0, 6788, '2025-03-15'),
+(247, 10017, '2024-02-05', '2024-02-11', 'Account Team Leader', 41850, 249, 18, 0, 4482, 1500, 800, 800, 158, 628, 100, 0, 6697, '2025-03-15'),
+(248, 10018, '2024-02-05', '2024-02-11', 'Account Rank and File', 22500, 133, 18, 0, 2394, 1500, 500, 500, 158, 338, 100, 0, 4299, '2025-03-15'),
+(249, 10019, '2024-02-05', '2024-02-11', 'Account Rank and File', 22500, 133, 18, 0, 2394, 1500, 500, 500, 158, 338, 100, 0, 4299, '2025-03-15'),
+(250, 10020, '2024-02-05', '2024-02-11', 'Account Rank and File', 23250, 138, 18, 0, 2484, 1500, 500, 500, 158, 349, 100, 0, 4378, '2025-03-15'),
+(251, 10021, '2024-02-05', '2024-02-11', 'Account Rank and File', 23250, 138, 13, 0, 1794, 1500, 500, 500, 158, 349, 100, 0, 3688, '2025-03-15'),
+(252, 10022, '2024-02-05', '2024-02-11', 'Account Rank and File', 24000, 142, 18, 0, 2556, 1500, 500, 500, 158, 360, 100, 0, 4439, '2025-03-15'),
+(253, 10023, '2024-02-05', '2024-02-11', 'Account Rank and File', 22500, 133, 18, 0, 2394, 1500, 500, 500, 158, 338, 100, 0, 4299, '2025-03-15'),
+(254, 10024, '2024-02-05', '2024-02-11', 'Account Rank and File', 22500, 133, 18, 0, 2394, 1500, 500, 500, 158, 338, 100, 0, 4299, '2025-03-15'),
+(255, 10025, '2024-02-05', '2024-02-11', 'Account Rank and File', 24000, 142, 18, 0, 2556, 1500, 500, 500, 158, 360, 100, 0, 4439, '2025-03-15'),
+(256, 10026, '2024-02-05', '2024-02-11', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(257, 10027, '2024-02-05', '2024-02-11', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(258, 10028, '2024-02-05', '2024-02-11', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(259, 10029, '2024-02-05', '2024-02-11', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(260, 10030, '2024-02-05', '2024-02-11', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(261, 10031, '2024-02-05', '2024-02-11', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(262, 10032, '2024-02-05', '2024-02-11', 'Sales & Marketing', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(263, 10033, '2024-02-05', '2024-02-11', 'Supply Chain and Logistics', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(264, 10034, '2024-02-05', '2024-02-11', 'Customer Service and Relations', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-15'),
+(273, 10008, '2025-03-17', '2025-03-23', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(274, 10009, '2025-03-17', '2025-03-23', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(275, 10015, '2025-03-17', '2025-03-23', 'Account Manager', 53500, 318, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(276, 10016, '2025-03-17', '2025-03-23', 'Account Team Leader', 42975, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(277, 10017, '2025-03-17', '2025-03-23', 'Account Team Leader', 41850, 249, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(278, 10018, '2025-03-17', '2025-03-23', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(279, 10019, '2025-03-17', '2025-03-23', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(280, 10020, '2025-03-17', '2025-03-23', 'Account Rank and File', 23250, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(281, 10021, '2025-03-17', '2025-03-23', 'Account Rank and File', 23250, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(282, 10022, '2025-03-17', '2025-03-23', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(283, 10023, '2025-03-17', '2025-03-23', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(284, 10024, '2025-03-17', '2025-03-23', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(285, 10025, '2025-03-17', '2025-03-23', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(286, 10026, '2025-03-17', '2025-03-23', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(287, 10027, '2025-03-17', '2025-03-23', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(288, 10028, '2025-03-17', '2025-03-23', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(289, 10029, '2025-03-17', '2025-03-23', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(290, 10030, '2025-03-17', '2025-03-23', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(291, 10031, '2025-03-17', '2025-03-23', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(292, 10032, '2025-03-17', '2025-03-23', 'Sales & Marketing', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(293, 10033, '2025-03-17', '2025-03-23', 'Supply Chain and Logistics', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(294, 10034, '2025-03-17', '2025-03-23', 'Customer Service and Relations', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(303, 10008, '2024-03-04', '2024-03-10', 'HR Rank and File', 22500, 133, 9, 0, 1197, 1500, 500, 500, 158, 338, 100, 0, 3102, '2025-03-23'),
+(304, 10009, '2024-03-04', '2024-03-10', 'HR Rank and File', 22500, 133, 9, 0, 1197, 1500, 500, 500, 158, 338, 100, 0, 3102, '2025-03-23'),
+(305, 10015, '2024-03-04', '2024-03-10', 'Account Manager', 53500, 318, 9, 0, 2862, 1500, 1000, 1000, 158, 803, 100, 0, 5302, '2025-03-23'),
+(306, 10016, '2024-03-04', '2024-03-10', 'Account Team Leader', 42975, 255, 9, 0, 2295, 1500, 800, 800, 158, 645, 100, 0, 4493, '2025-03-23'),
+(307, 10017, '2024-03-04', '2024-03-10', 'Account Team Leader', 41850, 249, 9, 0, 2241, 1500, 800, 800, 158, 628, 100, 0, 4456, '2025-03-23'),
+(308, 10018, '2024-03-04', '2024-03-10', 'Account Rank and File', 22500, 133, 9, 0, 1197, 1500, 500, 500, 158, 338, 100, 0, 3102, '2025-03-23'),
+(309, 10019, '2024-03-04', '2024-03-10', 'Account Rank and File', 22500, 133, 9, 0, 1197, 1500, 500, 500, 158, 338, 100, 0, 3102, '2025-03-23'),
+(310, 10020, '2024-03-04', '2024-03-10', 'Account Rank and File', 23250, 138, 9, 0, 1242, 1500, 500, 500, 158, 349, 100, 0, 3136, '2025-03-23'),
+(311, 10021, '2024-03-04', '2024-03-10', 'Account Rank and File', 23250, 138, 9, 0, 1242, 1500, 500, 500, 158, 349, 100, 0, 3136, '2025-03-23'),
+(312, 10022, '2024-03-04', '2024-03-10', 'Account Rank and File', 24000, 142, 9, 0, 1278, 1500, 500, 500, 158, 360, 100, 0, 3161, '2025-03-23'),
+(313, 10023, '2024-03-04', '2024-03-10', 'Account Rank and File', 22500, 133, 9, 0, 1197, 1500, 500, 500, 158, 338, 100, 0, 3102, '2025-03-23'),
+(314, 10024, '2024-03-04', '2024-03-10', 'Account Rank and File', 22500, 133, 9, 0, 1197, 1500, 500, 500, 158, 338, 100, 0, 3102, '2025-03-23'),
+(315, 10025, '2024-03-04', '2024-03-10', 'Account Rank and File', 24000, 142, 9, 0, 1278, 1500, 500, 500, 158, 360, 100, 0, 3161, '2025-03-23'),
+(316, 10026, '2024-03-04', '2024-03-10', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(317, 10027, '2024-03-04', '2024-03-10', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(318, 10028, '2024-03-04', '2024-03-10', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(319, 10029, '2024-03-04', '2024-03-10', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(320, 10030, '2024-03-04', '2024-03-10', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(321, 10031, '2024-03-04', '2024-03-10', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(322, 10032, '2024-03-04', '2024-03-10', 'Sales & Marketing', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(323, 10033, '2024-03-04', '2024-03-10', 'Supply Chain and Logistics', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(324, 10034, '2024-03-04', '2024-03-10', 'Customer Service and Relations', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(333, 10008, '2025-02-17', '2025-02-23', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(334, 10009, '2025-02-17', '2025-02-23', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(335, 10015, '2025-02-17', '2025-02-23', 'Account Manager', 53500, 318, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(336, 10016, '2025-02-17', '2025-02-23', 'Account Team Leader', 42975, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(337, 10017, '2025-02-17', '2025-02-23', 'Account Team Leader', 41850, 249, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(338, 10018, '2025-02-17', '2025-02-23', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(339, 10019, '2025-02-17', '2025-02-23', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(340, 10020, '2025-02-17', '2025-02-23', 'Account Rank and File', 23250, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(341, 10021, '2025-02-17', '2025-02-23', 'Account Rank and File', 23250, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(342, 10022, '2025-02-17', '2025-02-23', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(343, 10023, '2025-02-17', '2025-02-23', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(344, 10024, '2025-02-17', '2025-02-23', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(345, 10025, '2025-02-17', '2025-02-23', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(346, 10026, '2025-02-17', '2025-02-23', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(347, 10027, '2025-02-17', '2025-02-23', 'Account Rank and File', 24750, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(348, 10028, '2025-02-17', '2025-02-23', 'Account Rank and File', 24000, 142, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(349, 10029, '2025-02-17', '2025-02-23', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(350, 10030, '2025-02-17', '2025-02-23', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(351, 10031, '2025-02-17', '2025-02-23', 'Account Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(352, 10032, '2025-02-17', '2025-02-23', 'Sales & Marketing', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(353, 10033, '2025-02-17', '2025-02-23', 'Supply Chain and Logistics', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23'),
+(354, 10034, '2025-02-17', '2025-02-23', 'Customer Service and Relations', 52670, 313, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-23');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permissions`
+-- Table structure for table permissions
 --
 
-CREATE TABLE `permissions` (
-  `permission_id` int(11) NOT NULL,
-  `module` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
-  `submodule` varchar(255) DEFAULT NULL
+CREATE TABLE permissions (
+  permission_id int(11) NOT NULL,
+  module varchar(255) NOT NULL,
+  description text DEFAULT NULL,
+  submodule varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `permissions`
+-- Dumping data for table permissions
 --
 
-INSERT INTO `permissions` (`permission_id`, `module`, `description`, `submodule`) VALUES
+INSERT INTO permissions (permission_id, module, description, submodule) VALUES
 (1, 'Home', 'Main landing page', NULL),
+(2, 'Dashboard', NULL, NULL),
 (3, 'Employee Management', 'Employee management module', NULL),
 (4, 'Attendance', 'Attendance tracking', NULL),
 (5, 'Payroll Generation', 'Payroll and report access', NULL),
@@ -2491,20 +2682,20 @@ INSERT INTO `permissions` (`permission_id`, `module`, `description`, `submodule`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Table structure for table roles
 --
 
-CREATE TABLE `roles` (
-  `role_id` int(11) NOT NULL,
-  `role_name` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL
+CREATE TABLE roles (
+  role_id int(11) NOT NULL,
+  role_name varchar(255) NOT NULL,
+  description text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `roles`
+-- Dumping data for table roles
 --
 
-INSERT INTO `roles` (`role_id`, `role_name`, `description`) VALUES
+INSERT INTO roles (role_id, role_name, description) VALUES
 (1, 'Employee', 'Regular employee with limited access'),
 (2, 'HR Personnel', 'HR personnel with access to HR-related features'),
 (3, 'System Admin', 'Administrator with full access');
@@ -2512,50 +2703,50 @@ INSERT INTO `roles` (`role_id`, `role_name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role_permissions`
+-- Table structure for table role_permissions
 --
 
-CREATE TABLE `role_permissions` (
-  `role_id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL
+CREATE TABLE role_permissions (
+  role_id int(11) NOT NULL,
+  permission_id int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `role_permissions`
+-- Dumping data for table role_permissions
 --
 
-INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
+INSERT INTO role_permissions (role_id, permission_id) VALUES
 (1, 1),
 (1, 4),
 (1, 6),
 (1, 10),
-(2, 1),
+(2, 2),
 (2, 3),
 (2, 4),
 (2, 5),
 (2, 6),
 (2, 7),
 (2, 11),
-(3, 1),
+(3, 2),
 (3, 8);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_credentials`
+-- Table structure for table user_credentials
 --
 
-CREATE TABLE `user_credentials` (
-  `employee_number` int(11) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `role_id` int(11) DEFAULT NULL
+CREATE TABLE user_credentials (
+  employee_number int(11) NOT NULL,
+  password varchar(255) NOT NULL,
+  role_id int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user_credentials`
+-- Dumping data for table user_credentials
 --
 
-INSERT INTO `user_credentials` (`employee_number`, `password`, `role_id`) VALUES
+INSERT INTO user_credentials (employee_number, password, role_id) VALUES
 (10001, 'Garcia01', 3),
 (10002, 'Lim02', 3),
 (10003, 'Aquino03', 3),
@@ -2590,144 +2781,133 @@ INSERT INTO `user_credentials` (`employee_number`, `password`, `role_id`) VALUES
 (10032, 'Castro32', 1),
 (10033, 'Martinez33', 1),
 (10034, 'Santos34', 1),
-(10038, 'Test4123', 1),
-(10039, 'Test123', 1),
-(10042, 'Test123', 1),
-(10043, 'test123', 2),
-(10044, 'Test again123', 2),
-(10045, 'Test9123', 2),
-(10048, 'Test123', 1),
-(10049, 'test123', 2),
-(10050, 'test123', 2),
-(10051, 'test123', 2),
-(10052, 'Test123', 1),
-(10053, 'test123', 1),
-(10054, 'test123', 1),
-(10055, 'test123', 1);
+(10062, 'AlexTest123', 1),
+(10063, 'Alexander123', 1),
+(10064, 'Alexis123', 1);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `announcement`
+-- Indexes for table announcement
 --
-ALTER TABLE `announcement`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_created_by` (`created_by`);
+ALTER TABLE announcement
+  ADD PRIMARY KEY (id),
+  ADD KEY fk_created_by (created_by);
 
 --
--- Indexes for table `employees`
+-- Indexes for table employees
 --
-ALTER TABLE `employees`
-  ADD PRIMARY KEY (`employee_number`),
-  ADD UNIQUE KEY `sss_number` (`sss_number`),
-  ADD UNIQUE KEY `philhealth_number` (`philhealth_number`),
-  ADD UNIQUE KEY `tin_number` (`tin_number`),
-  ADD UNIQUE KEY `pagibig_number` (`pagibig_number`);
+ALTER TABLE employees
+  ADD PRIMARY KEY (employee_number),
+  ADD UNIQUE KEY sss_number (sss_number),
+  ADD UNIQUE KEY philhealth_number (philhealth_number),
+  ADD UNIQUE KEY tin_number (tin_number),
+  ADD UNIQUE KEY pagibig_number (pagibig_number);
 
 --
--- Indexes for table `leave_records`
+-- Indexes for table leave_records
 --
-ALTER TABLE `leave_records`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE leave_records
+  ADD PRIMARY KEY (id);
 
 --
--- Indexes for table `payslip`
+-- Indexes for table payslip
 --
-ALTER TABLE `payslip`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_employee` (`employee_id`);
+ALTER TABLE payslip
+  ADD PRIMARY KEY (id),
+  ADD KEY fk_employee (employee_id);
 
 --
--- Indexes for table `permissions`
+-- Indexes for table permissions
 --
-ALTER TABLE `permissions`
-  ADD PRIMARY KEY (`permission_id`);
+ALTER TABLE permissions
+  ADD PRIMARY KEY (permission_id);
 
 --
--- Indexes for table `roles`
+-- Indexes for table roles
 --
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`role_id`);
+ALTER TABLE roles
+  ADD PRIMARY KEY (role_id);
 
 --
--- Indexes for table `role_permissions`
+-- Indexes for table role_permissions
 --
-ALTER TABLE `role_permissions`
-  ADD PRIMARY KEY (`role_id`,`permission_id`),
-  ADD KEY `permission_id` (`permission_id`);
+ALTER TABLE role_permissions
+  ADD PRIMARY KEY (role_id,permission_id),
+  ADD KEY permission_id (permission_id);
 
 --
--- Indexes for table `user_credentials`
+-- Indexes for table user_credentials
 --
-ALTER TABLE `user_credentials`
-  ADD PRIMARY KEY (`employee_number`),
-  ADD KEY `fk_role_id` (`role_id`);
+ALTER TABLE user_credentials
+  ADD PRIMARY KEY (employee_number),
+  ADD KEY fk_role_id (role_id);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `employees`
+-- AUTO_INCREMENT for table employees
 --
-ALTER TABLE `employees`
-  MODIFY `employee_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10061;
+ALTER TABLE employees
+  MODIFY employee_number int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10065;
 
 --
--- AUTO_INCREMENT for table `leave_records`
+-- AUTO_INCREMENT for table leave_records
 --
-ALTER TABLE `leave_records`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+ALTER TABLE leave_records
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `payslip`
+-- AUTO_INCREMENT for table payslip
 --
-ALTER TABLE `payslip`
-  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+ALTER TABLE payslip
+  MODIFY id int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=363;
 
 --
--- AUTO_INCREMENT for table `permissions`
+-- AUTO_INCREMENT for table permissions
 --
-ALTER TABLE `permissions`
-  MODIFY `permission_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+ALTER TABLE permissions
+  MODIFY permission_id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `roles`
+-- AUTO_INCREMENT for table roles
 --
-ALTER TABLE `roles`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE roles
+  MODIFY role_id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `announcement`
+-- Constraints for table announcement
 --
-ALTER TABLE `announcement`
-  ADD CONSTRAINT `fk_created_by` FOREIGN KEY (`created_by`) REFERENCES `employees` (`employee_number`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE announcement
+  ADD CONSTRAINT fk_created_by FOREIGN KEY (created_by) REFERENCES employees (employee_number) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `payslip`
+-- Constraints for table payslip
 --
-ALTER TABLE `payslip`
-  ADD CONSTRAINT `fk_employee` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_number`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE payslip
+  ADD CONSTRAINT fk_employee FOREIGN KEY (employee_id) REFERENCES employees (employee_number) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `role_permissions`
+-- Constraints for table role_permissions
 --
-ALTER TABLE `role_permissions`
-  ADD CONSTRAINT `role_permissions_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `role_permissions_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`permission_id`) ON DELETE CASCADE;
+ALTER TABLE role_permissions
+  ADD CONSTRAINT role_permissions_ibfk_1 FOREIGN KEY (role_id) REFERENCES `roles` (role_id) ON DELETE CASCADE,
+  ADD CONSTRAINT role_permissions_ibfk_2 FOREIGN KEY (permission_id) REFERENCES permissions (permission_id) ON DELETE CASCADE;
 
 --
--- Constraints for table `user_credentials`
+-- Constraints for table user_credentials
 --
-ALTER TABLE `user_credentials`
-  ADD CONSTRAINT `fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `user_credentials_ibfk_1` FOREIGN KEY (`employee_number`) REFERENCES `employees` (`employee_number`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE user_credentials
+  ADD CONSTRAINT fk_role_id FOREIGN KEY (role_id) REFERENCES `roles` (role_id) ON DELETE CASCADE,
+  ADD CONSTRAINT user_credentials_ibfk_1 FOREIGN KEY (employee_number) REFERENCES employees (employee_number) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

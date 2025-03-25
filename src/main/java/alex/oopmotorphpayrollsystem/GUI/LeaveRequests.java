@@ -131,7 +131,7 @@ public class LeaveRequests extends javax.swing.JPanel {
         decline.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         decline.setForeground(new java.awt.Color(153, 0, 0));
         decline.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\remove.png")); // NOI18N
-        decline.setText("Reject");
+        decline.setText("Decline");
         decline.setBorder(null);
         decline.setFocusPainted(false);
         decline.addActionListener(new java.awt.event.ActionListener() {
@@ -203,7 +203,7 @@ public class LeaveRequests extends javax.swing.JPanel {
 
         leaveRemarks.setBackground(new java.awt.Color(255, 255, 255));
         leaveRemarks.setForeground(new java.awt.Color(0, 0, 0));
-        leaveRemarks.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Pending", "Reject", "Approved" }));
+        leaveRemarks.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Pending", "Declined", "Approved" }));
         leaveRemarks.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         leaveRemarks.setLightWeightPopupEnabled(false);
         leaveRemarks.addActionListener(new java.awt.event.ActionListener() {

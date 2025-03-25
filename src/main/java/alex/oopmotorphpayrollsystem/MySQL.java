@@ -45,7 +45,7 @@ public class MySQL {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             // Open a connection
-            String url = "jdbc:mysql://localhost:3306/motorph_db";
+            String url = "jdbc:mysql://localhost:3307/motorph_db";
             String username = "root";
             String password = "";
             connection = DriverManager.getConnection(url, username, password);

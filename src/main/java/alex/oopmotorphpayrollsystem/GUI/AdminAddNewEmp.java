@@ -62,8 +62,11 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         initializeForm();
         defaultComponentView();
         if(action.equals("View")){
+            addNewEmpLabel.setText("View User");
             Helpers.disableFields(fields);
             Helpers.disableFields(empOnlyFields);
+        } else {
+            addNewEmpLabel.setText("Edit User");
         }
         if(user instanceof SystemAdministrator){
             newEmpRoleValue.setEnabled(true);
@@ -116,24 +119,60 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         newEmpLastNameValue.setText(editableUser.getLastName());
         newEmpFirstNameValue.setText(editableUser.getFirstName());
         newEmpBirthValue.setDate(editableUser.getBirthday());
-        newEmpStatusValue.setSelectedItem(((Employee) editableUser).getStatus());
         newEmpDateHiredValue.setDate(editableUser.getDateHired());
         newEmpPositionValue.setSelectedItem(editableUser.getPosition());
-        newEmpImmediateSupValue.setText(((Employee) editableUser).getImmediateSupervisor());
         newEmpPhoneNumValue.setText(editableUser.getPhoneNumber());
         newEmpPersonalEmailValue.setText("@example.motorph.com.ph");
         newEmpAddressValue.setText(editableUser.getAddress());
-        newEmpBasicSalaryValue.setText(String.valueOf(((Employee) editableUser).getBenefitsBasicSalary()));
-        newEmpGrossSemiValue.setText(String.valueOf(((Employee) editableUser).getBenefitsGrossSemiMonthlyRate()));
-        newEmpHourlyRateValue.setText(String.valueOf(((Employee) editableUser).getBenefitsHourlyRate()));
-        newEmpRiceSubValue.setText(String.valueOf(((Employee) editableUser).getBenefitsRiceSubsidy()));
-        newEmpPhoneAllowValue.setText(String.valueOf(((Employee) editableUser).getBenefitsPhoneAllowance()));
-        newEmpClothingAllowValue.setText(String.valueOf(((Employee) editableUser).getBenefitsClothingAllowance()));
         newEmpSssValue.setText(editableUser.getSssNumber());
         newEmpTinValue.setText(editableUser.getTinNumber());
         newEmpPhilhealthValue.setText(editableUser.getPhilhealthNumber());
         newEmpPagIbigValue.setText(editableUser.getPagibigNumber());
+        if(editableUser instanceof Employee){
+            enableAllEmpOnlyFields();
+            newEmpStatusValue.setSelectedItem(((Employee) editableUser).getStatus());
+            newEmpImmediateSupValue.setText(((Employee) editableUser).getImmediateSupervisor());
+            newEmpBasicSalaryValue.setText(String.valueOf(((Employee) editableUser).getBenefitsBasicSalary()));
+            newEmpGrossSemiValue.setText(String.valueOf(((Employee) editableUser).getBenefitsGrossSemiMonthlyRate()));
+            newEmpHourlyRateValue.setText(String.valueOf(((Employee) editableUser).getBenefitsHourlyRate()));
+            newEmpRiceSubValue.setText(String.valueOf(((Employee) editableUser).getBenefitsRiceSubsidy()));
+            newEmpPhoneAllowValue.setText(String.valueOf(((Employee) editableUser).getBenefitsPhoneAllowance()));
+            newEmpClothingAllowValue.setText(String.valueOf(((Employee) editableUser).getBenefitsClothingAllowance()));
+        } else {
+            disableAllEmpOnlyFields();
+        }
+    }
+    
         
+    private void enableAllEmpOnlyFields(){
+        newEmpStatusValue.setEnabled(true);
+        newEmpImmediateSupValue.setEnabled(true);
+        newEmpBasicSalaryValue.setEnabled(true);
+        newEmpGrossSemiValue.setEnabled(true);
+        newEmpHourlyRateValue.setEnabled(true);
+        newEmpRiceSubValue.setEnabled(true);
+        newEmpPhoneAllowValue.setEnabled(true);
+        newEmpClothingAllowValue.setEnabled(true);
+    }
+    
+    private void disableAllEmpOnlyFields(){
+        newEmpStatusValue.setEnabled(false);
+        newEmpImmediateSupValue.setEnabled(false);
+        newEmpBasicSalaryValue.setEnabled(false);
+        newEmpGrossSemiValue.setEnabled(false);
+        newEmpHourlyRateValue.setEnabled(false);
+        newEmpRiceSubValue.setEnabled(false);
+        newEmpPhoneAllowValue.setEnabled(false);
+        newEmpClothingAllowValue.setEnabled(false);
+        
+        newEmpStatusValue.setSelectedItem(null);
+        newEmpImmediateSupValue.setText(null);
+        newEmpBasicSalaryValue.setText(null);
+        newEmpGrossSemiValue.setText(null);
+        newEmpHourlyRateValue.setText(null);
+        newEmpRiceSubValue.setText(null);
+        newEmpPhoneAllowValue.setText(null);
+        newEmpClothingAllowValue.setText(null);
     }
     
     public void defaultComponentView(){
@@ -827,7 +866,12 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     }//GEN-LAST:event_newEmpCancelButtonActionPerformed
 
     private void newEmpRoleValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpRoleValueActionPerformed
-        // TODO add your handling code here:
+        String role = (String) newEmpRoleValue.getSelectedItem();
+        if(role.equals("Employee")){
+            enableAllEmpOnlyFields();
+        } else {
+            disableAllEmpOnlyFields();
+        }
     }//GEN-LAST:event_newEmpRoleValueActionPerformed
 
     

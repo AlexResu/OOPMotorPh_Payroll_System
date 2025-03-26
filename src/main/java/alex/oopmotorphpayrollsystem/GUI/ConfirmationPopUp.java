@@ -102,7 +102,7 @@ public class ConfirmationPopUp extends javax.swing.JFrame {
         messagePrompt.setBackground(new java.awt.Color(255, 255, 255));
         messagePrompt.setForeground(new java.awt.Color(0, 0, 255));
         messagePrompt.setText("Successfully deleted this employee. Automatically closing in 3 seconds.");
-        deletePopup.add(messagePrompt, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 390, 40));
+        deletePopup.add(messagePrompt, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 390, 40));
 
         kGradientPanel1.add(deletePopup, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 450, 270));
 

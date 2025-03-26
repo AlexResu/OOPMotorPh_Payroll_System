@@ -45,7 +45,7 @@ public class MySQL {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             // Open a connection
-            String url = "jdbc:mysql://localhost:3307/motorph_db";
+            String url = "jdbc:mysql://localhost:3306/motorph_db";
             String username = "root";
             String password = "";
             connection = DriverManager.getConnection(url, username, password);
@@ -1032,8 +1032,8 @@ public class MySQL {
             // Define the query
             String query = "INSERT INTO employees ("
                 + "last_name, first_name, birthdate, address, phone_number, "
-                + "sss_number, philhealth_number, tin_number, pagibig_number) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "sss_number, philhealth_number, tin_number, pagibig_number, position) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             // Prepare the statement
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -1049,8 +1049,10 @@ public class MySQL {
             preparedStatement.setString(7, employee.getPhilhealthNumber());
             preparedStatement.setString(8, employee.getTinNumber());
             preparedStatement.setString(9, employee.getPagibigNumber());
+            preparedStatement.setString(10, employee.getPosition());
 
             // Execute the query
+            System.out.println("Executing Query: " + preparedStatement.toString());
             rowsAffected = preparedStatement.executeUpdate();
             
             if(rowsAffected > 0){
@@ -1074,7 +1076,7 @@ public class MySQL {
 
                 // Define the query
                 String query = "INSERT INTO user_credentials ("
-                    + "employee_number, password, role) VALUES (?, ?, ?)";
+                    + "employee_number, password, role_id) VALUES (?, ?, ?)";
 
                 // Prepare the statement
                 PreparedStatement preparedStatement2 = connection.prepareStatement(query);
@@ -1085,6 +1087,7 @@ public class MySQL {
                 preparedStatement2.setInt(3, role_id);
 
                 // Execute the query
+                System.out.println("Executing Query: " + preparedStatement2.toString());
                 rowsAffected = preparedStatement2.executeUpdate();
 
             } catch (SQLException e) {
@@ -1241,7 +1244,33 @@ public class MySQL {
             e.printStackTrace();
         }
         
-        System.out.println(rowsAffected);
+        int role_id = (employee instanceof HRPersonnel) ? 2 : 
+                (employee instanceof SystemAdministrator) ? 3 : 1;
+        // If an employee number was generated, insert user credentials with default password
+        
+        try {
+            // Create a statement object
+            statement = connection.createStatement();
+
+            // Define the query
+            String query = "UPDATE user_credentials "
+                    + "SET role_id = ? WHERE employee_number = ?";
+
+            // Prepare the statement
+            PreparedStatement preparedStatement2 = connection.prepareStatement(query);
+
+            // Set the parameters
+            preparedStatement2.setInt(1, role_id);
+            preparedStatement2.setInt(2, employee.getEmployeeID());
+
+            // Execute the query
+            System.out.println("Executing Query: " + preparedStatement2.toString());
+            rowsAffected = preparedStatement2.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("Error while executing SQL query!");
+            e.printStackTrace();
+        }
         
         return rowsAffected == 1;
     }

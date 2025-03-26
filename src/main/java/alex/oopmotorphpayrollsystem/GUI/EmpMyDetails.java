@@ -9,6 +9,7 @@ import alex.oopmotorphpayrollsystem.Employee;
 import alex.oopmotorphpayrollsystem.Benefits;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.JScrollBar;
 
 /**
  *
@@ -139,6 +140,11 @@ public class EmpMyDetails extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jScrollPane1MouseWheelMoved(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -700,6 +706,16 @@ public class EmpMyDetails extends javax.swing.JPanel {
     private void empPhoneNumValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empPhoneNumValueActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_empPhoneNumValueActionPerformed
+
+    private void jScrollPane1MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane1MouseWheelMoved
+        int rotation = evt.getWheelRotation();
+                JScrollBar verticalScrollBar = jScrollPane1.getVerticalScrollBar();
+                
+                // Control the scroll speed here (higher value = faster scroll)
+                int scrollAmount = rotation * 38;  // Adjust this multiplier for smoothness
+                
+                verticalScrollBar.setValue(verticalScrollBar.getValue() + scrollAmount);
+    }//GEN-LAST:event_jScrollPane1MouseWheelMoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

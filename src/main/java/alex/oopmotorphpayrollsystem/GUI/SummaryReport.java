@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import java.io.File;
+import javax.swing.JScrollBar;
 
 /**
  *
@@ -92,6 +93,12 @@ public class SummaryReport extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane9.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jScrollPane9MouseWheelMoved(evt);
+            }
+        });
 
         payrollReportTable.setAutoCreateRowSorter(true);
         payrollReportTable.setBackground(new java.awt.Color(255, 255, 255));
@@ -224,6 +231,16 @@ public class SummaryReport extends javax.swing.JPanel {
             PayrollSummaryExcel.generatePayrollReport(this.payrollList, fileToSave);
         }
     }//GEN-LAST:event_downloadSummaryActionPerformed
+
+    private void jScrollPane9MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane9MouseWheelMoved
+        int rotation = evt.getWheelRotation();
+                JScrollBar verticalScrollBar = jScrollPane9.getVerticalScrollBar();
+                
+                // Control the scroll speed here (higher value = faster scroll)
+                int scrollAmount = rotation * 38;  // Adjust this multiplier for smoothness
+                
+                verticalScrollBar.setValue(verticalScrollBar.getValue() + scrollAmount);
+    }//GEN-LAST:event_jScrollPane9MouseWheelMoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

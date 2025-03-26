@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
+import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -305,6 +306,11 @@ public class EmployeePayslip extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane6.setPreferredSize(new java.awt.Dimension(850, 960));
+        jScrollPane6.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jScrollPane6MouseWheelMoved(evt);
+            }
+        });
 
         employeePayslipPanel.setBackground(new java.awt.Color(255, 255, 255));
         employeePayslipPanel.setPreferredSize(new java.awt.Dimension(848, 1006));
@@ -766,6 +772,16 @@ public class EmployeePayslip extends javax.swing.JPanel {
             loadPayslip();
         }
     }//GEN-LAST:event_generateActionPerformed
+
+    private void jScrollPane6MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane6MouseWheelMoved
+        int rotation = evt.getWheelRotation();
+                JScrollBar verticalScrollBar = jScrollPane6.getVerticalScrollBar();
+                
+                // Control the scroll speed here (higher value = faster scroll)
+                int scrollAmount = rotation * 38;  // Adjust this multiplier for smoothness
+                
+                verticalScrollBar.setValue(verticalScrollBar.getValue() + scrollAmount);
+    }//GEN-LAST:event_jScrollPane6MouseWheelMoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

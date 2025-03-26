@@ -12,6 +12,7 @@ import alex.oopmotorphpayrollsystem.User;
 import alex.oopmotorphpayrollsystem.LeaveRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -262,6 +263,12 @@ public class HomePagePanel extends javax.swing.JPanel {
         recordsLabel.setText("Records");
         empHomePage.add(recordsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 190, -1, -1));
 
+        jScrollPane1.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jScrollPane1MouseWheelMoved(evt);
+            }
+        });
+
         leaveCreditsTable.setBackground(new java.awt.Color(255, 255, 255));
         leaveCreditsTable.setForeground(new java.awt.Color(0, 0, 0));
         leaveCreditsTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -289,6 +296,12 @@ public class HomePagePanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(leaveCreditsTable);
 
         empHomePage.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 390, 122));
+
+        jScrollPane2.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jScrollPane2MouseWheelMoved(evt);
+            }
+        });
 
         recordsTable.setBackground(new java.awt.Color(255, 255, 255));
         recordsTable.setForeground(new java.awt.Color(0, 0, 0));
@@ -516,6 +529,26 @@ public class HomePagePanel extends javax.swing.JPanel {
         dateTimeOutValue.setText(formattedDate);
         timeInTimeOutRecordedLabel.setVisible(true);
     }//GEN-LAST:event_timeOutActionPerformed
+
+    private void jScrollPane1MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane1MouseWheelMoved
+        int rotation = evt.getWheelRotation();
+                JScrollBar verticalScrollBar = jScrollPane1.getVerticalScrollBar();
+                
+                // Control the scroll speed here (higher value = faster scroll)
+                int scrollAmount = rotation * 38;  // Adjust this multiplier for smoothness
+                
+                verticalScrollBar.setValue(verticalScrollBar.getValue() + scrollAmount);
+    }//GEN-LAST:event_jScrollPane1MouseWheelMoved
+
+    private void jScrollPane2MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane2MouseWheelMoved
+        int rotation = evt.getWheelRotation();
+                JScrollBar verticalScrollBar = jScrollPane2.getVerticalScrollBar();
+                
+                // Control the scroll speed here (higher value = faster scroll)
+                int scrollAmount = rotation * 38;  // Adjust this multiplier for smoothness
+                
+                verticalScrollBar.setValue(verticalScrollBar.getValue() + scrollAmount);
+    }//GEN-LAST:event_jScrollPane2MouseWheelMoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

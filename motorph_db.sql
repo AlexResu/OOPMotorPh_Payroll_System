@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2025 at 06:05 PM
+-- Generation Time: Mar 26, 2025 at 04:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,40 +18,40 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: motorph_db
+-- Database: `motorph_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table announcement
+-- Table structure for table `announcement`
 --
 
-CREATE TABLE announcement (
-  id int(11) NOT NULL,
-  description varchar(255) NOT NULL,
-  date_created date NOT NULL,
-  created_by int(11) NOT NULL
+CREATE TABLE `announcement` (
+  `id` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `date_created` date NOT NULL,
+  `created_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table attendance_record
+-- Table structure for table `attendance_record`
 --
 
-CREATE TABLE attendance_record (
-  employee_number int(11) NOT NULL,
-  date date NOT NULL,
-  time_in datetime DEFAULT NULL,
-  time_out datetime DEFAULT NULL
+CREATE TABLE `attendance_record` (
+  `employee_number` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `time_in` datetime DEFAULT NULL,
+  `time_out` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table attendance_record
+-- Dumping data for table `attendance_record`
 --
 
-INSERT INTO attendance_record (employee_number, date, time_in, time_out) VALUES
+INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out`) VALUES
 (10001, '2024-01-09', '2024-01-09 08:00:00', '2024-01-09 17:00:00'),
 (10002, '2024-01-09', '2024-01-09 08:00:00', '2024-01-09 17:00:00'),
 (10003, '2024-01-09', '2024-01-09 08:00:00', '2024-01-09 17:00:00'),
@@ -795,9 +795,9 @@ INSERT INTO attendance_record (employee_number, date, time_in, time_out) VALUES
 (10016, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
 (10017, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
 (10018, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
-(10019, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
-(10020, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00');
-INSERT INTO attendance_record (employee_number, date, time_in, time_out) VALUES
+(10019, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00');
+INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out`) VALUES
+(10020, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
 (10021, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
 (10022, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
 (10023, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
@@ -1540,10 +1540,10 @@ INSERT INTO attendance_record (employee_number, date, time_in, time_out) VALUES
 (10010, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
 (10011, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
 (10012, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
-(10013, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
+(10013, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00');
+INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out`) VALUES
 (10014, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
-(10015, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00');
-INSERT INTO attendance_record (employee_number, date, time_in, time_out) VALUES
+(10015, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
 (10016, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
 (10017, '2024-11-23', '2024-11-23 08:05:00', '2024-11-23 17:00:00'),
 (10018, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
@@ -2228,52 +2228,53 @@ INSERT INTO attendance_record (employee_number, date, time_in, time_out) VALUES
 (10001, '2024-03-10', '2024-03-10 07:51:23', '2024-03-10 13:07:12'),
 (0, '2024-03-13', '2024-03-13 22:47:07', '2024-03-13 22:47:17'),
 (10001, '2024-03-15', '2024-03-15 00:04:54', '2024-03-15 19:56:56'),
-(10008, '2025-03-23', '2025-03-23 19:25:48', '2025-03-23 19:25:50');
+(10008, '2025-03-23', '2025-03-23 19:25:48', '2025-03-23 19:25:50'),
+(10008, '2025-03-26', '2025-03-26 23:25:00', '2025-03-26 23:25:00');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table employees
+-- Table structure for table `employees`
 --
 
-CREATE TABLE employees (
-  employee_number int(11) NOT NULL,
-  last_name varchar(255) NOT NULL,
-  first_name varchar(255) NOT NULL,
-  address varchar(255) DEFAULT NULL,
-  phone_number varchar(255) NOT NULL,
-  sss_number varchar(255) NOT NULL,
-  philhealth_number varchar(255) NOT NULL,
-  tin_number varchar(255) NOT NULL,
-  pagibig_number varchar(255) NOT NULL,
-  status varchar(255) NOT NULL,
-  position varchar(255) NOT NULL,
-  immediate_supervisor varchar(255) NOT NULL,
-  basic_salary double NOT NULL,
-  gross_semi_monthly_rate double NOT NULL,
-  hourly_rate double NOT NULL,
-  rice_subsidy double NOT NULL,
-  phone_allowance double NOT NULL,
-  clothing_allowance double NOT NULL,
-  birthdate date DEFAULT NULL,
-  is_deleted tinyint(1) NOT NULL DEFAULT 0,
-  department varchar(150) DEFAULT NULL,
-  date_hired date NOT NULL DEFAULT current_timestamp()
+CREATE TABLE `employees` (
+  `employee_number` int(11) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `phone_number` varchar(255) NOT NULL,
+  `sss_number` varchar(255) NOT NULL,
+  `philhealth_number` varchar(255) NOT NULL,
+  `tin_number` varchar(255) NOT NULL,
+  `pagibig_number` varchar(255) NOT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `position` varchar(255) NOT NULL,
+  `immediate_supervisor` varchar(255) DEFAULT NULL,
+  `basic_salary` double DEFAULT NULL,
+  `gross_semi_monthly_rate` double DEFAULT NULL,
+  `hourly_rate` double DEFAULT NULL,
+  `rice_subsidy` double DEFAULT NULL,
+  `phone_allowance` double DEFAULT NULL,
+  `clothing_allowance` double DEFAULT NULL,
+  `birthdate` date DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+  `department` varchar(150) DEFAULT NULL,
+  `date_hired` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table employees
+-- Dumping data for table `employees`
 --
 
-INSERT INTO employees (employee_number, last_name, first_name, address, phone_number, sss_number, philhealth_number, tin_number, pagibig_number, status, position, immediate_supervisor, basic_salary, gross_semi_monthly_rate, hourly_rate, rice_subsidy, phone_allowance, clothing_allowance, birthdate, is_deleted, department, date_hired) VALUES
-(10001, 'Garcia', 'Manuel III', '', '999554', '44-4506057-3', '820126853951', '442-605-657-000', '691295330870', 'Regular', 'Chief Executive Officer', 'N/A', 90000, 45000, 535.71, 1500, 2000, 1000, '1983-10-11', 0, 'Administration', '2025-03-01'),
+INSERT INTO `employees` (`employee_number`, `last_name`, `first_name`, `address`, `phone_number`, `sss_number`, `philhealth_number`, `tin_number`, `pagibig_number`, `status`, `position`, `immediate_supervisor`, `basic_salary`, `gross_semi_monthly_rate`, `hourly_rate`, `rice_subsidy`, `phone_allowance`, `clothing_allowance`, `birthdate`, `is_deleted`, `department`, `date_hired`) VALUES
+(10001, 'Garcia', 'Manuel III', 'test', '999554', '44-4506057-3', '820126853951', '442-605-657-000', '691295330870', 'Regular', 'Chief Executive Officer', 'N/A', 90000, 45000, 535.71, 1500, 2000, 1000, '1983-10-11', 0, 'Administration', '2025-03-01'),
 (10002, 'Lim', 'Antonio', 'San Antonio De Padua 2, Block 1 Lot 8 and 2, Dasmarinas, Cavite', '171-867-411', '52-2061274-9', '331735646338', '683-102-776-000', '663904995411', 'Regular', 'Chief Operating Officer', 'Garcia, Manuel III', 60000, 30000, 357.14, 1500, 2000, 1000, '1988-06-19', 0, 'Administration', '2025-03-01'),
-(10003, 'Aquinotest', 'Bianca Sofia', 'Rm. 402 4/F Jiao Building Timog Avenue Cor. Quezon Avenue 1100, Quezon City', '966-889-370', '30-8870406-2', '177451189665', '971-711-280-000', '171519773969', 'Regular', 'Chief Finance Officer', 'Garcia, Manuel III', 60000, 30000, 357.14, 1500, 2000, 1000, '1989-08-04', 0, 'Administration', '2025-03-01'),
+(10003, 'Aquinotest', 'Bianca Sofia', 'Rm. 402 4/F Jiao Building Timog Avenue Cor. Quezon Avenue 1100, Quezon City', '55555555', '30-8870406-2', '177451189665', '971-711-280-000', '171519773969', 'Regular', 'Chief Finance Officer', 'Garcia, Manuel III', 60000, 30000, 357.14, 1500, 2000, 1000, '1989-08-04', 0, 'Administration', '2025-03-01'),
 (10004, 'Reyes', 'Isabella', '460 Solanda Street Intramuros 1000, Manila', '786-868-477', '40-2511815-0', '341911411254', '876-809-437-000', '416946776041', 'Regular', 'Chief Marketing Officer', 'Garcia, Manuel III', 60000, 30000, 357.14, 1500, 2000, 1000, '1994-06-16', 0, 'Administration', '2025-03-01'),
 (10005, 'Hernandez', 'Eduard', 'National Highway, Gingoog,  Misamis Occidental', '088-861-012', '50-5577638-1', '957436191812', '031-702-374-000', '952347222457', 'Regular', 'IT Operations and Systems', 'Lim, Antonio', 52670, 26335, 313.51, 1500, 1000, 1000, '1989-09-23', 0, 'IT', '2025-03-01'),
 (10006, 'Villanueva', 'Andrea Mae', '17/85 Stracke Via Suite 042, Poblacion, Las Piñas 4783 Dinagat Islands ', '918-621-603', '49-1632020-8', '382189453145', '317-674-022-000', '441093369646', 'Regular', 'HR Manager', 'Lim, Antonio', 52670, 26335, 313.51, 1500, 1000, 1000, '1988-02-14', 0, 'HR', '2025-03-01'),
 (10007, 'San Jose', 'Brad ', '99 Strosin Hills, Poblacion, Bislig 5340 Tawi-Tawi', '797-009-261', '40-2400714-1', '239192926939', '672-474-690-000', '210850209964', 'Regular', 'HR Team Leader', 'Villanueva, Andrea Mae', 42975, 21488, 255.8, 1500, 800, 800, '1996-03-15', 0, 'HR', '2025-03-01'),
-(10008, 'Romualdez', 'Alice', '12A/33 Upton Isle Apt. 420, Roxas City 1814 Surigao del Norte', '983-606-797', '55-4476527-2', '545652640232', '888-572-294-000', '211385556888', 'Regular', 'HR Rank and File', 'San, Jose Brad', 22500, 11250, 133.93, 1500, 500, 500, '1992-05-14', 0, 'HR', '2025-03-01'),
+(10008, 'Romualdez', 'Alice', '12A/33 Upton Isle Apt. 420, Roxas City 1814 Surigao del Norte', '983-606-797', '55-4476527-2', '545652640232', '888-572-294-000', '211385556888', 'Regular', 'HR Rank and File', 'San, Jose Brad', 22500, 11250, 133, 1500, 500, 500, '1992-05-14', 0, 'HR', '2025-03-01'),
 (10009, 'Atienza', 'Rosie ', '90A Dibbert Terrace Apt. 190, San Lorenzo 6056 Davao del Norte', '266-036-427', '41-0644692-3', '708988234853', '604-997-793-000', '260107732354', 'Regular', 'HR Rank and File', 'San, Jose Brad', 22500, 11250, 133, 1500, 500, 500, '1948-09-24', 0, 'HR', '2025-03-01'),
 (10010, 'Alvaro', 'Roderick', '#284 T. Morato corner, Scout Rallos Street, Quezon City', '053-381-386', '64-7605054-4', '578114853194', '525-420-419-000', '799254095212', 'Regular', 'Accounting Head', 'Aquino, Bianca Sofia ', 52670, 26335, 313.51, 1500, 1000, 1000, '1988-03-30', 0, 'Finance', '2025-03-01'),
 (10011, 'Salcedo', 'Anthony', '93/54 Shanahan Alley Apt. 183, Santo Tomas 1572 Masbate', '070-766-300', '26-9647608-3', '126445315651', '210-805-911-000', '218002473454', 'Regular', 'Payroll Manager', 'Alvaro, Roderick', 50825, 25413, 302.53, 1500, 1000, 1000, '1993-09-14', 0, 'HR/Finance', '2025-03-01'),
@@ -2298,36 +2299,43 @@ INSERT INTO employees (employee_number, last_name, first_name, address, phone_nu
 (10030, 'Maceda', 'Emelia ', '50A/83 Bahringer Oval Suite 145, Kiamba 7688 Nueva Ecija', '973-358-041', '54-1331005-0', '465087894112', '215-973-013-000', '515012579765', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 22500, 11250, 133, 1500, 500, 500, '1973-04-14', 0, 'Sales', '2025-03-01'),
 (10031, 'Aguilar', 'Delia ', '95 Cremin Junction, Surallah 2809 Cotabato', '529-705-439', '52-1859253-1', '136451303068', '599-312-588-000', '110018813465', 'Probationary', 'Account Rank and File', 'De Leon, Selena', 22500, 11250, 133.93, 1500, 500, 500, '1989-01-27', 0, 'Sales', '2025-03-01'),
 (10032, 'Castro', 'John Rafael1', 'Hi-way, Yati, Liloan Cebu', '332-424-955 ', '26-7145133-4', '601644902402', '404-768-309-000', '697764069311', 'Regular', 'Sales & Marketing', 'Reyes, Isabella', 52670, 26335, 313, 1500, 1000, 1000, '1992-02-09', 0, 'Sales', '2025-03-01'),
-(10033, 'Martinez', 'Carlos Ian', 'Bulala, Camalaniugan', '078-854-208', '11-5062972-7', '380685387212', '256-436-296-000', '993372963726', 'Regular', 'Supply Chain and Logistics', 'Reyes, Isabella', 52670, 26335, 313.51, 1500, 1000, 1000, '1990-11-16', 0, 'Logistic', '2025-03-01'),
-(10034, 'Santos', 'Beatriz', 'Agapita Building, Metro Manila', '526-639-511', '20-2987501-5', '918460050077', '911-529-713-000', '874042259378', 'Regular', 'Customer Service and Relations', 'Reyes, Isabella', 52670, 26335, 313.51, 1500, 1000, 1000, '1990-08-07', 0, 'Sales', '2025-03-01'),
+(10033, 'Martinez', 'Carlos Ian', 'Bulala, Camalaniugan', '078-854-208', '11-5062972-7', '380685387212', '256-436-296-000', '993372963726', 'Regular', 'Customer Service and Relations', 'Reyes, Isabella', 52670, 26335, 313, 1500, 1000, 1000, '1990-11-16', 0, 'Logistic', '2025-03-01'),
+(10034, 'Rick', 'Beatriz', 'Agapita Building, Metro Manila', '526-639-511', '20-2987501-5', '918460050077', '911-529-713-000', '874042259378', 'Regular', 'Customer Service and Relations', 'RICK', 1212, 1212, 121, 1212, 1212, 1212, '1990-08-07', 1, 'Sales', '2025-03-01'),
 (10062, 'AlexTest', 'Test', 'Test1', '55466', '1125488', '524878', '824426', '255422', 'Regular', 'Chief Operating Officer', 'Test', 50000, 5000, 5000, 500, 500, 500, '2000-06-20', 0, NULL, '2025-03-23'),
 (10063, 'AlexanderTest', 'Test', 'Test', '213412', '125748', '5158541', '3312485', '25441', 'Regular', 'Chief Executive Officer', 'Test', 500, 500, 500, 850, 520, 852, '2000-03-27', 1, NULL, '2025-03-23'),
-(10064, 'Alexistest', 'test', 'test', '2556', '20245', '635112', '2441', '2325211', 'Regular', 'Sales & Marketing', 'test', 500, 500, 500, 500, 500, 500, '2000-03-26', 0, NULL, '2025-03-23');
+(10064, 'Alexistest', 'test', 'test', '2556', '20245', '635112', '2441', '2325211', 'Regular', 'Sales & Marketing', 'test', 500, 500, 500, 500, 500, 500, '2000-03-26', 0, NULL, '2025-03-23'),
+(10065, 'fadsfdas', 'sdfafasfd', 'asdf3', '4123523', '45235', '542352', '3213', '3213', 'Probationary', 'Payroll Team Leader', 'rtwe56324', 2313, 121, 112, 12312, 11, 112, '2005-03-27', 0, NULL, '2025-03-26'),
+(10066, 'Alextest', 'Test', 'fTest', '0655', '12', '222', '1222', '222', 'Regular', 'Account Manager', 'test', 222, 222, 222, 222, 222, 12, '2000-03-29', 0, NULL, '2025-03-26'),
+(10067, 'Aqua', 'Flask', 'sssss', '52', '22', '22', '22', '22', NULL, 'Chief Marketing Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2000-03-29', 1, NULL, '2025-03-26'),
+(10072, 'River', 'Esnyr', 'Test', '22', '6684', '6654', '1144', '5575254', NULL, 'Chief Finance Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2000-03-29', 0, NULL, '2025-03-26'),
+(10073, 'Esnyr', 'River', 'Test', '3655', '366214', '551745', '52274121', '22541', NULL, 'Chief Finance Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2000-03-29', 0, NULL, '2025-03-26'),
+(10074, 'HRTest', 'Test', 'Test', '022', '3248', '21245', '2571', '254667', NULL, 'Chief Executive Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2000-03-29', 0, NULL, '2025-03-26'),
+(10075, 'EmployeeTest', 'testEdit', 'Test', '225', '14452121', '122121', '5224545', '120012', 'Regular', 'HR Team Leader', 'Test', 22, 22, 22, 22, 2, 222, '2000-03-29', 0, NULL, '2025-03-26');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table leave_records
+-- Table structure for table `leave_records`
 --
 
-CREATE TABLE leave_records (
-  id int(11) NOT NULL,
-  employee_number int(11) NOT NULL,
-  leave_type varchar(200) NOT NULL,
-  date_filed date NOT NULL DEFAULT current_timestamp(),
-  date_from date NOT NULL,
-  date_until date NOT NULL,
-  number_of_days int(11) NOT NULL,
-  reason varchar(200) NOT NULL,
-  approved_by int(11) DEFAULT NULL,
-  remarks enum('PENDING','APPROVED','DECLINED') NOT NULL DEFAULT 'PENDING'
+CREATE TABLE `leave_records` (
+  `id` int(11) NOT NULL,
+  `employee_number` int(11) NOT NULL,
+  `leave_type` varchar(200) NOT NULL,
+  `date_filed` date NOT NULL DEFAULT current_timestamp(),
+  `date_from` date NOT NULL,
+  `date_until` date NOT NULL,
+  `number_of_days` int(11) NOT NULL,
+  `reason` varchar(200) NOT NULL,
+  `approved_by` int(11) DEFAULT NULL,
+  `remarks` enum('PENDING','APPROVED','DECLINED') NOT NULL DEFAULT 'PENDING'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table leave_records
+-- Dumping data for table `leave_records`
 --
 
-INSERT INTO leave_records (id, employee_number, leave_type, date_filed, date_from, date_until, number_of_days, reason, approved_by, remarks) VALUES
+INSERT INTO `leave_records` (`id`, `employee_number`, `leave_type`, `date_filed`, `date_from`, `date_until`, `number_of_days`, `reason`, `approved_by`, `remarks`) VALUES
 (2, 10001, 'SL - Sick Leave', '2024-06-22', '2024-06-24', '2024-06-25', 1, 'Edi Sick ano pa ba', 10002, 'APPROVED'),
 (3, 10001, 'VL - Vacation Leave', '2024-06-22', '2024-06-28', '2024-06-29', 1, 'Vacation to Palawan', 10002, 'DECLINED'),
 (4, 10001, 'VL - Vacation Leave', '2024-06-22', '2024-06-03', '2024-06-04', 1, 'Vacay', 10002, 'APPROVED'),
@@ -2348,41 +2356,43 @@ INSERT INTO leave_records (id, employee_number, leave_type, date_filed, date_fro
 (21, 10001, 'VL - Vacation Leave', '2025-03-15', '2025-03-10', '2025-03-11', 1, 'Vacay', 10002, 'APPROVED'),
 (22, 10008, 'VL - Vacation Leave', '2025-03-23', '2025-03-24', '2025-03-25', 2, 'Vacay', NULL, 'PENDING'),
 (23, 10008, 'VL - Vacation Leave', '2025-03-23', '2025-03-25', '2025-03-26', 2, '', 10006, 'APPROVED'),
-(24, 10008, 'VL - Vacation Leave', '2025-03-23', '2025-03-26', '2025-03-27', 2, 'Test', NULL, 'PENDING');
+(24, 10008, 'VL - Vacation Leave', '2025-03-23', '2025-03-26', '2025-03-27', 2, 'Test', NULL, 'PENDING'),
+(25, 10008, 'SL - Sick Leave', '2025-03-26', '2025-03-21', '2025-03-28', 6, '', NULL, 'PENDING'),
+(26, 10008, 'VL - Vacation Leave', '2025-03-26', '2025-03-26', '2025-03-27', 2, 'Bora', NULL, 'PENDING');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table payslip
+-- Table structure for table `payslip`
 --
 
-CREATE TABLE payslip (
-  id int(15) NOT NULL,
-  employee_id int(11) NOT NULL,
-  period_start date NOT NULL,
-  period_end date NOT NULL,
-  position varchar(50) NOT NULL,
-  monthly_rate decimal(10,0) NOT NULL,
-  hourly_rate decimal(10,0) NOT NULL,
-  hours_worked decimal(10,0) DEFAULT 0,
-  overtime_hours decimal(10,0) DEFAULT 0,
-  gross_income decimal(10,0) NOT NULL,
-  rice_subsidy decimal(10,0) NOT NULL,
-  phone_allowance decimal(10,0) NOT NULL,
-  clothing_allowance decimal(10,0) NOT NULL,
-  sss_deduction decimal(10,0) NOT NULL,
-  philhealth_deduction decimal(10,0) NOT NULL,
-  pagibig_deduction decimal(10,0) NOT NULL,
-  withholding_tax decimal(10,0) NOT NULL,
-  take_home_pay decimal(10,0) NOT NULL,
-  payment_date date DEFAULT NULL
+CREATE TABLE `payslip` (
+  `id` int(15) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `period_start` date NOT NULL,
+  `period_end` date NOT NULL,
+  `position` varchar(50) NOT NULL,
+  `monthly_rate` decimal(10,0) NOT NULL,
+  `hourly_rate` decimal(10,0) NOT NULL,
+  `hours_worked` decimal(10,0) DEFAULT 0,
+  `overtime_hours` decimal(10,0) DEFAULT 0,
+  `gross_income` decimal(10,0) NOT NULL,
+  `rice_subsidy` decimal(10,0) NOT NULL,
+  `phone_allowance` decimal(10,0) NOT NULL,
+  `clothing_allowance` decimal(10,0) NOT NULL,
+  `sss_deduction` decimal(10,0) NOT NULL,
+  `philhealth_deduction` decimal(10,0) NOT NULL,
+  `pagibig_deduction` decimal(10,0) NOT NULL,
+  `withholding_tax` decimal(10,0) NOT NULL,
+  `take_home_pay` decimal(10,0) NOT NULL,
+  `payment_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table payslip
+-- Dumping data for table `payslip`
 --
 
-INSERT INTO payslip (id, employee_id, period_start, period_end, position, monthly_rate, hourly_rate, hours_worked, overtime_hours, gross_income, rice_subsidy, phone_allowance, clothing_allowance, sss_deduction, philhealth_deduction, pagibig_deduction, withholding_tax, take_home_pay, payment_date) VALUES
+INSERT INTO `payslip` (`id`, `employee_id`, `period_start`, `period_end`, `position`, `monthly_rate`, `hourly_rate`, `hours_worked`, `overtime_hours`, `gross_income`, `rice_subsidy`, `phone_allowance`, `clothing_allowance`, `sss_deduction`, `philhealth_deduction`, `pagibig_deduction`, `withholding_tax`, `take_home_pay`, `payment_date`) VALUES
 (1, 10001, '2025-03-10', '2025-03-16', 'Chief Executive Officer', 90000, 535, 32, 0, 17120, 1500, 2000, 1000, 158, 1350, 100, 0, 20013, '2025-03-12'),
 (2, 10008, '2025-03-10', '2025-03-16', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
 (3, 10009, '2025-03-10', '2025-03-16', 'HR Rank and File', 22500, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2025-03-12'),
@@ -2653,21 +2663,21 @@ INSERT INTO payslip (id, employee_id, period_start, period_end, position, monthl
 -- --------------------------------------------------------
 
 --
--- Table structure for table permissions
+-- Table structure for table `permissions`
 --
 
-CREATE TABLE permissions (
-  permission_id int(11) NOT NULL,
-  module varchar(255) NOT NULL,
-  description text DEFAULT NULL,
-  submodule varchar(255) DEFAULT NULL
+CREATE TABLE `permissions` (
+  `permission_id` int(11) NOT NULL,
+  `module` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `submodule` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table permissions
+-- Dumping data for table `permissions`
 --
 
-INSERT INTO permissions (permission_id, module, description, submodule) VALUES
+INSERT INTO `permissions` (`permission_id`, `module`, `description`, `submodule`) VALUES
 (1, 'Home', 'Main landing page', NULL),
 (2, 'Dashboard', NULL, NULL),
 (3, 'Employee Management', 'Employee management module', NULL),
@@ -2682,20 +2692,20 @@ INSERT INTO permissions (permission_id, module, description, submodule) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table roles
+-- Table structure for table `roles`
 --
 
-CREATE TABLE roles (
-  role_id int(11) NOT NULL,
-  role_name varchar(255) NOT NULL,
-  description text DEFAULT NULL
+CREATE TABLE `roles` (
+  `role_id` int(11) NOT NULL,
+  `role_name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table roles
+-- Dumping data for table `roles`
 --
 
-INSERT INTO roles (role_id, role_name, description) VALUES
+INSERT INTO `roles` (`role_id`, `role_name`, `description`) VALUES
 (1, 'Employee', 'Regular employee with limited access'),
 (2, 'HR Personnel', 'HR personnel with access to HR-related features'),
 (3, 'System Admin', 'Administrator with full access');
@@ -2703,19 +2713,19 @@ INSERT INTO roles (role_id, role_name, description) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table role_permissions
+-- Table structure for table `role_permissions`
 --
 
-CREATE TABLE role_permissions (
-  role_id int(11) NOT NULL,
-  permission_id int(11) NOT NULL
+CREATE TABLE `role_permissions` (
+  `role_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table role_permissions
+-- Dumping data for table `role_permissions`
 --
 
-INSERT INTO role_permissions (role_id, permission_id) VALUES
+INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 (1, 1),
 (1, 4),
 (1, 6),
@@ -2733,20 +2743,20 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table user_credentials
+-- Table structure for table `user_credentials`
 --
 
-CREATE TABLE user_credentials (
-  employee_number int(11) NOT NULL,
-  password varchar(255) NOT NULL,
-  role_id int(11) DEFAULT NULL
+CREATE TABLE `user_credentials` (
+  `employee_number` int(11) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table user_credentials
+-- Dumping data for table `user_credentials`
 --
 
-INSERT INTO user_credentials (employee_number, password, role_id) VALUES
+INSERT INTO `user_credentials` (`employee_number`, `password`, `role_id`) VALUES
 (10001, 'Garcia01', 3),
 (10002, 'Lim02', 3),
 (10003, 'Aquino03', 3),
@@ -2783,131 +2793,135 @@ INSERT INTO user_credentials (employee_number, password, role_id) VALUES
 (10034, 'Santos34', 1),
 (10062, 'AlexTest123', 1),
 (10063, 'Alexander123', 1),
-(10064, 'Alexis123', 1);
+(10064, 'Alexis123', 1),
+(10065, 'fadsfdas123', 1),
+(10066, 'Alextest123', 3),
+(10074, 'HRTest123', 3),
+(10075, 'EmployeeTest123', 1);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table announcement
+-- Indexes for table `announcement`
 --
-ALTER TABLE announcement
-  ADD PRIMARY KEY (id),
-  ADD KEY fk_created_by (created_by);
+ALTER TABLE `announcement`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_created_by` (`created_by`);
 
 --
--- Indexes for table employees
+-- Indexes for table `employees`
 --
-ALTER TABLE employees
-  ADD PRIMARY KEY (employee_number),
-  ADD UNIQUE KEY sss_number (sss_number),
-  ADD UNIQUE KEY philhealth_number (philhealth_number),
-  ADD UNIQUE KEY tin_number (tin_number),
-  ADD UNIQUE KEY pagibig_number (pagibig_number);
+ALTER TABLE `employees`
+  ADD PRIMARY KEY (`employee_number`),
+  ADD UNIQUE KEY `sss_number` (`sss_number`),
+  ADD UNIQUE KEY `philhealth_number` (`philhealth_number`),
+  ADD UNIQUE KEY `tin_number` (`tin_number`),
+  ADD UNIQUE KEY `pagibig_number` (`pagibig_number`);
 
 --
--- Indexes for table leave_records
+-- Indexes for table `leave_records`
 --
-ALTER TABLE leave_records
-  ADD PRIMARY KEY (id);
+ALTER TABLE `leave_records`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table payslip
+-- Indexes for table `payslip`
 --
-ALTER TABLE payslip
-  ADD PRIMARY KEY (id),
-  ADD KEY fk_employee (employee_id);
+ALTER TABLE `payslip`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_employee` (`employee_id`);
 
 --
--- Indexes for table permissions
+-- Indexes for table `permissions`
 --
-ALTER TABLE permissions
-  ADD PRIMARY KEY (permission_id);
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`permission_id`);
 
 --
--- Indexes for table roles
+-- Indexes for table `roles`
 --
-ALTER TABLE roles
-  ADD PRIMARY KEY (role_id);
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`role_id`);
 
 --
--- Indexes for table role_permissions
+-- Indexes for table `role_permissions`
 --
-ALTER TABLE role_permissions
-  ADD PRIMARY KEY (role_id,permission_id),
-  ADD KEY permission_id (permission_id);
+ALTER TABLE `role_permissions`
+  ADD PRIMARY KEY (`role_id`,`permission_id`),
+  ADD KEY `permission_id` (`permission_id`);
 
 --
--- Indexes for table user_credentials
+-- Indexes for table `user_credentials`
 --
-ALTER TABLE user_credentials
-  ADD PRIMARY KEY (employee_number),
-  ADD KEY fk_role_id (role_id);
+ALTER TABLE `user_credentials`
+  ADD PRIMARY KEY (`employee_number`),
+  ADD KEY `fk_role_id` (`role_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table employees
+-- AUTO_INCREMENT for table `employees`
 --
-ALTER TABLE employees
-  MODIFY employee_number int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10065;
+ALTER TABLE `employees`
+  MODIFY `employee_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10076;
 
 --
--- AUTO_INCREMENT for table leave_records
+-- AUTO_INCREMENT for table `leave_records`
 --
-ALTER TABLE leave_records
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+ALTER TABLE `leave_records`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
--- AUTO_INCREMENT for table payslip
+-- AUTO_INCREMENT for table `payslip`
 --
-ALTER TABLE payslip
-  MODIFY id int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=363;
+ALTER TABLE `payslip`
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=363;
 
 --
--- AUTO_INCREMENT for table permissions
+-- AUTO_INCREMENT for table `permissions`
 --
-ALTER TABLE permissions
-  MODIFY permission_id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+ALTER TABLE `permissions`
+  MODIFY `permission_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table roles
+-- AUTO_INCREMENT for table `roles`
 --
-ALTER TABLE roles
-  MODIFY role_id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `roles`
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table announcement
+-- Constraints for table `announcement`
 --
-ALTER TABLE announcement
-  ADD CONSTRAINT fk_created_by FOREIGN KEY (created_by) REFERENCES employees (employee_number) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `announcement`
+  ADD CONSTRAINT `fk_created_by` FOREIGN KEY (`created_by`) REFERENCES `employees` (`employee_number`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table payslip
+-- Constraints for table `payslip`
 --
-ALTER TABLE payslip
-  ADD CONSTRAINT fk_employee FOREIGN KEY (employee_id) REFERENCES employees (employee_number) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `payslip`
+  ADD CONSTRAINT `fk_employee` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_number`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table role_permissions
+-- Constraints for table `role_permissions`
 --
-ALTER TABLE role_permissions
-  ADD CONSTRAINT role_permissions_ibfk_1 FOREIGN KEY (role_id) REFERENCES `roles` (role_id) ON DELETE CASCADE,
-  ADD CONSTRAINT role_permissions_ibfk_2 FOREIGN KEY (permission_id) REFERENCES permissions (permission_id) ON DELETE CASCADE;
+ALTER TABLE `role_permissions`
+  ADD CONSTRAINT `role_permissions_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `role_permissions_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`permission_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table user_credentials
+-- Constraints for table `user_credentials`
 --
-ALTER TABLE user_credentials
-  ADD CONSTRAINT fk_role_id FOREIGN KEY (role_id) REFERENCES `roles` (role_id) ON DELETE CASCADE,
-  ADD CONSTRAINT user_credentials_ibfk_1 FOREIGN KEY (employee_number) REFERENCES employees (employee_number) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `user_credentials`
+  ADD CONSTRAINT `fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `user_credentials_ibfk_1` FOREIGN KEY (`employee_number`) REFERENCES `employees` (`employee_number`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -98,11 +98,13 @@ public class Helpers {
                 if (!isEmptyCheck(fieldWithLabel)) {
                     isClear = false;
                 }
+                
+                System.out.println(fieldWithLabel.getField().getValue());
 
                 // Check other validation rules
                 for (String rule : validationRules) {
                     boolean isValid = true;
-
+                    System.out.println(rule);
                     switch (rule) {
                         case "Required":
                             isValid = isEmptyCheck(fieldWithLabel);// "isEmpty" is already handled by isEmptyCheck, so we skip it
@@ -135,6 +137,7 @@ public class Helpers {
 
                     // If any validation fails, set isClear to false and break out of the loop
                     if (!isValid) {
+                        System.out.println("Not clear");
                         isClear = false;
                         break; // No need to check further rules for this field
                     }

@@ -12,6 +12,7 @@ import alex.oopmotorphpayrollsystem.User;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -285,6 +286,12 @@ public class Dashboard extends javax.swing.JPanel {
         dateHiredLabelValue.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         add(dateHiredLabelValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, 140, 26));
 
+        jScrollPane4.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jScrollPane4MouseWheelMoved(evt);
+            }
+        });
+
         EmpMngTable.setAutoCreateRowSorter(true);
         EmpMngTable.setBackground(new java.awt.Color(255, 255, 255));
         EmpMngTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -351,6 +358,16 @@ public class Dashboard extends javax.swing.JPanel {
         jSeparator7.setForeground(new java.awt.Color(187, 187, 187));
         add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 176, 860, 18));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jScrollPane4MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane4MouseWheelMoved
+        int rotation = evt.getWheelRotation();
+                JScrollBar verticalScrollBar = jScrollPane4.getVerticalScrollBar();
+                
+                // Control the scroll speed here (higher value = faster scroll)
+                int scrollAmount = rotation * 38;  // Adjust this multiplier for smoothness
+                
+                verticalScrollBar.setValue(verticalScrollBar.getValue() + scrollAmount);
+    }//GEN-LAST:event_jScrollPane4MouseWheelMoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

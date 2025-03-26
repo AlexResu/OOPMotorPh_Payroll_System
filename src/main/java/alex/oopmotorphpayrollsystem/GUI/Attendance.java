@@ -10,6 +10,7 @@ import alex.oopmotorphpayrollsystem.AttendanceRecord;
 import alex.oopmotorphpayrollsystem.HRPersonnel;
 import alex.oopmotorphpayrollsystem.User;
 import java.util.List;
+import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -120,6 +121,12 @@ public class Attendance extends javax.swing.JPanel {
         endDate.setText("End Date");
         add(endDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, -1, -1));
 
+        jScrollPane5.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jScrollPane5MouseWheelMoved(evt);
+            }
+        });
+
         attendanceTable.setAutoCreateRowSorter(true);
         attendanceTable.setBackground(new java.awt.Color(255, 255, 255));
         attendanceTable.setForeground(new java.awt.Color(0, 0, 0));
@@ -190,6 +197,16 @@ public class Attendance extends javax.swing.JPanel {
     private void EmpAttendanceSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmpAttendanceSearchActionPerformed
         loadAttendance();
     }//GEN-LAST:event_EmpAttendanceSearchActionPerformed
+
+    private void jScrollPane5MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane5MouseWheelMoved
+         int rotation = evt.getWheelRotation();
+                JScrollBar verticalScrollBar = jScrollPane5.getVerticalScrollBar();
+                
+                // Control the scroll speed here (higher value = faster scroll)
+                int scrollAmount = rotation * 38;  // Adjust this multiplier for smoothness
+                
+                verticalScrollBar.setValue(verticalScrollBar.getValue() + scrollAmount);
+    }//GEN-LAST:event_jScrollPane5MouseWheelMoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

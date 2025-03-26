@@ -13,6 +13,7 @@ import java.util.Date;
 import com.toedter.calendar.JDateChooser;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JScrollBar;
 
 /**
  *
@@ -221,6 +222,12 @@ public class FileALeave extends javax.swing.JFrame {
             }
         });
         kGradientPanel1.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 10, -1, 30));
+
+        jScrollPane3.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jScrollPane3MouseWheelMoved(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -456,6 +463,16 @@ public class FileALeave extends javax.swing.JFrame {
             }, 3000);
         } 
     }//GEN-LAST:event_submitActionPerformed
+
+    private void jScrollPane3MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane3MouseWheelMoved
+        int rotation = evt.getWheelRotation();
+                JScrollBar verticalScrollBar = jScrollPane3.getVerticalScrollBar();
+                
+                // Control the scroll speed here (higher value = faster scroll)
+                int scrollAmount = rotation * 38;  // Adjust this multiplier for smoothness
+                
+                verticalScrollBar.setValue(verticalScrollBar.getValue() + scrollAmount);
+    }//GEN-LAST:event_jScrollPane3MouseWheelMoved
 
     /**
      * @param args the command line arguments

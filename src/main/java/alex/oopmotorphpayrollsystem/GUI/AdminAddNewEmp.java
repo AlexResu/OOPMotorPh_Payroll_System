@@ -14,6 +14,7 @@ import alex.oopmotorphpayrollsystem.SystemAdministrator;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.util.*;
+import javax.swing.JScrollBar;
 
 /**
  *
@@ -85,7 +86,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpBirthValue), addNewEmpWarnBirth, validation5));
         fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPhoneNumValue), addNewEmpWarnPhone, validation3));
         fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpAddressValue), addNewEmpWarnAdd, validation6));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpImmediateSupValue), addNewEmpWarnISup, validation1));
+        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpImmediateSupValue), addNewEmpWarnISup, validation6));
         empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpBasicSalaryValue), addNewEmpWarnBSal, validation4));
         empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpGrossSemiValue), addNewEmpWarnGSMR, validation4));
         empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpHourlyRateValue), addNewEmpWarnHRate, validation4));
@@ -114,8 +115,10 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     }
     
     public void loadUserDetails(){
+        System.out.println(editableUser.getRoleName());
+        System.out.println("loadUserDetails");
         newEmpIDValue.setText(String.valueOf(editableUser.getEmployeeID()));
-        newEmpRoleValue.setSelectedItem(String.valueOf(editableUser.getRoleName()));
+        newEmpRoleValue.setSelectedItem(editableUser.getRoleName());
         newEmpLastNameValue.setText(editableUser.getLastName());
         newEmpFirstNameValue.setText(editableUser.getFirstName());
         newEmpBirthValue.setDate(editableUser.getBirthday());
@@ -299,6 +302,11 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         AddNewEmpGradientPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jScrollPane1MouseWheelMoved(evt);
+            }
+        });
 
         addNewEmpForm.setBackground(new java.awt.Color(255, 255, 255));
         addNewEmpForm.setForeground(new java.awt.Color(0, 0, 0));
@@ -391,7 +399,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
 
         newEmpIDValue.setEditable(false);
         newEmpIDValue.setBackground(new java.awt.Color(227, 227, 227));
-        newEmpIDValue.setForeground(new java.awt.Color(204, 204, 204));
+        newEmpIDValue.setForeground(new java.awt.Color(0, 0, 0));
         newEmpIDValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         newEmpIDValue.setDisabledTextColor(new java.awt.Color(102, 102, 102));
         newEmpIDValue.addActionListener(new java.awt.event.ActionListener() {
@@ -592,6 +600,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
 
         newEmpSssValue.setBackground(new java.awt.Color(255, 255, 255));
         newEmpSssValue.setForeground(new java.awt.Color(0, 0, 0));
+        newEmpSssValue.setToolTipText("Must be unique");
         newEmpSssValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         newEmpSssValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -632,7 +641,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
 
         newEmpRoleValue.setBackground(new java.awt.Color(227, 227, 227));
         newEmpRoleValue.setForeground(new java.awt.Color(0, 0, 0));
-        newEmpRoleValue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Employee", "HR Personnel", "System Administrator" }));
+        newEmpRoleValue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Employee", "HR Personnel", "System Admin" }));
         newEmpRoleValue.setEnabled(false);
         newEmpRoleValue.setLightWeightPopupEnabled(false);
         newEmpRoleValue.addActionListener(new java.awt.event.ActionListener() {
@@ -877,12 +886,9 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     
     private void newEmpSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpSubmitButtonActionPerformed
         addNewEmpErrorFill.setVisible(false);
-        // Validate the form inputs
-
-        boolean isFormClear = Helpers.validateForm(fields);
-        boolean isEmployeeClear = Helpers.validateForm(empOnlyFields);
         
         String role = (String) newEmpRoleValue.getSelectedItem();
+        System.out.println(role);
         if(role.equals("System Admin")){
             editableUser = new SystemAdministrator();
         } else if(role.equals("HR Personnel")){
@@ -890,13 +896,18 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         } else {
             editableUser = new Employee();
         }
-        
-        boolean isClear = editableUser instanceof Employee 
-                ? isEmployeeClear && isFormClear 
-                : isFormClear;
+        boolean isClear = Helpers.validateForm(fields);
+        System.out.println(editableUser instanceof Employee);
+        System.out.println(editableUser instanceof HRPersonnel);
+        System.out.println(editableUser instanceof SystemAdministrator);
+        if(editableUser instanceof Employee ){
+            isClear = Helpers.validateForm(empOnlyFields) && isClear;
+        }
         boolean result = false;
         
+        addNewEmpErrorFill.setText("Error: Please fill the required (*) fields. ");
         addNewEmpErrorFill.setVisible(!isClear);
+        System.out.println(isClear);
         if(isClear){
             editableUser.setLastName(newEmpLastNameValue.getText());
             editableUser.setFirstName(newEmpFirstNameValue.getText());
@@ -907,19 +918,11 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
             editableUser.setTinNumber(newEmpTinValue.getText());
             editableUser.setPhilhealthNumber(newEmpPhilhealthValue.getText());
             editableUser.setPagibigNumber(newEmpPagIbigValue.getText());
+            editableUser.setPosition((String) newEmpPositionValue.getSelectedItem());
             
             if(role.equals("Employee")){
-                boolean isEmployeeFormClear = Helpers.validateForm(empOnlyFields);
-                System.out.println("isEmployeeFormClear: ");
-                System.out.println(isEmployeeFormClear);
-                if(!isEmployeeFormClear){
-                    return;
-                }
-                
                 ((Employee) editableUser).setStatus((String) newEmpStatusValue.getSelectedItem());
-                ((Employee) editableUser).setPosition((String) newEmpPositionValue.getSelectedItem());
                 ((Employee) editableUser).setImmediateSupervisor(newEmpImmediateSupValue.getText());
-                
                 Benefits benefit = new Benefits();
                 benefit.setBasicSalary(Double.parseDouble(newEmpBasicSalaryValue.getText()));
                 benefit.setGrossSemiMonthlyRate(Double.parseDouble(newEmpGrossSemiValue.getText()));
@@ -945,7 +948,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
                     result = ((SystemAdministrator) user).updateEmployee(editableUser);
                 }
             }
-
+            System.out.println(result);
             if(result){
                 addNewEmpSuccessCreatedLabel.setVisible(true);
                 newEmpSubmitButton.setEnabled(false);
@@ -961,6 +964,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
                     }
                 }, 3000);
             } else {
+                addNewEmpErrorFill.setText("Error: Something went wrong. ");
                 addNewEmpErrorFill.setVisible(true);
             }
         }
@@ -1041,6 +1045,16 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     private void newEmpImmediateSupValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpImmediateSupValueActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_newEmpImmediateSupValueActionPerformed
+
+    private void jScrollPane1MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane1MouseWheelMoved
+         int rotation = evt.getWheelRotation();
+                JScrollBar verticalScrollBar = jScrollPane1.getVerticalScrollBar();
+                
+                // Control the scroll speed here (higher value = faster scroll)
+                int scrollAmount = rotation * 38;  // Adjust this multiplier for smoothness
+                
+                verticalScrollBar.setValue(verticalScrollBar.getValue() + scrollAmount);
+    }//GEN-LAST:event_jScrollPane1MouseWheelMoved
 
     /**
      * @param args the command line arguments

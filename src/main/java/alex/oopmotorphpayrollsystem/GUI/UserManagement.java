@@ -211,6 +211,12 @@ public class UserManagement extends javax.swing.JPanel {
         });
         add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 110, 140, 30));
 
+        jScrollPane4.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jScrollPane4MouseWheelMoved(evt);
+            }
+        });
+
         EmpMngTable.setAutoCreateRowSorter(true);
         EmpMngTable.setBackground(new java.awt.Color(255, 255, 255));
         EmpMngTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -385,6 +391,16 @@ public class UserManagement extends javax.swing.JPanel {
             newEmpFrame.setVisible(true);
         }
     }//GEN-LAST:event_deleteActionPerformed
+
+    private void jScrollPane4MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane4MouseWheelMoved
+        int rotation = evt.getWheelRotation();
+                JScrollBar verticalScrollBar = jScrollPane4.getVerticalScrollBar();
+                
+                // Control the scroll speed here (higher value = faster scroll)
+                int scrollAmount = rotation * 38;  // Adjust this multiplier for smoothness
+                
+                verticalScrollBar.setValue(verticalScrollBar.getValue() + scrollAmount);
+    }//GEN-LAST:event_jScrollPane4MouseWheelMoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

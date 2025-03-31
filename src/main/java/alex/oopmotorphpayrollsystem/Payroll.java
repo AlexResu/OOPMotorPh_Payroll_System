@@ -4,6 +4,7 @@
  */
 package alex.oopmotorphpayrollsystem;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -125,12 +126,7 @@ public class Payroll {
         this.overtimeHours = workedHours > 40 ? workedHours - 40 : 0;
         this.weekPeriodStart = weekPeriodStart;
         this.weekPeriodEnd = weekPeriodEnd;
-        
-        // Call helper methods to calculate benefits, deductions, gross pay, and net pay
         checkBenefits();
-        generateDeductions();
-        calculateGrossPay();
-        calculateNetPay();
     }
     
     // Calculate the gross income based on hours worked and hourly rate
@@ -159,7 +155,7 @@ public class Payroll {
     // If no benefits are applicable (no worked hours or no basic salary), set allowances to 0
     public void checkBenefits(){
         // no benefits if no worked hours
-        if(employee.getBenefitsBasicSalary() == 0.0 || this.hoursWorked == 0.0){
+        if(!isLastSunday()){
             this.employee.setBenefitsClothingAllowance(0);
             this.employee.setBenefitsPhoneAllowance(0);
             this.employee.setBenefitsRiceSubsidy(0);
@@ -167,19 +163,44 @@ public class Payroll {
     }
     
     // Generate the deductions based on the employee's basic salary and worked hours
-    protected void generateDeductions(){
+    public void generateDeductions(double totalMonthWorkHours){
         // no deductions if no worked hours
-        if(employee.getBenefitsBasicSalary() == 0.0 || this.hoursWorked == 0.0){
+        if(isLastSunday()){
+            this.deductions = new Deductions(employee.getBenefitsBasicSalary());
+            // Calculate taxable income (gross income minus existing deductions)
+            double taxableIncome = this.employee.getBenefitsHourlyRate() * this.hoursWorked - 
+                    (this.deductions.getSssDeduction() + this.deductions.getPhilhealthDeduction()
+                    + this.deductions.getPagIbigDeduction());
+            // Calculate tax deduction based on taxable income
+            this.deductions.calculateTaxDeduction(taxableIncome);
+        } else {
             this.deductions = new Deductions();
             return;
         }
-        // Create new deductions based on the basic salary
-        this.deductions = new Deductions(employee.getBenefitsBasicSalary());
-        // Calculate taxable income (gross income minus existing deductions)
-        double taxableIncome = this.employee.getBenefitsHourlyRate() * this.hoursWorked - 
-                (this.deductions.getSssDeduction() + this.deductions.getPhilhealthDeduction()
-                + this.deductions.getPagIbigDeduction());
-        // Calculate tax deduction based on taxable income
-        this.deductions.calculateTaxDeduction(taxableIncome);
+        
+    }
+    
+    private boolean isLastSunday() {
+        // Use Calendar to work with the Date (weekendPeriod)
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(this.weekPeriodEnd);
+        
+        // Set the calendar to the last day of the month
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        
+        // Find the last Sunday of the month
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        
+        // Move back to the Sunday before or on the last day of the month
+        while (dayOfWeek != Calendar.SUNDAY) {
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
+            dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        }
+        
+        // The date to compare with (last Sunday)
+        Date lastSunday = calendar.getTime();
+        
+        // Check if the weekendPeriod matches the last Sunday
+        return this.weekPeriodEnd.equals(lastSunday);
     }
 }

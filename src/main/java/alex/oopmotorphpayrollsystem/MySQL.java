@@ -639,20 +639,52 @@ public class MySQL {
                     "    AND p.period_end = ? " + 
                     "WHERE r.role_name = 'Employee'";
             
-            if(!status.equals("All")){
-                query += " AND payslip_status = ?";
-            }
-            
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             
             
             preparedStatement.setDate(1, startDate);
             preparedStatement.setDate(2, endDate);
-            if(!status.equals("All")){
-                preparedStatement.setString(3, status);
-            }
 
             // Execute the query
+            System.out.println("Executing Query: " + preparedStatement.toString());
+            resultSet = preparedStatement.executeQuery();
+
+        } catch (SQLException e) {
+            System.err.println("Error while executing SQL query!");
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+    
+    public ResultSet getPayslipListForCalculate(int year, int month) {
+        System.out.println("getPayslipList");
+        try {
+            // Define the query
+            String query = "SELECT p.id, e.*, "
+                    + "p.period_start, p.period_end, "
+                    + "p.payment_date, COALESCE(SUM(p.hours_worked), 0) AS total_hours_worked, "
+                    + "COALESCE(p.take_home_pay, 0) AS take_home_pay,\n" +
+                    "    CASE \n" +
+                    "        WHEN p.payment_date IS NOT NULL THEN 'Completed'\n" +
+                    "        ELSE 'Pending'\n" +
+                    "    END AS payslip_status\n" +
+                    "FROM employees e\n" +
+                    "INNER JOIN user_credentials uc "
+                    + "ON e.employee_number = uc.employee_number\n" +
+                    "INNER JOIN roles r ON uc.role_id = r.role_id\n" +
+                    "LEFT JOIN payslip p ON e.employee_number = p.employee_id\n" +
+                    "    AND YEAR(p.period_end) = ? " + 
+                    "    AND MONTH(p.period_end) = ? " + 
+                    "WHERE r.role_name = 'Employee' GROUP BY e.employee_number";
+            
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            
+            
+            preparedStatement.setInt(1, year);
+            preparedStatement.setInt(2, month);
+
+            // Execute the query
+            System.out.println("Executing Query: " + preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
 
         } catch (SQLException e) {

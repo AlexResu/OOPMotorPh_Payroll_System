@@ -8,6 +8,8 @@ import alex.oopmotorphpayrollsystem.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 /**
  * HRPersonnel class handles the core operations related to payroll processing, employee management,
@@ -103,13 +105,49 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
      * @return true if payroll is successfully processed, false otherwise.
      */
     public boolean processPayroll(Date startDate, Date endDate) {
-        MySQL mySQL = new MySQL();
-        ResultSet rs = mySQL.getPayslipList(
-                new java.sql.Date(startDate.getTime()), 
-                new java.sql.Date(endDate.getTime()),
-                "All");
-        List<User> employees = mapEmployees(rs);  
+        LocalDate localDate = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
+        // Extract year and month
+        int year = localDate.getYear();
+        int month = localDate.getMonthValue();
+        MySQL mySQL = new MySQL();
+        ResultSet rs = mySQL.getPayslipListForCalculate(year, month);
+        List<User> employees = new ArrayList<>();
+        Map<Integer, Integer> employeeWorkedHoursMap = new HashMap<>(); 
+        try {
+            while (rs.next()) {
+                Employee emp = new Employee();
+                emp.setEmployeeID(rs.getInt("employee_number"));
+                emp.setLastName(rs.getString("last_name"));
+                emp.setFirstName(rs.getString("first_name"));
+                emp.setAddress(rs.getString("address"));
+                emp.setBirthday(rs.getDate("birthdate"));
+                emp.setPhoneNumber(rs.getString("phone_number"));
+                emp.setSssNumber(rs.getString("sss_number"));
+                emp.setPhilhealthNumber(rs.getString("philhealth_number"));
+                emp.setTinNumber(rs.getString("tin_number"));
+                emp.setPagibigNumber(rs.getString("pagibig_number"));
+                emp.setStatus(rs.getString("status"));
+                emp.setPosition(rs.getString("position"));
+                emp.setImmediateSupervisor(rs.getString("immediate_supervisor"));
+                emp.setDateHired(rs.getDate("date_hired"));
+
+                Benefits benefit = new Benefits(
+                        rs.getInt("basic_salary"),
+                        rs.getInt("gross_semi_monthly_rate"),
+                        rs.getInt("hourly_rate"),
+                        rs.getInt("rice_subsidy"),
+                        rs.getInt("phone_allowance"),
+                        rs.getInt("clothing_allowance")
+                    );
+                emp.setBenefits(benefit);
+                employees.add(emp);
+                employeeWorkedHoursMap.put(emp.getEmployeeID(), rs.getInt("total_hours_worked"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
         rs = mySQL.getAttendanceByPeriod(
                 new java.sql.Date(startDate.getTime()), 
                 new java.sql.Date(endDate.getTime()));
@@ -134,7 +172,12 @@ public class HRPersonnel extends User implements PayrollProcessor, LeaveApprover
                 }
             }
             
+            int totalMonthWorkHours = totalWorkHours + employeeWorkedHoursMap.get(emp.getEmployeeID());
+            
             Payroll pr = new Payroll((Employee) emp, totalWorkHours, startDate, endDate);
+            pr.generateDeductions(totalMonthWorkHours);
+            pr.calculateGrossPay();
+            pr.calculateNetPay();
             payslips.add(pr);
             // generate all payslip
         }

@@ -3,7 +3,7 @@ package UnitTesing;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import alex.oopmotorphpayrollsystem.Deductions;
+import models.Deductions;
 
 /**
  * Unit tests for the Deductions class.

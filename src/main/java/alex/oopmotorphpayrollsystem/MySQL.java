@@ -8,6 +8,14 @@ package alex.oopmotorphpayrollsystem;
  *
  * @author Alex Resurreccion
  */
+import models.Employee;
+import models.Benefits;
+import models.Payroll;
+import models.SystemAdministrator;
+import models.User;
+import models.HRPersonnel;
+import models.Deductions;
+import models.LeaveRequest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -45,7 +53,7 @@ public class MySQL {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             // Open a connection
-            String url = "jdbc:mysql://localhost:3306/motorph_db";
+            String url = "jdbc:mysql://localhost:3307/motorph_db";
             String username = "root";
             String password = "";
             connection = DriverManager.getConnection(url, username, password);

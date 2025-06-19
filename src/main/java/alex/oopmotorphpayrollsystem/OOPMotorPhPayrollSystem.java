@@ -4,7 +4,7 @@
 
 package alex.oopmotorphpayrollsystem;
 
-import alex.oopmotorphpayrollsystem.GUI.LoginGui;
+import gui.LoginGui;
 import java.util.Scanner;
 
 /**

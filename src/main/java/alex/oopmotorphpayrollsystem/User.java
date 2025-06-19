@@ -144,34 +144,4 @@ public abstract class User {
     public void setDepartment(String department) {
         this.department = department;
     }
-    
-    // Method to get the role ID of the user by querying the database
-    public int getAccountRole(){
-        MySQL mySQL = new MySQL();
-        ResultSet result = mySQL.getUserRole(this);
-        try { 
-            if (result.next()) {
-                return result.getInt("role_id");
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        mySQL.close(); // Always ensure to close the connection
-        return 0;
-    }
-    
-    // Method to get the role name of the user by querying the database
-    public String getRoleName(){
-        MySQL mySQL = new MySQL();
-        ResultSet result = mySQL.getUserRole(this);
-        try { 
-            if (result.next()) {
-                return result.getString("role_name");
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        mySQL.close();
-        return "";
-    }
 } 

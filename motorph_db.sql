@@ -41,7 +41,7 @@ CREATE TABLE `announcement` (
 --
 
 CREATE TABLE `attendance_record` (
-  `employee_number` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
   `date` date NOT NULL,
   `time_in` datetime DEFAULT NULL,
   `time_out` datetime DEFAULT NULL
@@ -51,7 +51,7 @@ CREATE TABLE `attendance_record` (
 -- Dumping data for table `attendance_record`
 --
 
-INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out`) VALUES
+INSERT INTO `attendance_record` (`employee_id`, `date`, `time_in`, `time_out`) VALUES
 (10001, '2024-01-09', '2024-01-09 08:00:00', '2024-01-09 17:00:00'),
 (10002, '2024-01-09', '2024-01-09 08:00:00', '2024-01-09 17:00:00'),
 (10003, '2024-01-09', '2024-01-09 08:00:00', '2024-01-09 17:00:00'),
@@ -796,7 +796,7 @@ INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out
 (10017, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
 (10018, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
 (10019, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00');
-INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out`) VALUES
+INSERT INTO `attendance_record` (`employee_id`, `date`, `time_in`, `time_out`) VALUES
 (10020, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
 (10021, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
 (10022, '2024-12-10', '2024-12-10 08:00:00', '2024-12-10 17:00:00'),
@@ -1541,7 +1541,7 @@ INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out
 (10011, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
 (10012, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
 (10013, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00');
-INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out`) VALUES
+INSERT INTO `attendance_record` (`employee_id`, `date`, `time_in`, `time_out`) VALUES
 (10014, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
 (10015, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
 (10016, '2024-11-23', '2024-11-23 08:00:00', '2024-11-23 17:00:00'),
@@ -2238,7 +2238,7 @@ INSERT INTO `attendance_record` (`employee_number`, `date`, `time_in`, `time_out
 --
 
 CREATE TABLE `employees` (
-  `employee_number` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
@@ -2266,7 +2266,7 @@ CREATE TABLE `employees` (
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`employee_number`, `last_name`, `first_name`, `address`, `phone_number`, `sss_number`, `philhealth_number`, `tin_number`, `pagibig_number`, `status`, `position`, `immediate_supervisor`, `basic_salary`, `gross_semi_monthly_rate`, `hourly_rate`, `rice_subsidy`, `phone_allowance`, `clothing_allowance`, `birthdate`, `is_deleted`, `department`, `date_hired`) VALUES
+INSERT INTO `employees` (`employee_id`, `last_name`, `first_name`, `address`, `phone_number`, `sss_number`, `philhealth_number`, `tin_number`, `pagibig_number`, `status`, `position`, `immediate_supervisor`, `basic_salary`, `gross_semi_monthly_rate`, `hourly_rate`, `rice_subsidy`, `phone_allowance`, `clothing_allowance`, `birthdate`, `is_deleted`, `department`, `date_hired`) VALUES
 (10001, 'Garcia', 'Manuel III', 'test', '999554', '44-4506057-3', '820126853951', '442-605-657-000', '691295330870', 'Regular', 'Chief Executive Officer', 'N/A', 90000, 45000, 535.71, 1500, 2000, 1000, '1983-10-11', 0, 'Administration', '2025-03-01'),
 (10002, 'Lim', 'Antonio', 'San Antonio De Padua 2, Block 1 Lot 8 and 2, Dasmarinas, Cavite', '171-867-411', '52-2061274-9', '331735646338', '683-102-776-000', '663904995411', 'Regular', 'Chief Operating Officer', 'Garcia, Manuel III', 60000, 30000, 357.14, 1500, 2000, 1000, '1988-06-19', 0, 'Administration', '2025-03-01'),
 (10003, 'Aquinotest', 'Bianca Sofia', 'Rm. 402 4/F Jiao Building Timog Avenue Cor. Quezon Avenue 1100, Quezon City', '55555555', '30-8870406-2', '177451189665', '971-711-280-000', '171519773969', 'Regular', 'Chief Finance Officer', 'Garcia, Manuel III', 60000, 30000, 357.14, 1500, 2000, 1000, '1989-08-04', 0, 'Administration', '2025-03-01'),
@@ -2320,7 +2320,7 @@ INSERT INTO `employees` (`employee_number`, `last_name`, `first_name`, `address`
 
 CREATE TABLE `leave_records` (
   `id` int(11) NOT NULL,
-  `employee_number` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
   `leave_type` varchar(200) NOT NULL,
   `date_filed` date NOT NULL DEFAULT current_timestamp(),
   `date_from` date NOT NULL,
@@ -2335,7 +2335,7 @@ CREATE TABLE `leave_records` (
 -- Dumping data for table `leave_records`
 --
 
-INSERT INTO `leave_records` (`id`, `employee_number`, `leave_type`, `date_filed`, `date_from`, `date_until`, `number_of_days`, `reason`, `approved_by`, `remarks`) VALUES
+INSERT INTO `leave_records` (`id`, `employee_id`, `leave_type`, `date_filed`, `date_from`, `date_until`, `number_of_days`, `reason`, `approved_by`, `remarks`) VALUES
 (2, 10001, 'SL - Sick Leave', '2024-06-22', '2024-06-24', '2024-06-25', 1, 'Edi Sick ano pa ba', 10002, 'APPROVED'),
 (3, 10001, 'VL - Vacation Leave', '2024-06-22', '2024-06-28', '2024-06-29', 1, 'Vacation to Palawan', 10002, 'DECLINED'),
 (4, 10001, 'VL - Vacation Leave', '2024-06-22', '2024-06-03', '2024-06-04', 1, 'Vacay', 10002, 'APPROVED'),
@@ -2747,7 +2747,7 @@ INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 --
 
 CREATE TABLE `user_credentials` (
-  `employee_number` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -2756,7 +2756,7 @@ CREATE TABLE `user_credentials` (
 -- Dumping data for table `user_credentials`
 --
 
-INSERT INTO `user_credentials` (`employee_number`, `password`, `role_id`) VALUES
+INSERT INTO `user_credentials` (`employee_id`, `password`, `role_id`) VALUES
 (10001, 'Garcia01', 3),
 (10002, 'Lim02', 3),
 (10003, 'Aquino03', 3),
@@ -2814,7 +2814,7 @@ ALTER TABLE `announcement`
 -- Indexes for table `employees`
 --
 ALTER TABLE `employees`
-  ADD PRIMARY KEY (`employee_number`),
+  ADD PRIMARY KEY (`employee_id`),
   ADD UNIQUE KEY `sss_number` (`sss_number`),
   ADD UNIQUE KEY `philhealth_number` (`philhealth_number`),
   ADD UNIQUE KEY `tin_number` (`tin_number`),
@@ -2856,7 +2856,7 @@ ALTER TABLE `role_permissions`
 -- Indexes for table `user_credentials`
 --
 ALTER TABLE `user_credentials`
-  ADD PRIMARY KEY (`employee_number`),
+  ADD PRIMARY KEY (`employee_id`),
   ADD KEY `fk_role_id` (`role_id`);
 
 --
@@ -2867,7 +2867,7 @@ ALTER TABLE `user_credentials`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10076;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10076;
 
 --
 -- AUTO_INCREMENT for table `leave_records`
@@ -2901,13 +2901,13 @@ ALTER TABLE `roles`
 -- Constraints for table `announcement`
 --
 ALTER TABLE `announcement`
-  ADD CONSTRAINT `fk_created_by` FOREIGN KEY (`created_by`) REFERENCES `employees` (`employee_number`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_created_by` FOREIGN KEY (`created_by`) REFERENCES `employees` (`employee_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `payslip`
 --
 ALTER TABLE `payslip`
-  ADD CONSTRAINT `fk_employee` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_number`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_employee` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `role_permissions`
@@ -2921,7 +2921,7 @@ ALTER TABLE `role_permissions`
 --
 ALTER TABLE `user_credentials`
   ADD CONSTRAINT `fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `user_credentials_ibfk_1` FOREIGN KEY (`employee_number`) REFERENCES `employees` (`employee_number`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `user_credentials_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

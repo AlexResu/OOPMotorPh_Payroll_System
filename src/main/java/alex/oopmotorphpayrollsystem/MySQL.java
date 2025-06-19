@@ -45,9 +45,9 @@ public class MySQL {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             // Open a connection
-            String url = "jdbc:mysql://localhost:3306/motorph_db";
+            String url = "jdbc:mysql://localhost:3306/payrollsystem_db";
             String username = "root";
-            String password = "";
+            String password = "motorph_db2025";
             connection = DriverManager.getConnection(url, username, password);
             
 
@@ -184,9 +184,9 @@ public class MySQL {
             // Define the query
             String query = "SELECT a.*, e.position, e.first_name, e.last_name "
                     + "FROM attendance_record a INNER JOIN employees e "
-                    + "ON e.employee_number = a.employee_number ";
+                    + "ON e.employee_id = a.employee_id ";
             if(employeeNumber != 0){
-                query += "WHERE a.employee_number = ? ";
+                query += "WHERE a.employee_id = ? ";
             }
             query += "ORDER BY a.date DESC";
             
@@ -216,10 +216,10 @@ public class MySQL {
             // Define the query
             String query = "SELECT a.*, e.position, e.first_name, e.last_name "
                     + "FROM attendance_record a INNER JOIN employees e "
-                    + "ON e.employee_number = a.employee_number "
+                    + "ON e.employee_id = a.employee_id "
                     + "WHERE date BETWEEN ? AND ? ";
             if(employeeNumber != 0){
-                query += "AND a.employee_number = ? ";
+                query += "AND a.employee_id = ? ";
             }
             query += "ORDER BY date DESC";
 
@@ -250,9 +250,9 @@ public class MySQL {
             statement = connection.createStatement();
 
             // Define the query
-            String query = "SELECT p.*, e.employee_number, e.first_name, e.last_name, e.department,"
+            String query = "SELECT p.*, e.employee_id, e.first_name, e.last_name, e.department,"
                     + " e.position FROM payslip p INNER JOIN employees e "
-                    + "ON e.employee_number = p.employee_id ";
+                    + "ON e.employee_id = p.employee_id ";
             query += "ORDER BY payment_date DESC";
 
             // Execute the query
@@ -277,10 +277,7 @@ public class MySQL {
             statement = connection.createStatement();
 
             // Define the query
-            String query = "SELECT p.*, e.employee_number, e.first_name, e.last_name, "
-                    + "e.department, e.position FROM payslip p "
-                    + "INNER JOIN employees e "
-                    + "ON e.employee_number = p.employee_id "
+            String query = "SELECT * FROM payslip_view "
                     + "WHERE MONTH(period_start) = ? AND YEAR(period_start) = ? ";
             query += "ORDER BY payment_date DESC";
 
@@ -308,10 +305,7 @@ public class MySQL {
             statement = connection.createStatement();
 
             // Define the query
-            String query = "SELECT p.*, e.employee_number, e.first_name, e.last_name, "
-                    + "e.department, e.position FROM payslip p "
-                    + "INNER JOIN employees e "
-                    + "ON e.employee_number = p.employee_id "
+            String query = "SELECT * FROM payslip_view "
                     + "WHERE period_start = ? AND period_end = ? "
                     + "AND p.employee_id = ? ";
 
@@ -343,7 +337,7 @@ public class MySQL {
             // Define the query
             String query = "SELECT e.*, uc.role_id FROM employees e "
                     + "LEFT JOIN user_credentials uc "
-                    + "ON e.employee_number = uc.employee_number "
+                    + "ON e.employee_id = uc.employee_id "
                     + "WHERE e.is_deleted = False";
 
             // Execute the query
@@ -371,8 +365,8 @@ public class MySQL {
 
             // Define the query
             String query = "SELECT e.*, uc.role_id FROM employees e LEFT JOIN user_credentials uc "
-                    + "ON e.employee_number = uc.employee_number WHERE "
-                    + "(e.employee_number LIKE ? OR first_name LIKE ? OR "
+                    + "ON e.employee_id = uc.employee_id WHERE "
+                    + "(e.employee_id LIKE ? OR first_name LIKE ? OR "
                     + "last_name LIKE ?) AND e.is_deleted = False";
             
             preparedStatement = connection.prepareStatement(query);
@@ -403,7 +397,7 @@ public class MySQL {
             // Define the query
             String query = "SELECT e.* FROM employees e "
                     + "INNER JOIN user_credentials uc "
-                    + "ON e.employee_number = uc.employee_number "
+                    + "ON e.employee_id = uc.employee_id "
                     + "WHERE uc.role_id = 1 AND e.is_deleted = False";
 
             // Execute the query
@@ -431,9 +425,9 @@ public class MySQL {
 
             // Define the query
             String query = "SELECT * FROM employees e INNER JOIN user_credentials uc "
-                    + "ON e.employee_number = uc.employee_number WHERE uc.role_id = 1 "
+                    + "ON e.employee_id = uc.employee_id WHERE uc.role_id = 1 "
                     + "AND is_deleted = False AND "
-                    + "(e.employee_number LIKE ? OR first_name LIKE ? OR "
+                    + "(e.employee_id LIKE ? OR first_name LIKE ? OR "
                     + "last_name LIKE ?)";
             
             preparedStatement = connection.prepareStatement(query);
@@ -469,7 +463,7 @@ public class MySQL {
 
             // Define the query
             String query = "SELECT * FROM employees " 
-                    + "WHERE employee_number = " + employeeNumber ;
+                    + "WHERE employee_id = " + employeeNumber ;
 
             // Execute the query
             resultSet = statement.executeQuery(query);
@@ -490,9 +484,9 @@ public class MySQL {
             // Define the query
             String query = "SELECT r.role_id, r.role_name "
                     + "FROM employees e INNER JOIN user_credentials uc "
-                    + "ON uc.employee_number = e.employee_number "
+                    + "ON uc.employee_id = e.employee_id "
                     + "INNER JOIN roles r ON r.role_id = uc.role_id "
-                    + "WHERE e.employee_number = " + user.getEmployeeID();
+                    + "WHERE e.employee_id = " + user.getEmployeeID();
 
             // Execute the query
             resultSet = statement.executeQuery(query);
@@ -516,7 +510,7 @@ public class MySQL {
                     + " AS new_employees FROM employees e ";
             if(user instanceof HRPersonnel){
                 query += "INNER JOIN user_credentials uc "
-                    + " ON e.employee_number = uc.employee_number "
+                    + " ON e.employee_id = uc.employee_id "
                     + "WHERE role_id = 1";
             }
             
@@ -539,7 +533,7 @@ public class MySQL {
             // Define the query
             String query = "SELECT e.*, uc.role_id FROM employees e "
                     + "LEFT JOIN user_credentials uc "
-                    + " ON e.employee_number = uc.employee_number "
+                    + " ON e.employee_id = uc.employee_id "
                     + "WHERE date_hired >= CURDATE() - INTERVAL 7 DAY ";
             if(user instanceof HRPersonnel){
                 query += "AND role_id = 1 ";
@@ -563,12 +557,12 @@ public class MySQL {
 
             // Define the query
             String query = "SELECT l.*, e.department, e.first_name, e.last_name, \n" +
-                "e2.employee_number AS approver_id, \n" +
+                "e2.employee_id AS approver_id, \n" +
                 "e2.first_name AS approver_first_name, \n" +
                 "e2.last_name AS approver_last_name \n" +
                 "FROM leave_records l \n" +
-                "LEFT JOIN employees e ON e.employee_number = l.employee_number \n" +
-                "LEFT JOIN employees e2 ON e2.employee_number = l.employee_number "
+                "LEFT JOIN employees e ON e.employee_id = l.employee_id \n" +
+                "LEFT JOIN employees e2 ON e2.employee_id = l.employee_id "
                 + "ORDER BY date_filed DESC";
 
             // Execute the query
@@ -589,12 +583,12 @@ public class MySQL {
 
             // Define the query
             String query = "SELECT l.*, e.department, e.first_name, e.last_name, \n" +
-                "e2.employee_number AS approver_id, \n" +
+                "e2.employee_id AS approver_id, \n" +
                 "e2.first_name AS approver_first_name, \n" +
                 "e2.last_name AS approver_last_name \n" +
                 "FROM leave_records l \n" +
-                "LEFT JOIN employees e ON e.employee_number = l.employee_number \n" +
-                "LEFT JOIN employees e2 ON e2.employee_number = l.employee_number ";
+                "LEFT JOIN employees e ON e.employee_id = l.employee_id \n" +
+                "LEFT JOIN employees e2 ON e2.employee_id = l.employee_id ";
             
             if(!remarks.equals("All")){
                 query += "WHERE remarks = ? ";
@@ -622,23 +616,15 @@ public class MySQL {
         System.out.println("getPayslipList");
         try {
             // Define the query
-            String query = "SELECT p.id, e.*, "
-                    + "p.period_start, p.period_end, "
-                    + "p.payment_date, "
-                    + "COALESCE(p.take_home_pay, 0) AS take_home_pay,\n" +
-                    "    CASE \n" +
-                    "        WHEN p.payment_date IS NOT NULL THEN 'Completed'\n" +
-                    "        ELSE 'Pending'\n" +
-                    "    END AS payslip_status\n" +
-                    "FROM employees e\n" +
+            String query = "SELECT * " +
+                    "FROM payslip_view p\n" +
                     "INNER JOIN user_credentials uc "
-                    + "ON e.employee_number = uc.employee_number\n" +
+                    + "ON p.employee_id = uc.employee_id\n" +
                     "INNER JOIN roles r ON uc.role_id = r.role_id\n" +
-                    "LEFT JOIN payslip p ON e.employee_number = p.employee_id\n" +
-                    "    AND p.period_start = ? " + 
-                    "    AND p.period_end = ? " + 
-                    "WHERE r.role_name = 'Employee'";
-            
+                    "LEFT JOIN payslip p ON e.employee_id = p.employee_id\n" +
+                    "WHERE r.role_name = 'Employee' " +
+                    "    AND period_start = ? " + 
+                    "    AND period_end = ? " ;
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             
             
@@ -670,12 +656,12 @@ public class MySQL {
                     "    END AS payslip_status\n" +
                     "FROM employees e\n" +
                     "INNER JOIN user_credentials uc "
-                    + "ON e.employee_number = uc.employee_number\n" +
+                    + "ON e.employee_id = uc.employee_id\n" +
                     "INNER JOIN roles r ON uc.role_id = r.role_id\n" +
-                    "LEFT JOIN payslip p ON e.employee_number = p.employee_id\n" +
+                    "LEFT JOIN payslip p ON e.employee_id = p.employee_id\n" +
                     "    AND YEAR(p.period_end) = ? " + 
                     "    AND MONTH(p.period_end) = ? " + 
-                    "WHERE r.role_name = 'Employee' GROUP BY e.employee_number";
+                    "WHERE r.role_name = 'Employee' GROUP BY e.employee_id";
             
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             
@@ -699,7 +685,7 @@ public class MySQL {
             // Define the query
             String query = "SELECT a.* FROM attendance_record a "
                     + "INNER JOIN employees e "
-                    + "ON e.employee_number = a.employee_number "
+                    + "ON e.employee_id = a.employee_id "
                     + "WHERE date BETWEEN ? AND ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             
@@ -729,9 +715,9 @@ public class MySQL {
             statement = connection.createStatement();
 
             // Define the query
-            String query = "SELECT employee_number, password, role_name "
+            String query = "SELECT employee_id, password, role_name "
                     + "FROM user_credentials uc " 
-                    + "JOIN roles r ON r.role_id = uc.role_id WHERE employee_number = "
+                    + "JOIN roles r ON r.role_id = uc.role_id WHERE employee_id = "
                     + employeeNumber ;
 
             // Execute the query
@@ -761,7 +747,7 @@ public class MySQL {
                 "JOIN roles r ON r.role_id = uc.role_id\n" +
                 "JOIN role_permissions rp ON r.role_id = rp.role_id\n" +
                 "JOIN permissions p ON p.permission_id = rp.permission_id\n" +
-                "WHERE employee_number = " + employeeNumber;;
+                "WHERE employee_id = " + employeeNumber;;
 
             // Execute the query
             resultSet = statement.executeQuery(query);
@@ -786,7 +772,7 @@ public class MySQL {
             statement = connection.createStatement();
 
             // Define the query
-            String query = "SELECT * FROM employees WHERE employee_number = " + employeeNumber;
+            String query = "SELECT * FROM employees WHERE employee_id = " + employeeNumber;
 
             // Execute the query
             resultSet = statement.executeQuery(query);
@@ -804,7 +790,7 @@ public class MySQL {
         try {
             // Define the query
             String query = "SELECT * FROM attendance_record ar LEFT JOIN "
-                    + "employees e ON e.employee_number = ar.employee_number ORDER BY date DESC";
+                    + "employees e ON e.employee_id = ar.employee_id ORDER BY date DESC";
 
             // Prepare the statement
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -826,8 +812,8 @@ public class MySQL {
         try {
             // Define the query
             String query = "SELECT * FROM attendance_record ar LEFT JOIN "
-                    + "employees e ON e.employee_number = ar.employee_number "
-                    + "WHERE ar.employee_number LIKE ? ORDER BY date DESC";
+                    + "employees e ON e.employee_id = ar.employee_id "
+                    + "WHERE ar.employee_id LIKE ? ORDER BY date DESC";
 
             // Prepare the statement
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -853,7 +839,7 @@ public class MySQL {
         try {
             // Define the query
             String query = "SELECT * FROM attendance_record ar LEFT JOIN "
-                    + "employees e ON e.employee_number = ar.employee_number "
+                    + "employees e ON e.employee_id = ar.employee_id "
                     + "WHERE date BETWEEN ? AND ? ORDER BY date DESC";
 
             // Prepare the statement
@@ -882,8 +868,8 @@ public class MySQL {
         try {
             // Define the query
             String query = "SELECT * FROM attendance_record ar LEFT JOIN "
-                    + "employees e ON e.employee_number = ar.employee_number "
-                    + "WHERE ar.employee_number LIKE ? AND date BETWEEN ? AND ? "
+                    + "employees e ON e.employee_id = ar.employee_id "
+                    + "WHERE ar.employee_id LIKE ? AND date BETWEEN ? AND ? "
                     + "ORDER BY date DESC";
 
             // Prepare the statement
@@ -918,7 +904,7 @@ public class MySQL {
 
             // Define the query
             String query = "SELECT * FROM attendance_record "
-                    + "WHERE employee_number = ? AND date = ?";
+                    + "WHERE employee_id = ? AND date = ?";
             
             preparedStatement = connection.prepareStatement(query);
 
@@ -1030,7 +1016,7 @@ public class MySQL {
 
                 // Define the query
                 String query = "INSERT INTO user_credentials ("
-                    + "employee_number, password, role_id) VALUES (?, ?, ?)";
+                    + "employee_id, password, role_id) VALUES (?, ?, ?)";
 
                 // Prepare the statement
                 PreparedStatement preparedStatement2 = connection.prepareStatement(query);
@@ -1108,7 +1094,7 @@ public class MySQL {
 
                 // Define the query
                 String query = "INSERT INTO user_credentials ("
-                    + "employee_number, password, role_id) VALUES (?, ?, ?)";
+                    + "employee_id, password, role_id) VALUES (?, ?, ?)";
 
                 // Prepare the statement
                 PreparedStatement preparedStatement2 = connection.prepareStatement(query);
@@ -1234,7 +1220,7 @@ public class MySQL {
                         + "phone_allowance = ?, clothing_allowance = ? ";
             }
                 
-            query += "WHERE employee_number = ?";
+            query += "WHERE employee_id = ?";
 
             // Prepare the statement
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -1286,7 +1272,7 @@ public class MySQL {
 
             // Define the query
             String query = "UPDATE user_credentials "
-                    + "SET role_id = ? WHERE employee_number = ?";
+                    + "SET role_id = ? WHERE employee_id = ?";
 
             // Prepare the statement
             PreparedStatement preparedStatement2 = connection.prepareStatement(query);
@@ -1320,7 +1306,7 @@ public class MySQL {
 
             // Define the query
             String query = "UPDATE employees SET address = ?, phone_number = ? "
-                    + "WHERE employee_number = ?";
+                    + "WHERE employee_id = ?";
 
             // Prepare the statement
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -1348,7 +1334,7 @@ public class MySQL {
 
             // Define the query
             String query = "INSERT INTO leave_records("
-                    + "employee_number, leave_type, "
+                    + "employee_id, leave_type, "
                     + "date_from, date_until, number_of_days, reason, "
                     + "remarks) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -1442,7 +1428,7 @@ public class MySQL {
             statement = connection.createStatement();
 
             // Define the query
-            String query = "UPDATE employees SET is_deleted = ? WHERE employee_number = ?";
+            String query = "UPDATE employees SET is_deleted = ? WHERE employee_id = ?";
             
             // Prepare the statement
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -1464,7 +1450,7 @@ public class MySQL {
         ResultSet resultSet = null;
         try {
             // Define the query
-            String query = "SELECT * FROM attendance_record WHERE employee_number = ? AND date = ?";
+            String query = "SELECT * FROM attendance_record WHERE employee_id = ? AND date = ?";
 
             // Prepare the statement
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -1497,7 +1483,7 @@ public class MySQL {
         try {
             // Define the query
             String query = "INSERT INTO attendance_record ("
-                    + "employee_number, date, time_in) VALUES (?, ?, ?)";
+                    + "employee_id, date, time_in) VALUES (?, ?, ?)";
 
             // Prepare the statement
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -1529,7 +1515,7 @@ public class MySQL {
             // Define the query
             String query = "UPDATE attendance_record SET "
                     + "time_out = ? "
-                    + "WHERE employee_number = ? AND date = ?";
+                    + "WHERE employee_id = ? AND date = ?";
 
             // Prepare the statement
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -1555,8 +1541,8 @@ public class MySQL {
         try {
             // Define the query
             String query = "SELECT * FROM leave_records "
-                    + "LEFT JOIN employees ON leave_records.employee_number = "
-                    + "employees.employee_number WHERE "
+                    + "LEFT JOIN employees ON leave_records.employee_id = "
+                    + "employees.employee_id WHERE "
                     + "MONTH(date_filed) = ? AND YEAR(date_filed) = ?";
 
             // Prepare the statement
@@ -1590,7 +1576,7 @@ public class MySQL {
                 "COALESCE(SUM(CASE WHEN leave_type = 'VL - Vacation Leave' THEN 1 ELSE 0 END), "
                 + "0) AS vacation_leave_count " +
                 "FROM leave_records " +
-                "WHERE YEAR(date_filed) = ? AND employee_number = ? AND remarks = 'APPROVED'";
+                "WHERE YEAR(date_filed) = ? AND employee_id = ? AND remarks = 'APPROVED'";
 
             // Prepare the statement
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -1617,9 +1603,9 @@ public class MySQL {
         try {
             // Define the query
             String query = "SELECT * FROM leave_records LEFT JOIN employees "
-                    + "ON employees.employee_number = "
+                    + "ON employees.employee_id = "
                     + "leave_records.approved_by "
-                    + "WHERE leave_records.employee_number = ?";
+                    + "WHERE leave_records.employee_id = ?";
 
             // Prepare the statement
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -1655,7 +1641,7 @@ public class MySQL {
 
             // Define the query
             String query = "INSERT INTO leave_records ("
-                + "employee_number, number_of_days, leave_type, date_from, "
+                + "employee_id, number_of_days, leave_type, date_from, "
                 + "date_until, reason) VALUES (?, ?, ?, ?, ?, ?)";
 
             // Prepare the statement

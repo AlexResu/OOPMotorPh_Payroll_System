@@ -92,9 +92,9 @@ public class AttendanceRecord {
      * This method queries the database to get the attendance for the given employee on the current date.
      */
     private void initAttendanceRecord(){
-        MySQL mySQL = new MySQL();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = formatter.format(new Date());
+        MySQL mySQL = new MySQL();
         ResultSet result = mySQL.getEmployeeAttendanceByNumber(employeeID, formattedDate);
         try { 
             if (result.next()) {

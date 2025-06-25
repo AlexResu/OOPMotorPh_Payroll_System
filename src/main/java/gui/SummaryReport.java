@@ -90,6 +90,7 @@ public class SummaryReport extends javax.swing.JPanel {
         year = new javax.swing.JLabel();
         filterMonthlyYearValue = new com.toedter.calendar.JYearChooser();
         search = new javax.swing.JButton();
+        days = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -195,6 +196,11 @@ public class SummaryReport extends javax.swing.JPanel {
         });
         jPanel1.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 40, 30));
 
+        days.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        days.setForeground(new java.awt.Color(255, 0, 51));
+        days.setText("No data available for the selected period");
+        jPanel1.add(days, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 230, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,6 +252,7 @@ public class SummaryReport extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel days;
     private javax.swing.JButton downloadSummary;
     private javax.swing.JLabel filterMonthly;
     private com.toedter.calendar.JYearChooser filterMonthlyYearValue;

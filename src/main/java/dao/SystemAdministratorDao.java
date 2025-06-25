@@ -4,6 +4,7 @@
  */
 package dao;
 
+import alex.oopmotorphpayrollsystem.Address;
 import alex.oopmotorphpayrollsystem.Benefits;
 import alex.oopmotorphpayrollsystem.Employee;
 import alex.oopmotorphpayrollsystem.HRPersonnel;
@@ -50,11 +51,11 @@ public class SystemAdministratorDao {
                 // 1. Insert into address
                 String addressQuery = "INSERT INTO address (street, barangay, city, province, zipcode) VALUES (?, ?, ?, ?, ?)";
                 PreparedStatement psAddress = connection.prepareStatement(addressQuery, Statement.RETURN_GENERATED_KEYS);
-    //            psAddress.setString(1, employee.getAddress().getStreet());
-    //            psAddress.setString(2, employee.getAddress().getBarangay());
-    //            psAddress.setString(3, employee.getAddress().getCity());
-    //            psAddress.setString(4, employee.getAddress().getProvince());
-    //            psAddress.setString(5, employee.getAddress().getZipcode());
+                psAddress.setString(1, employee.getAddress().getStreet());
+                psAddress.setString(2, employee.getAddress().getBarangay());
+                psAddress.setString(3, employee.getAddress().getCity());
+                psAddress.setString(4, employee.getAddress().getProvince());
+                psAddress.setString(5, employee.getAddress().getZipcode());
                 psAddress.executeUpdate();
 
                 ResultSet rsAddress = psAddress.getGeneratedKeys();
@@ -142,11 +143,11 @@ public class SystemAdministratorDao {
                 // 1. Insert into address
                 String addressQuery = "INSERT INTO address (street, barangay, city, province, zipcode) VALUES (?, ?, ?, ?, ?)";
                 PreparedStatement psAddress = connection.prepareStatement(addressQuery, Statement.RETURN_GENERATED_KEYS);
-    //            psAddress.setString(1, employee.getAddress().getStreet());
-    //            psAddress.setString(2, employee.getAddress().getBarangay());
-    //            psAddress.setString(3, employee.getAddress().getCity());
-    //            psAddress.setString(4, employee.getAddress().getProvince());
-    //            psAddress.setString(5, employee.getAddress().getZipcode());
+                psAddress.setString(1, employee.getAddress().getStreet());
+                psAddress.setString(2, employee.getAddress().getBarangay());
+                psAddress.setString(3, employee.getAddress().getCity());
+                psAddress.setString(4, employee.getAddress().getProvince());
+                psAddress.setString(5, employee.getAddress().getZipcode());
                 psAddress.executeUpdate();
 
                 ResultSet rsAddress = psAddress.getGeneratedKeys();
@@ -458,7 +459,6 @@ public class SystemAdministratorDao {
                 user.setEmployeeID(result.getInt("employee_id"));
                 user.setLastName(result.getString("last_name"));
                 user.setFirstName(result.getString("first_name"));
-//                user.setAddress(result.getString("address"));
                 user.setBirthday(result.getDate("birthdate"));
                 user.setPhoneNumber(result.getString("phone_number"));
                 user.setSssNumber(result.getString("sss_number"));
@@ -466,6 +466,14 @@ public class SystemAdministratorDao {
                 user.setTinNumber(result.getString("tin_number"));
                 user.setPagibigNumber(result.getString("pagibig_number"));
                 user.setDateHired(result.getDate("date_hired"));
+                
+                Address address = new Address();
+                address.setBarangay(result.getString("barangay"));
+                address.setCity(result.getString("date_hired"));
+                address.setProvince(result.getString("province"));
+                address.setStreet(result.getString("street"));
+                address.setZipcode(result.getString("date_hired"));
+                user.setAddress(address);
                 
                 if (user instanceof Employee){
                     ((Employee) user).setStatus(result.getString("status"));

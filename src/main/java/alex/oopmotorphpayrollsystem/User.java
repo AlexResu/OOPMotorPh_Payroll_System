@@ -23,7 +23,6 @@ public abstract class User {
     protected String lastName;
     protected Date birthday;
     protected String position;
-    protected String address;
     protected String phoneNumber;
     protected String sssNumber;
     protected String philhealthNumber;
@@ -31,6 +30,7 @@ public abstract class User {
     protected String pagibigNumber;
     protected String department;
     protected Date dateHired;
+    private Address address;  // Composition: Employee "HAS-A" Address
     
     public User(){}
     
@@ -64,10 +64,6 @@ public abstract class User {
         return position;
     }
     
-    public String getAddress() {
-        return address;
-    }
-    
     
     public String getPhoneNumber() {
         return phoneNumber;
@@ -91,6 +87,10 @@ public abstract class User {
     
     public String getDepartment() {
         return department;
+    }
+    
+    public Address getAddress() {
+        return address;
     }
     
     public void setDateHired(Date dateHired) {
@@ -117,10 +117,6 @@ public abstract class User {
         this.position = position;
     }
     
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -143,5 +139,13 @@ public abstract class User {
     
     public void setDepartment(String department) {
         this.department = department;
+    }
+    
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public void setStreet(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 } 

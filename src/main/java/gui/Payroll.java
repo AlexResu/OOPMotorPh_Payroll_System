@@ -36,7 +36,7 @@ public class Payroll extends javax.swing.JPanel {
     }
     
     private void populateWeekComboBox() {
-        Map<String, String[]> valueMap = generateMondayValues();
+        Map<String, String[]> valueMap = generateBiMonthlyValues();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
         // Populate JComboBox with formatted week ranges
@@ -52,72 +52,74 @@ public class Payroll extends javax.swing.JPanel {
             selectPeriodValue.setSelectedIndex(0);
         }
     }
-
-    private Map<String, String[]> generateMondayValues() {
+    
+    private Map<String, String[]> generateBiMonthlyValues() {
         Map<String, String[]> map = new LinkedHashMap<>();
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd yyyy");
         Calendar calendar = Calendar.getInstance();
 
-        // Move to the latest Monday
-        if (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
-            calendar.add(Calendar.DAY_OF_WEEK, -((calendar.get(Calendar.DAY_OF_WEEK) + 5) % 7));
-        }
+        // Generate past 6 months of bi-monthly periods (approx. 12 periods)
+        for (int i = 0; i < 36; i++) {
+            // Period 2: 16th to end of month
+            int lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+            String start2 = sdf.format(getDate(calendar, 16));
+            String end2 = sdf.format(getDate(calendar, lastDay));
+            map.put(start2 + " - " + end2, new String[]{start2, end2});
 
-        // Generate past 3 months of Mondays (about 12 weeks)
-        for (int i = 0; i < 104; i++) {
-            String startDate = sdf.format(calendar.getTime()); // Monday
-            calendar.add(Calendar.DATE, 6); // Move to Sunday
-            String endDate = sdf.format(calendar.getTime()); // Sunday
+            // Period 1: 1st to 15th
+            String start1 = sdf.format(getDate(calendar, 1));
+            String end1 = sdf.format(getDate(calendar, 15));
+            map.put(start1 + " - " + end1, new String[]{start1, end1});
 
-            map.put(startDate + " - " + endDate, new String[]{startDate, endDate});
-
-            calendar.add(Calendar.DATE, -13); // Move back to the previous Monday
+            // Move calendar back 1 month
+            calendar.add(Calendar.MONTH, -1);
         }
 
         return map;
     }
+
+    // Helper method to get a specific day of the current calendar month
+    private Date getDate(Calendar baseCal, int day) {
+        Calendar cal = (Calendar) baseCal.clone();
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        return cal.getTime();
+    }
     
-    private Date[] getSelectedWeekDates() {
+    private Date[] getSelectedBiMonthlyDates() {
         String selectedText = (String) selectPeriodValue.getSelectedItem();
-        Map<String, String> valueMap = (Map<String, String>) selectPeriodValue.getClientProperty("valueMap");
+        Map<String, String[]> valueMap = (Map<String, String[]>) selectPeriodValue.getClientProperty("valueMap");
 
-        if (valueMap != null && selectedText != null) {
-            String[] dates = selectedText.split(" - "); // Extract "March 11" and "March 17"
+        if (valueMap != null && selectedText != null && valueMap.containsKey(selectedText)) {
+            String[] dateRange = valueMap.get(selectedText); // Contains [startDate, endDate]
+            SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd yyyy");
 
-            if (dates.length == 2) {
-                SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd yyyy");
-                int currentYear = Calendar.getInstance().get(Calendar.YEAR); // Use the current year
-
-                try {
-                    Date startDate = sdf.parse(dates[0] + " " + currentYear);
-                    Date endDate = sdf.parse(dates[1] + " " + currentYear);
-                    return new Date[]{startDate, endDate}; // Return both dates
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            try {
+                Date startDate = sdf.parse(dateRange[0]);
+                Date endDate = sdf.parse(dateRange[1]);
+                return new Date[]{startDate, endDate};
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-        return null; // Return null if parsing fails
+        return null;
     }
     
     private void loadPayrollData(){
         HRPersonnelDao hrPersonnelDao = new HRPersonnelDao();
-        Date[] selectedDates = getSelectedWeekDates();
-        String status = (String) selectStatusValue.getSelectedItem();
+        Date[] selectedDates = getSelectedBiMonthlyDates();
         List<Map<String, Object>> payrollList = hrPersonnelDao.loadPayrollList(
-                    selectedDates[0], selectedDates[1], status);
+                    selectedDates[0], selectedDates[1]);
         DefaultTableModel model = (DefaultTableModel) payrollReportTable.getModel();
         model.setRowCount(0);
         boolean hasPending = false;
         for (Map<String, Object> payroll : payrollList) {
             Object data[] = {
-                payroll.get("id"),
-                payroll.get("employeeNumber"),
-                payroll.get("department"),
-                payroll.get("name"),
-                payroll.get("paymentDate"),
-                payroll.get("netPay"),
-                payroll.get("status"),
+                payroll.get("payslip_no"),
+                payroll.get("employee_id"),
+                payroll.get("position_department"),
+                payroll.get("employee_name"),
+                payroll.get("take_home_pay"),
+//                payroll.get("status"),
             };
 
             // Add the row to the table model
@@ -143,9 +145,8 @@ public class Payroll extends javax.swing.JPanel {
         payrollReport = new javax.swing.JLabel();
         selectPeriod = new javax.swing.JLabel();
         selectPeriodValue = new javax.swing.JComboBox<>();
-        selectStatus = new javax.swing.JLabel();
-        selectStatusValue = new javax.swing.JComboBox<>();
         calculate = new javax.swing.JButton();
+        days = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(860, 590));
@@ -162,32 +163,32 @@ public class Payroll extends javax.swing.JPanel {
         payrollReportTable.setForeground(new java.awt.Color(0, 0, 0));
         payrollReportTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"180001", "10001", "Executive", "Manuel III A.", "05/15/2024", "26,000.00", "Completed"},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {"180001", "10001", "Executive", "Manuel III A.", "26,000.00"},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "PAYROLL ID", "EMPLOYEE ID", "DEPARTMENT", "NAME", "DATE OF PAYMENT", "EARNINGS", "STATUS"
+                "PAYROLL ID", "EMPLOYEE ID", "DEPARTMENT", "NAME", "EARNINGS"
             }
         ));
         payrollReportTable.setGridColor(new java.awt.Color(102, 102, 102));
@@ -206,7 +207,7 @@ public class Payroll extends javax.swing.JPanel {
         selectPeriod.setForeground(new java.awt.Color(0, 0, 0));
         selectPeriod.setText("Select Period");
         selectPeriod.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        add(selectPeriod, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 110, 30));
+        add(selectPeriod, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 110, 30));
 
         selectPeriodValue.setBackground(new java.awt.Color(255, 255, 255));
         selectPeriodValue.setForeground(new java.awt.Color(0, 0, 0));
@@ -217,30 +218,13 @@ public class Payroll extends javax.swing.JPanel {
                 selectPeriodValueActionPerformed(evt);
             }
         });
-        add(selectPeriodValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 230, 30));
-
-        selectStatus.setForeground(new java.awt.Color(0, 0, 0));
-        selectStatus.setText("Select Status");
-        selectStatus.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        add(selectStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 110, 30));
-
-        selectStatusValue.setBackground(new java.awt.Color(255, 255, 255));
-        selectStatusValue.setForeground(new java.awt.Color(0, 0, 0));
-        selectStatusValue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Completed", "Pending" }));
-        selectStatusValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        selectStatusValue.setLightWeightPopupEnabled(false);
-        selectStatusValue.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectStatusValueActionPerformed(evt);
-            }
-        });
-        add(selectStatusValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, 230, 30));
+        add(selectPeriodValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 230, 30));
 
         calculate.setBackground(new java.awt.Color(255, 255, 255));
         calculate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         calculate.setForeground(new java.awt.Color(0, 0, 204));
         calculate.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\calculator.png")); // NOI18N
-        calculate.setText("Calculate");
+        calculate.setText("Approve");
         calculate.setBorder(null);
         calculate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -248,18 +232,19 @@ public class Payroll extends javax.swing.JPanel {
             }
         });
         add(calculate, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 70, 100, 50));
+
+        days.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        days.setForeground(new java.awt.Color(255, 0, 51));
+        days.setText("No data available for the selected period");
+        add(days, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 230, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void selectPeriodValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectPeriodValueActionPerformed
         loadPayrollData();
     }//GEN-LAST:event_selectPeriodValueActionPerformed
 
-    private void selectStatusValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectStatusValueActionPerformed
-        loadPayrollData();
-    }//GEN-LAST:event_selectStatusValueActionPerformed
-
     private void calculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateActionPerformed
-        Date[] selectedDates = getSelectedWeekDates();
+        Date[] selectedDates = getSelectedBiMonthlyDates();
         boolean isSuccess = user.processPayroll(selectedDates[0], selectedDates[1]);
         if(isSuccess){
             loadPayrollData();
@@ -282,12 +267,11 @@ public class Payroll extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton calculate;
+    private javax.swing.JLabel days;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JLabel payrollReport;
     private javax.swing.JTable payrollReportTable;
     private javax.swing.JLabel selectPeriod;
     private javax.swing.JComboBox<String> selectPeriodValue;
-    private javax.swing.JLabel selectStatus;
-    private javax.swing.JComboBox<String> selectStatusValue;
     // End of variables declaration//GEN-END:variables
 }

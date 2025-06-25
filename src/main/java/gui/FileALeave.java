@@ -395,6 +395,7 @@ public class FileALeave extends javax.swing.JFrame {
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 630, 240, -1));
         jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 650, 10));
 
+        days.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         days.setForeground(new java.awt.Color(255, 0, 51));
         days.setText("You only have # of days left for this leave type.");
         jPanel2.add(days, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 320, 20));

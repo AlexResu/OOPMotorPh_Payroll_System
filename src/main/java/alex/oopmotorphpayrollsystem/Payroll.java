@@ -16,7 +16,7 @@ import java.util.List;
  * @author Alex Resurreccion
  */
 public class Payroll {
-    private int payrollID;
+    private String payrollID;
     private Employee employee;
     private Date weekPeriodStart;
     private Date weekPeriodEnd;
@@ -68,7 +68,7 @@ public class Payroll {
         return paymentDate;
     }
 
-    public int getPayrollID() {
+    public String getPayrollID() {
         return payrollID;
     }
 
@@ -88,7 +88,7 @@ public class Payroll {
         return deductions;
     } 
 
-    public void setPayrollID(int payrollID) {
+    public void setPayrollID(String payrollID) {
         this.payrollID = payrollID;
     }
 
@@ -111,7 +111,7 @@ public class Payroll {
     public Payroll() {}
     
     // Constructor with payroll ID, employee, and pay period start and end
-    public Payroll(int payrollID, Employee employee, Date weekPeriodStart, Date weekPeriodEnd) {
+    public Payroll(String payrollID, Employee employee, Date weekPeriodStart, Date weekPeriodEnd) {
         this.payrollID = payrollID;
         this.employee = employee;
         this.weekPeriodStart = weekPeriodStart;

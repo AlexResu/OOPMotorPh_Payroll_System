@@ -72,7 +72,7 @@ public class EmployeePayslip extends javax.swing.JPanel {
     private void loadPayslip(){
         EmployeeDao employeeDao = new EmployeeDao();
         HRPersonnelDao hrPersonnelDao = new HRPersonnelDao();
-        Date[] selectedDates = getSelectedWeekDates();
+        Date[] selectedDates = getSelectedBiMonthlyDates();
 //        String status = (String) selectStatusValue.getSelectedItem();
         Payroll payroll = new Payroll();
         if(user instanceof Employee){
@@ -89,7 +89,7 @@ public class EmployeePayslip extends javax.swing.JPanel {
             }
         }
         
-        if(payroll.getPayrollID() != 0){
+        if(payroll.getPayrollID() != null){
             this.payslip = payroll;
             System.out.println("Employee ID" + payroll.getEmployee().getEmployeeID());
             download.setEnabled(true);
@@ -139,7 +139,7 @@ public class EmployeePayslip extends javax.swing.JPanel {
         String formattedStartDate = formatter.format(payslip.getWeekPeriodStart());
         String formattedEndDate = formatter.format(payslip.getWeekPeriodEnd());
         
-        payslipNumValue.setText(Integer.toString(this.payslip.getPayrollID()));
+        payslipNumValue.setText(this.payslip.getPayrollID());
         empIdValue.setText(Integer.toString(employee.getEmployeeID()));
         empNameValue.setText(
                 employee.getFirstName() + " " + employee.getLastName());
@@ -167,11 +167,11 @@ public class EmployeePayslip extends javax.swing.JPanel {
     }
     
     private void populateWeekComboBox() {
-        Map<String, String[]> valueMap = generateMondayValues();
+        Map<String, String[]> valueMap = generateBiMonthlyValues();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
         // Populate JComboBox with formatted week ranges
-        model.addElement("Select week range");
+        model.addElement("Select bi-monthly range");
         for (String displayText : valueMap.keySet()) {
             model.addElement(displayText);
         }
@@ -185,51 +185,55 @@ public class EmployeePayslip extends javax.swing.JPanel {
         }
     }
     
-    private Map<String, String[]> generateMondayValues() {
+    private Map<String, String[]> generateBiMonthlyValues() {
         Map<String, String[]> map = new LinkedHashMap<>();
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd yyyy");
         Calendar calendar = Calendar.getInstance();
 
-        // Move to the latest Monday
-        if (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
-            calendar.add(Calendar.DAY_OF_WEEK, -((calendar.get(Calendar.DAY_OF_WEEK) + 5) % 7));
-        }
+        // Generate past 6 months of bi-monthly periods (approx. 12 periods)
+        for (int i = 0; i < 36; i++) {
+            // Period 2: 16th to end of month
+            int lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+            String start2 = sdf.format(getDate(calendar, 16));
+            String end2 = sdf.format(getDate(calendar, lastDay));
+            map.put(start2 + " - " + end2, new String[]{start2, end2});
 
-        // Generate past 3 months of Mondays (about 12 weeks)
-        for (int i = 0; i < 100; i++) {
-            String startDate = sdf.format(calendar.getTime()); // Monday
-            calendar.add(Calendar.DATE, 6); // Move to Sunday
-            String endDate = sdf.format(calendar.getTime()); // Sunday
+            // Period 1: 1st to 15th
+            String start1 = sdf.format(getDate(calendar, 1));
+            String end1 = sdf.format(getDate(calendar, 15));
+            map.put(start1 + " - " + end1, new String[]{start1, end1});
 
-            map.put(startDate + " - " + endDate, new String[]{startDate, endDate});
-
-            calendar.add(Calendar.DATE, -13); // Move back to the previous Monday
+            // Move calendar back 1 month
+            calendar.add(Calendar.MONTH, -1);
         }
 
         return map;
     }
+
+    // Helper method to get a specific day of the current calendar month
+    private Date getDate(Calendar baseCal, int day) {
+        Calendar cal = (Calendar) baseCal.clone();
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        return cal.getTime();
+    }
     
-    private Date[] getSelectedWeekDates() {
+    private Date[] getSelectedBiMonthlyDates() {
         String selectedText = (String) selectPeriodValue.getSelectedItem();
-        Map<String, String> valueMap = (Map<String, String>) selectPeriodValue.getClientProperty("valueMap");
+        Map<String, String[]> valueMap = (Map<String, String[]>) selectPeriodValue.getClientProperty("valueMap");
 
-        if (valueMap != null && selectedText != null) {
-            String[] dates = selectedText.split(" - "); // Extract "March 11" and "March 17"
+        if (valueMap != null && selectedText != null && valueMap.containsKey(selectedText)) {
+            String[] dateRange = valueMap.get(selectedText); // Contains [startDate, endDate]
+            SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd yyyy");
 
-            if (dates.length == 2) {
-                SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd yyyy");
-                int currentYear = Calendar.getInstance().get(Calendar.YEAR); // Use the current year
-
-                try {
-                    Date startDate = sdf.parse(dates[0] + " " + currentYear);
-                    Date endDate = sdf.parse(dates[1] + " " + currentYear);
-                    return new Date[]{startDate, endDate}; // Return both dates
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            try {
+                Date startDate = sdf.parse(dateRange[0]);
+                Date endDate = sdf.parse(dateRange[1]);
+                return new Date[]{startDate, endDate};
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-        return null; // Return null if parsing fails
+        return null;
     }
 
     /**
@@ -379,9 +383,9 @@ public class EmployeePayslip extends javax.swing.JPanel {
         employeePayslipPanel.add(empName, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 170, 30));
 
         empPosition.setBackground(new java.awt.Color(255, 255, 255));
-        empPosition.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        empPosition.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
         empPosition.setForeground(new java.awt.Color(0, 0, 0));
-        empPosition.setText("EMPLOYEE POSITION");
+        empPosition.setText("EMPLOYEE POSITION/DEPARTMENT ");
         empPosition.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255)));
         employeePayslipPanel.add(empPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 170, 30));
 

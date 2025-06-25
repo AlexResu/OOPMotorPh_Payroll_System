@@ -17,7 +17,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -392,18 +394,16 @@ public class EmployeeDao {
     // Helper method to map the ResultSet data to a Payroll object
     private Payroll mapPayroll(ResultSet result){
         Payroll pr = new Payroll();
-        try {
-            // Set the attributes of the Payroll object from the ResultSet
+        try { 
             pr.setGrossIncome(result.getInt("gross_income"));
             pr.setHoursWorked(result.getInt("hours_worked"));
             pr.setNetPay(result.getInt("take_home_pay"));
             pr.setOvertimeHours(result.getInt("overtime_hours"));
-            pr.setPaymentDate(result.getDate("payment_date"));
-            pr.setPayrollID(result.getInt("id"));
+//            pr.setPaymentDate(result.getDate("payment_date"));
+            pr.setPayrollID(result.getString("payslip_no"));
             pr.setWeekPeriodEnd(result.getDate("period_end"));
             pr.setWeekPeriodStart(result.getDate("period_start"));
             
-            // Initialize a new Deductions object to hold the payroll deductions
             Deductions deduction = new Deductions();
             deduction.setPagIbigDeduction(result.getInt("pagibig_deduction"));
             deduction.setPhilhealthDeduction(result.getInt("philhealth_deduction"));
@@ -411,10 +411,23 @@ public class EmployeeDao {
             deduction.setTaxDeduction(result.getInt("withholding_deduction"));
             pr.setDeductions(deduction);
             
-            // Set the employee’s benefits in the payroll (using the Employee instance)
-            Employee emp = new Employee(result.getInt("employee_id"));
+            Employee emp = new Employee();
+            String fullName = result.getString("employee_name"); 
+            String[] parts = fullName.split(", ", 2); 
+            String lastName = parts[0].trim();
+            String firstName = parts[1].trim();
 
-            // Initialize a Benefits object and set the various benefits based on query results
+            emp.setLastName(lastName);
+            emp.setFirstName(firstName);
+            
+            String positionDepartment = result.getString("position_department"); 
+            parts = positionDepartment.split(" / ", 2); 
+            String position = parts[0].trim();
+            String department = parts[1].trim();
+            emp.setEmployeeID(result.getInt("employee_id"));
+            emp.setPosition(position);
+            emp.setDepartment(department);
+
             Benefits benefit = new Benefits(
                     result.getInt("basic_salary"),
                     result.getInt("gross_income"),
@@ -429,8 +442,62 @@ public class EmployeeDao {
             System.out.println(ex);
         }
         
-        // Return the populated Payroll object
         return pr;
+    }
+ 
+    // Methods for Time-In and Time-Out (attendance management)
+    public void timeIn(int employeeNumber) {
+        LocalDate currentDate = LocalDate.now();
+        LocalDateTime currentTime = LocalDateTime.now();
+        int rowsAffected = 0;
+        
+        try {
+            // Define the query
+            String query = "INSERT INTO attendance_record ("
+                    + "employee_id, date, time_in) VALUES (?, ?, ?)";
+
+            // Prepare the statement
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+            // Set the parameters for the prepared statement
+            preparedStatement.setInt(1, employeeNumber);
+            preparedStatement.setDate(2, java.sql.Date.valueOf(currentDate));
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(currentTime));
+
+            // Execute the query
+            rowsAffected = preparedStatement.executeUpdate();
+            System.out.println(rowsAffected);
+        } catch (SQLException e) {
+            System.err.println("Error while executing SQL query!");
+            e.printStackTrace();
+        }
+    }
+    
+    public void timeOut(int employeeNumber) {
+        LocalDate currentDate = LocalDate.now();
+        LocalDateTime currentTime = LocalDateTime.now();
+       int rowsAffected = 0;
+        try {
+            // Define the query
+            String query = "UPDATE attendance_record SET "
+                    + "time_out = ? "
+                    + "WHERE employee_id = ? AND date = ?";
+
+            // Prepare the statement
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+            // Set the parameters
+            preparedStatement.setTimestamp(1, Timestamp.valueOf(currentTime));
+            preparedStatement.setInt(2, employeeNumber);
+            preparedStatement.setDate(3, java.sql.Date.valueOf(currentDate));
+
+            // Execute the query
+            rowsAffected = preparedStatement.executeUpdate();
+            System.out.println(rowsAffected);
+        } catch (SQLException e) {
+            System.err.println("Error while executing SQL query!");
+            e.printStackTrace();
+        }
     }
 }
 

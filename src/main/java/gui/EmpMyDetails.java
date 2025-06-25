@@ -5,6 +5,7 @@
 package gui;
 
 import alex.oopmotorphpayrollsystem.AccountAccess;
+import alex.oopmotorphpayrollsystem.Address;
 import alex.oopmotorphpayrollsystem.Employee;
 import alex.oopmotorphpayrollsystem.Benefits;
 import dao.EmployeeDao;
@@ -45,7 +46,13 @@ public class EmpMyDetails extends javax.swing.JPanel {
         empImmediateSupValue.setText(user.getImmediateSupervisor());
         empPhoneNumValue.setText(user.getPhoneNumber());
         empPersonalEmailValue.setText("@example.motorph.com.ph");
-        empAddressValue.setText(user.getAddress());
+        Address address = user.getAddress();
+        addressStreetValue.setText(address.getStreet());
+        addressBarangayValue.setText(address.getBarangay());
+        addressCityValue.setText(address.getCity());
+        addressProvinceValue.setText(address.getProvince());
+        addressZipcodeValue.setText(address.getZipcode());
+        
         Benefits benefit = ((Employee) user).getBenefits();
         empBasicSalaryValue.setText(Double.toString(benefit.getBasicSalary()));
         empGrossSemiValue.setText(Double.toString(benefit.getGrossSemiMonthlyRate()));
@@ -98,8 +105,6 @@ public class EmpMyDetails extends javax.swing.JPanel {
         empPhoneNum = new javax.swing.JLabel();
         empHourlyRateValue = new javax.swing.JTextField();
         empAllow = new javax.swing.JLabel();
-        empAddress = new javax.swing.JLabel();
-        empAddressValue = new javax.swing.JTextField();
         empHourlyRate = new javax.swing.JLabel();
         empClothingAllow = new javax.swing.JLabel();
         empClothingAllowValue = new javax.swing.JTextField();
@@ -135,6 +140,16 @@ public class EmpMyDetails extends javax.swing.JPanel {
         jSeparator8 = new javax.swing.JSeparator();
         empPhoneNumValue = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
+        addressStreet = new javax.swing.JLabel();
+        addressStreetValue = new javax.swing.JTextField();
+        addressProvince = new javax.swing.JLabel();
+        addressProvinceValue = new javax.swing.JTextField();
+        addressBarangay = new javax.swing.JLabel();
+        addressBarangayValue = new javax.swing.JTextField();
+        addressZipcode = new javax.swing.JLabel();
+        addressZipcodeValue = new javax.swing.JTextField();
+        addressCity = new javax.swing.JLabel();
+        addressCityValue = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(860, 590));
@@ -332,22 +347,6 @@ public class EmpMyDetails extends javax.swing.JPanel {
         empAllow.setForeground(new java.awt.Color(0, 0, 204));
         empAllow.setText("Allowances");
         jPanel3.add(empAllow, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 880, 100, 30));
-
-        empAddress.setBackground(new java.awt.Color(255, 255, 255));
-        empAddress.setForeground(new java.awt.Color(0, 0, 0));
-        empAddress.setText(" House number, Street, Barangay, City, State/Province/Region, Zip Postal Code");
-        empAddress.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        jPanel3.add(empAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 770, 30));
-
-        empAddressValue.setBackground(new java.awt.Color(255, 255, 255));
-        empAddressValue.setForeground(new java.awt.Color(0, 0, 0));
-        empAddressValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        empAddressValue.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                empAddressValueActionPerformed(evt);
-            }
-        });
-        jPanel3.add(empAddressValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 770, 70));
 
         empHourlyRate.setForeground(new java.awt.Color(0, 0, 0));
         empHourlyRate.setText(" Hourly Rate");
@@ -599,6 +598,86 @@ public class EmpMyDetails extends javax.swing.JPanel {
         jSeparator5.setForeground(new java.awt.Color(204, 204, 204));
         jPanel3.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 810, 20));
 
+        addressStreet.setBackground(new java.awt.Color(255, 255, 255));
+        addressStreet.setForeground(new java.awt.Color(0, 0, 0));
+        addressStreet.setText("  Street");
+        addressStreet.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanel3.add(addressStreet, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 120, 30));
+
+        addressStreetValue.setBackground(new java.awt.Color(255, 255, 255));
+        addressStreetValue.setForeground(new java.awt.Color(0, 0, 0));
+        addressStreetValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addressStreetValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressStreetValueActionPerformed(evt);
+            }
+        });
+        jPanel3.add(addressStreetValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 530, 260, 30));
+
+        addressProvince.setBackground(new java.awt.Color(255, 255, 255));
+        addressProvince.setForeground(new java.awt.Color(0, 0, 0));
+        addressProvince.setText("  Province");
+        addressProvince.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanel3.add(addressProvince, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 530, 120, 30));
+
+        addressProvinceValue.setBackground(new java.awt.Color(255, 255, 255));
+        addressProvinceValue.setForeground(new java.awt.Color(0, 0, 0));
+        addressProvinceValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addressProvinceValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressProvinceValueActionPerformed(evt);
+            }
+        });
+        jPanel3.add(addressProvinceValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 530, 260, 30));
+
+        addressBarangay.setBackground(new java.awt.Color(255, 255, 255));
+        addressBarangay.setForeground(new java.awt.Color(0, 0, 0));
+        addressBarangay.setText("  Barangay");
+        addressBarangay.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanel3.add(addressBarangay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 120, 30));
+
+        addressBarangayValue.setBackground(new java.awt.Color(255, 255, 255));
+        addressBarangayValue.setForeground(new java.awt.Color(0, 0, 0));
+        addressBarangayValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addressBarangayValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressBarangayValueActionPerformed(evt);
+            }
+        });
+        jPanel3.add(addressBarangayValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 570, 260, 30));
+
+        addressZipcode.setBackground(new java.awt.Color(255, 255, 255));
+        addressZipcode.setForeground(new java.awt.Color(0, 0, 0));
+        addressZipcode.setText("  Zipcode");
+        addressZipcode.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanel3.add(addressZipcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 570, 120, 30));
+
+        addressZipcodeValue.setBackground(new java.awt.Color(255, 255, 255));
+        addressZipcodeValue.setForeground(new java.awt.Color(0, 0, 0));
+        addressZipcodeValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addressZipcodeValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressZipcodeValueActionPerformed(evt);
+            }
+        });
+        jPanel3.add(addressZipcodeValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 570, 260, 30));
+
+        addressCity.setBackground(new java.awt.Color(255, 255, 255));
+        addressCity.setForeground(new java.awt.Color(0, 0, 0));
+        addressCity.setText("  City");
+        addressCity.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanel3.add(addressCity, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 610, 120, 30));
+
+        addressCityValue.setBackground(new java.awt.Color(255, 255, 255));
+        addressCityValue.setForeground(new java.awt.Color(0, 0, 0));
+        addressCityValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addressCityValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressCityValueActionPerformed(evt);
+            }
+        });
+        jPanel3.add(addressCityValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 610, 260, 30));
+
         jScrollPane1.setViewportView(jPanel3);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -8, 860, 600));
@@ -640,10 +719,6 @@ public class EmpMyDetails extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_empHourlyRateValueActionPerformed
 
-    private void empAddressValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empAddressValueActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_empAddressValueActionPerformed
-
     private void empClothingAllowValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empClothingAllowValueActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_empClothingAllowValueActionPerformed
@@ -682,7 +757,13 @@ public class EmpMyDetails extends javax.swing.JPanel {
 
     private void empSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empSubmitButtonActionPerformed
         EmployeeDao employeeDao = new EmployeeDao();
-        user.setAddress(empAddressValue.getText());
+        Address address = new Address();
+        address.setStreet(addressStreetValue.getText());
+        address.setBarangay(addressBarangayValue.getText());
+        address.setCity(addressCityValue.getText());
+        address.setProvince(addressProvinceValue.getText());
+        address.setZipcode(addressZipcodeValue.getText());
+        user.setAddress(address);
         user.setPhoneNumber(empPhoneNumValue.getText());
         
         //update UI to get province, city, etc.
@@ -722,11 +803,39 @@ public class EmpMyDetails extends javax.swing.JPanel {
                 verticalScrollBar.setValue(verticalScrollBar.getValue() + scrollAmount);
     }//GEN-LAST:event_jScrollPane1MouseWheelMoved
 
+    private void addressStreetValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressStreetValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressStreetValueActionPerformed
+
+    private void addressProvinceValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressProvinceValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressProvinceValueActionPerformed
+
+    private void addressBarangayValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressBarangayValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressBarangayValueActionPerformed
+
+    private void addressZipcodeValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressZipcodeValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressZipcodeValueActionPerformed
+
+    private void addressCityValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressCityValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressCityValueActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel addressBarangay;
+    private javax.swing.JTextField addressBarangayValue;
+    private javax.swing.JLabel addressCity;
+    private javax.swing.JTextField addressCityValue;
+    private javax.swing.JLabel addressProvince;
+    private javax.swing.JTextField addressProvinceValue;
+    private javax.swing.JLabel addressStreet;
+    private javax.swing.JTextField addressStreetValue;
+    private javax.swing.JLabel addressZipcode;
+    private javax.swing.JTextField addressZipcodeValue;
     private javax.swing.JLabel empAddInfo;
-    private javax.swing.JLabel empAddress;
-    private javax.swing.JTextField empAddressValue;
     private javax.swing.JLabel empAllow;
     private javax.swing.JLabel empBasicSalary;
     private javax.swing.JTextField empBasicSalaryValue;

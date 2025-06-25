@@ -4,13 +4,13 @@
  */
 package dao;
 
+import alex.oopmotorphpayrollsystem.Address;
 import alex.oopmotorphpayrollsystem.AttendanceRecord;
 import alex.oopmotorphpayrollsystem.Benefits;
 import alex.oopmotorphpayrollsystem.Deductions;
 import alex.oopmotorphpayrollsystem.Employee;
 import alex.oopmotorphpayrollsystem.HRPersonnel;
 import alex.oopmotorphpayrollsystem.LeaveRequest;
-import alex.oopmotorphpayrollsystem.MySQL;
 import alex.oopmotorphpayrollsystem.Payroll;
 import alex.oopmotorphpayrollsystem.SystemAdministrator;
 import alex.oopmotorphpayrollsystem.User;
@@ -138,11 +138,11 @@ public class HRPersonnelDao {
             // 1. Insert into address
             String addressQuery = "INSERT INTO address (street, barangay, city, province, zipcode) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement psAddress = connection.prepareStatement(addressQuery, Statement.RETURN_GENERATED_KEYS);
-//            psAddress.setString(1, employee.getAddress().getStreet());
-//            psAddress.setString(2, employee.getAddress().getBarangay());
-//            psAddress.setString(3, employee.getAddress().getCity());
-//            psAddress.setString(4, employee.getAddress().getProvince());
-//            psAddress.setString(5, employee.getAddress().getZipcode());
+            psAddress.setString(1, employee.getAddress().getStreet());
+            psAddress.setString(2, employee.getAddress().getBarangay());
+            psAddress.setString(3, employee.getAddress().getCity());
+            psAddress.setString(4, employee.getAddress().getProvince());
+            psAddress.setString(5, employee.getAddress().getZipcode());
             psAddress.executeUpdate();
 
             ResultSet rsAddress = psAddress.getGeneratedKeys();
@@ -582,11 +582,27 @@ public class HRPersonnelDao {
      * @return A list of payroll summary records for the given month and year.
      */
     public List<Payroll> loadSummaryReport(int month, int year){
-        MySQL mySQL = new MySQL();
-        ResultSet result = mySQL.getSummaryList(month, year);
-        List<Payroll> payrolls = mapPayrolls(result);
-        mySQL.close();
-        return payrolls;
+        try {
+            // Create a statement object
+            statement = connection.createStatement();
+
+            // Define the query
+            String query = "SELECT * FROM payslip_view ";
+
+            // Execute the query
+            result = statement.executeQuery(query);
+            
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            // Execute the query
+            result = preparedStatement.executeQuery();
+            List<Payroll> payrolls = mapPayrolls(result);
+            return payrolls;
+        } catch (SQLException e) {
+            System.err.println("Error while executing SQL query!");
+            e.printStackTrace();
+        }
+        return null;
     }
     
     // Maps a ResultSet containing employee data to a List of User objects.
@@ -611,7 +627,6 @@ public class HRPersonnelDao {
             emp.setEmployeeID(result.getInt("employee_id"));
             emp.setLastName(result.getString("last_name"));
             emp.setFirstName(result.getString("first_name"));
-//            emp.setAddress(result.getString("address"));
             emp.setBirthday(result.getDate("birthdate"));
             emp.setPhoneNumber(result.getString("phone_number"));
             emp.setSssNumber(result.getString("sss_number"));
@@ -632,6 +647,14 @@ public class HRPersonnelDao {
                     result.getInt("clothing_allowance")
                 );
             emp.setBenefits(benefit);
+
+            Address address = new Address();
+            address.setBarangay(result.getString("barangay"));
+            address.setCity(result.getString("date_hired"));
+            address.setProvince(result.getString("province"));
+            address.setStreet(result.getString("street"));
+            address.setZipcode(result.getString("date_hired"));
+            emp.setAddress(address);
         } catch (SQLException ex) {
             System.out.println(ex);
         }
@@ -662,8 +685,8 @@ public class HRPersonnelDao {
             pr.setHoursWorked(result.getInt("hours_worked"));
             pr.setNetPay(result.getInt("take_home_pay"));
             pr.setOvertimeHours(result.getInt("overtime_hours"));
-            pr.setPaymentDate(result.getDate("payment_date"));
-            pr.setPayrollID(result.getInt("id"));
+//            pr.setPaymentDate(result.getDate("payment_date"));
+            pr.setPayrollID(result.getString("payslip_no"));
             pr.setWeekPeriodEnd(result.getDate("period_end"));
             pr.setWeekPeriodStart(result.getDate("period_start"));
             
@@ -675,11 +698,21 @@ public class HRPersonnelDao {
             pr.setDeductions(deduction);
             
             Employee emp = new Employee();
+            String fullName = result.getString("employee_name"); 
+            String[] parts = fullName.split(", ", 2); 
+            String lastName = parts[0].trim();
+            String firstName = parts[1].trim();
+
+            emp.setLastName(lastName);
+            emp.setFirstName(firstName);
+            
+            String positionDepartment = result.getString("position_department"); 
+            parts = positionDepartment.split(" / ", 2); 
+            String position = parts[0].trim();
+            String department = parts[1].trim();
             emp.setEmployeeID(result.getInt("employee_id"));
-            emp.setLastName(result.getString("last_name"));
-            emp.setFirstName(result.getString("first_name"));
-            emp.setPosition(result.getString("position"));
-            emp.setDepartment(result.getString("department"));
+            emp.setPosition(position);
+            emp.setDepartment(department);
 
             Benefits benefit = new Benefits(
                     result.getInt("basic_salary"),
@@ -717,7 +750,7 @@ public class HRPersonnelDao {
     }
     
     // Loads payroll list within a date range and specific status into a list of Maps
-    public List<Map<String, Object>> loadPayrollList(Date startDate, Date endDate, String status){
+    public List<Map<String, Object>> loadPayrollList(Date startDate, Date endDate){
         List payroll = new ArrayList<>();
         try {
             // Define the query
@@ -741,15 +774,14 @@ public class HRPersonnelDao {
             while (result.next()) {
                 // Store data in a Map instead of a separate class
                 Map<String, Object> payrollData = new HashMap<>();
-                payrollData.put("id", result.getInt("id"));
-                payrollData.put("employeeNumber", result.getString("employee_id"));
-                payrollData.put("name", result.getString("first_name")
-                        + " " + result.getString("last_name"));
-                payrollData.put("department", result.getString("department"));
+                payrollData.put("payslip_no", result.getString("payslip_no"));
+                payrollData.put("employee_id", result.getString("employee_id"));
+                payrollData.put("employee_name", result.getString("employee_name"));
+                payrollData.put("position_department", result.getString("position_department"));
                 payrollData.put("payPeriod", result.getDate("period_start")
                         + " - " + result.getDate("period_end"));
-                payrollData.put("netPay", result.getDouble("take_home_pay"));
-                payrollData.put("status", result.getString("payslip_status"));
+                payrollData.put("take_home_pay", result.getDouble("take_home_pay"));
+//                payrollData.put("status", result.getString("payslip_status"));
 
                 payroll.add(payrollData);
             }

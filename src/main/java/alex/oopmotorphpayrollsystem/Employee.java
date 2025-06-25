@@ -43,25 +43,6 @@ public class Employee extends User {
         System.out.println(firstName + " " + lastName + " has submitted a leave request for " + leaveType);
     }
     
-    // Methods for Time-In and Time-Out (attendance management)
-    public void timeIn() {
-        LocalDate currentDate = LocalDate.now();
-        LocalDateTime currentTime = LocalDateTime.now();
-        MySQL mySQL = new MySQL();
-        // Insert attendance record into the database
-        mySQL.createAttendanceRecord(employeeID, currentDate, currentTime);
-        mySQL.close();
-    }
-    
-    public void timeOut() {
-        LocalDate currentDate = LocalDate.now();
-        LocalDateTime currentTime = LocalDateTime.now();
-        MySQL mySQL = new MySQL();
-        // Update the time-out in the attendance record
-        mySQL.updateAttendanceRecord(employeeID, currentDate, currentTime);
-        mySQL.close();
-    }
-    
     // Getters for employee status and supervisor
     public String getStatus() {
         return status;

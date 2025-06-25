@@ -504,7 +504,8 @@ public class HomePagePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_fileALeaveActionPerformed
 
     private void timeInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeInActionPerformed
-        ((Employee) user).timeIn();
+        EmployeeDao employeeDao = new EmployeeDao();
+        employeeDao.timeIn(user.getEmployeeID());
         timeIn.setEnabled(false);
         timeIn.setFocusable(false);
         timeIn.repaint();  // Force UI update
@@ -520,7 +521,8 @@ public class HomePagePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_timeInActionPerformed
 
     private void timeOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeOutActionPerformed
-        ((Employee) user).timeOut();
+        EmployeeDao employeeDao = new EmployeeDao();
+        employeeDao.timeOut(user.getEmployeeID());
         timeOut.setEnabled(false);  // Disable Time Out button after clicking
         timeOut.repaint();  // Force UI update
         SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm");

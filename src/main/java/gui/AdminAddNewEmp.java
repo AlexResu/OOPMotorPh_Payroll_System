@@ -5,6 +5,7 @@
 package gui;
 
 import alex.oopmotorphpayrollsystem.AccountAccess;
+import alex.oopmotorphpayrollsystem.Address;
 import alex.oopmotorphpayrollsystem.Employee;
 import alex.oopmotorphpayrollsystem.Benefits;
 import alex.oopmotorphpayrollsystem.HRPersonnel;
@@ -89,7 +90,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpFirstNameValue), addNewEmpWarnFN, validation2));
         fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpBirthValue), addNewEmpWarnBirth, validation5));
         fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPhoneNumValue), addNewEmpWarnPhone, validation3));
-        fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpAddressValue), addNewEmpWarnAdd, validation6));
         empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpImmediateSupValue), addNewEmpWarnISup, validation6));
         empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpBasicSalaryValue), addNewEmpWarnBSal, validation4));
         empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpGrossSemiValue), addNewEmpWarnGSMR, validation4));
@@ -129,7 +129,11 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         newEmpPositionValue.setSelectedItem(editableUser.getPosition());
         newEmpPhoneNumValue.setText(editableUser.getPhoneNumber());
         newEmpPersonalEmailValue.setText("@example.motorph.com.ph");
-        newEmpAddressValue.setText(editableUser.getAddress());
+        addressStreetValue.setText(editableUser.getAddress().getStreet());
+        addressBarangayValue.setText(editableUser.getAddress().getBarangay());
+        addressCityValue.setText(editableUser.getAddress().getCity());
+        addressProvinceValue.setText(editableUser.getAddress().getProvince());
+        addressZipcodeValue.setText(editableUser.getAddress().getZipcode());
         newEmpSssValue.setText(editableUser.getSssNumber());
         newEmpTinValue.setText(editableUser.getTinNumber());
         newEmpPhilhealthValue.setText(editableUser.getPhilhealthNumber());
@@ -187,7 +191,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         addNewEmpWarnBirth.setVisible(false);
         addNewEmpWarnISup.setVisible(false);
         addNewEmpWarnPhone.setVisible(false);
-        addNewEmpWarnAdd.setVisible(false);
         addNewEmpWarnBSal.setVisible(false);
         addNewEmpWarnGSMR.setVisible(false);
         addNewEmpWarnHRate.setVisible(false);
@@ -233,8 +236,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         newEmpPhoneNum = new javax.swing.JLabel();
         newEmpHourlyRateValue = new javax.swing.JTextField();
         addNewEmpAllowLabel = new javax.swing.JLabel();
-        newEmpAdd = new javax.swing.JLabel();
-        newEmpAddressValue = new javax.swing.JTextField();
+        addressZipcode = new javax.swing.JLabel();
         newEmpHourlyRate = new javax.swing.JLabel();
         newEmpClothingAllow = new javax.swing.JLabel();
         newEmpClothingAllowValue = new javax.swing.JTextField();
@@ -268,7 +270,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         addNewEmpWarnFN = new javax.swing.JLabel();
         addNewEmpWarnBirth = new javax.swing.JLabel();
         addNewEmpWarnPhone = new javax.swing.JLabel();
-        addNewEmpWarnAdd = new javax.swing.JLabel();
         addNewEmpWarnBSal = new javax.swing.JLabel();
         addNewEmpWarnGSMR = new javax.swing.JLabel();
         addNewEmpWarnHRate = new javax.swing.JLabel();
@@ -292,6 +293,15 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         newEmpImmediateSupValue = new javax.swing.JTextField();
         addNewEmpWarnISup = new javax.swing.JLabel();
         newEmpDateHiredValue = new com.toedter.calendar.JDateChooser();
+        addressStreet = new javax.swing.JLabel();
+        addressBarangay = new javax.swing.JLabel();
+        addressCity = new javax.swing.JLabel();
+        addressProvince = new javax.swing.JLabel();
+        addressProvinceValue = new javax.swing.JTextField();
+        addressStreetValue = new javax.swing.JTextField();
+        addressZipcodeValue = new javax.swing.JTextField();
+        addressCityValue = new javax.swing.JTextField();
+        addressBarangayValue = new javax.swing.JTextField();
         exitButton = new javax.swing.JLabel();
         addNewEmpLabel = new javax.swing.JLabel();
 
@@ -448,21 +458,11 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         addNewEmpAllowLabel.setText("Allowances");
         addNewEmpForm.add(addNewEmpAllowLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 880, 100, 30));
 
-        newEmpAdd.setBackground(new java.awt.Color(255, 255, 255));
-        newEmpAdd.setForeground(new java.awt.Color(0, 0, 0));
-        newEmpAdd.setText(" House number, Street, Barangay, City, State/Province/Region, Zip Postal Code*");
-        newEmpAdd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        addNewEmpForm.add(newEmpAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 770, 30));
-
-        newEmpAddressValue.setBackground(new java.awt.Color(255, 255, 255));
-        newEmpAddressValue.setForeground(new java.awt.Color(0, 0, 0));
-        newEmpAddressValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        newEmpAddressValue.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newEmpAddressValueActionPerformed(evt);
-            }
-        });
-        addNewEmpForm.add(newEmpAddressValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 770, 70));
+        addressZipcode.setBackground(new java.awt.Color(255, 255, 255));
+        addressZipcode.setForeground(new java.awt.Color(0, 0, 0));
+        addressZipcode.setText("  Zipcode");
+        addressZipcode.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addNewEmpForm.add(addressZipcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 570, 120, 30));
 
         newEmpHourlyRate.setForeground(new java.awt.Color(0, 0, 0));
         newEmpHourlyRate.setText(" Hourly Rate*");
@@ -710,11 +710,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         addNewEmpWarnPhone.setText("This is required.");
         addNewEmpForm.add(addNewEmpWarnPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, -1, 20));
 
-        addNewEmpWarnAdd.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        addNewEmpWarnAdd.setForeground(new java.awt.Color(204, 0, 51));
-        addNewEmpWarnAdd.setText("This is required.");
-        addNewEmpForm.add(addNewEmpWarnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 640, -1, 20));
-
         addNewEmpWarnBSal.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         addNewEmpWarnBSal.setForeground(new java.awt.Color(204, 0, 51));
         addNewEmpWarnBSal.setText("This is required.");
@@ -845,6 +840,80 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         newEmpDateHiredValue.setDateFormatString("MM/dd/yyyy");
         addNewEmpForm.add(newEmpDateHiredValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 190, 30));
 
+        addressStreet.setBackground(new java.awt.Color(255, 255, 255));
+        addressStreet.setForeground(new java.awt.Color(0, 0, 0));
+        addressStreet.setText("  Street");
+        addressStreet.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addNewEmpForm.add(addressStreet, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 120, 30));
+
+        addressBarangay.setBackground(new java.awt.Color(255, 255, 255));
+        addressBarangay.setForeground(new java.awt.Color(0, 0, 0));
+        addressBarangay.setText("  Barangay");
+        addressBarangay.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addNewEmpForm.add(addressBarangay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 120, 30));
+
+        addressCity.setBackground(new java.awt.Color(255, 255, 255));
+        addressCity.setForeground(new java.awt.Color(0, 0, 0));
+        addressCity.setText("  City");
+        addressCity.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addNewEmpForm.add(addressCity, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 610, 120, 30));
+
+        addressProvince.setBackground(new java.awt.Color(255, 255, 255));
+        addressProvince.setForeground(new java.awt.Color(0, 0, 0));
+        addressProvince.setText("  Province");
+        addressProvince.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addNewEmpForm.add(addressProvince, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 530, 120, 30));
+
+        addressProvinceValue.setBackground(new java.awt.Color(255, 255, 255));
+        addressProvinceValue.setForeground(new java.awt.Color(0, 0, 0));
+        addressProvinceValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addressProvinceValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressProvinceValueActionPerformed(evt);
+            }
+        });
+        addNewEmpForm.add(addressProvinceValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 530, 260, 30));
+
+        addressStreetValue.setBackground(new java.awt.Color(255, 255, 255));
+        addressStreetValue.setForeground(new java.awt.Color(0, 0, 0));
+        addressStreetValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addressStreetValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressStreetValueActionPerformed(evt);
+            }
+        });
+        addNewEmpForm.add(addressStreetValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 530, 260, 30));
+
+        addressZipcodeValue.setBackground(new java.awt.Color(255, 255, 255));
+        addressZipcodeValue.setForeground(new java.awt.Color(0, 0, 0));
+        addressZipcodeValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addressZipcodeValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressZipcodeValueActionPerformed(evt);
+            }
+        });
+        addNewEmpForm.add(addressZipcodeValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 570, 260, 30));
+
+        addressCityValue.setBackground(new java.awt.Color(255, 255, 255));
+        addressCityValue.setForeground(new java.awt.Color(0, 0, 0));
+        addressCityValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addressCityValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressCityValueActionPerformed(evt);
+            }
+        });
+        addNewEmpForm.add(addressCityValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 610, 260, 30));
+
+        addressBarangayValue.setBackground(new java.awt.Color(255, 255, 255));
+        addressBarangayValue.setForeground(new java.awt.Color(0, 0, 0));
+        addressBarangayValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        addressBarangayValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressBarangayValueActionPerformed(evt);
+            }
+        });
+        addNewEmpForm.add(addressBarangayValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 570, 260, 30));
+
         jScrollPane1.setViewportView(addNewEmpForm);
 
         AddNewEmpGradientPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 62, 820, 500));
@@ -914,11 +983,18 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         addNewEmpErrorFill.setVisible(!isClear);
         System.out.println(isClear);
         if(isClear){
+            Address address = new Address();
+            address.setStreet(addressStreetValue.getText());
+            address.setBarangay(addressBarangayValue.getText());
+            address.setCity(addressCityValue.getText());
+            address.setProvince(addressProvinceValue.getText());
+            address.setZipcode(addressZipcodeValue.getText());
+            
             editableUser.setLastName(newEmpLastNameValue.getText());
             editableUser.setFirstName(newEmpFirstNameValue.getText());
             editableUser.setBirthday(newEmpBirthValue.getDate());
             editableUser.setPhoneNumber(newEmpPhoneNumValue.getText());
-            editableUser.setAddress(newEmpAddressValue.getText());
+            editableUser.setAddress(address);
             editableUser.setSssNumber(newEmpSssValue.getText());
             editableUser.setTinNumber(newEmpTinValue.getText());
             editableUser.setPhilhealthNumber(newEmpPhilhealthValue.getText());
@@ -1011,10 +1087,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_newEmpClothingAllowValueActionPerformed
 
-    private void newEmpAddressValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpAddressValueActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_newEmpAddressValueActionPerformed
-
     private void newEmpHourlyRateValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpHourlyRateValueActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_newEmpHourlyRateValueActionPerformed
@@ -1061,6 +1133,26 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
                 verticalScrollBar.setValue(verticalScrollBar.getValue() + scrollAmount);
     }//GEN-LAST:event_jScrollPane1MouseWheelMoved
 
+    private void addressProvinceValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressProvinceValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressProvinceValueActionPerformed
+
+    private void addressStreetValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressStreetValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressStreetValueActionPerformed
+
+    private void addressZipcodeValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressZipcodeValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressZipcodeValueActionPerformed
+
+    private void addressCityValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressCityValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressCityValueActionPerformed
+
+    private void addressBarangayValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressBarangayValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressBarangayValueActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1103,7 +1195,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     private javax.swing.JPanel addNewEmpForm;
     private javax.swing.JLabel addNewEmpLabel;
     private javax.swing.JLabel addNewEmpSuccessCreatedLabel;
-    private javax.swing.JLabel addNewEmpWarnAdd;
     private javax.swing.JLabel addNewEmpWarnBSal;
     private javax.swing.JLabel addNewEmpWarnBirth;
     private javax.swing.JLabel addNewEmpWarnCAllow;
@@ -1119,6 +1210,16 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     private javax.swing.JLabel addNewEmpWarnRSub;
     private javax.swing.JLabel addNewEmpWarnSss;
     private javax.swing.JLabel addNewEmpWarnTin;
+    private javax.swing.JLabel addressBarangay;
+    private javax.swing.JTextField addressBarangayValue;
+    private javax.swing.JLabel addressCity;
+    private javax.swing.JTextField addressCityValue;
+    private javax.swing.JLabel addressProvince;
+    private javax.swing.JTextField addressProvinceValue;
+    private javax.swing.JLabel addressStreet;
+    private javax.swing.JTextField addressStreetValue;
+    private javax.swing.JLabel addressZipcode;
+    private javax.swing.JTextField addressZipcodeValue;
     private javax.swing.JLabel empInfo;
     private javax.swing.JLabel exitButton;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1129,9 +1230,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private keeptoo.KGradientPanel kGradientPanel2;
-    private javax.swing.JLabel newEmpAdd;
     private javax.swing.JLabel newEmpAddInfo;
-    private javax.swing.JTextField newEmpAddressValue;
     private javax.swing.JLabel newEmpBasicSalary;
     private javax.swing.JTextField newEmpBasicSalaryValue;
     private javax.swing.JLabel newEmpBenefits;

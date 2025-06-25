@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import utils.DbConnection;
 import alex.oopmotorphpayrollsystem.AccountAccess;
+import alex.oopmotorphpayrollsystem.Address;
 import alex.oopmotorphpayrollsystem.Benefits;
 import alex.oopmotorphpayrollsystem.Employee;
 import alex.oopmotorphpayrollsystem.HRPersonnel;
@@ -156,7 +157,6 @@ public class AccountAccessDao {
                 user.setEmployeeID(result.getInt("employee_id"));
                 user.setLastName(result.getString("last_name"));
                 user.setFirstName(result.getString("first_name"));
-//                user.setAddress(result.getString("address"));
                 user.setBirthday(result.getDate("birthdate"));
                 user.setPhoneNumber(result.getString("phone_number"));
                 user.setSssNumber(result.getString("sss_number"));
@@ -166,6 +166,15 @@ public class AccountAccessDao {
                 user.setPosition(result.getString("position"));
                 user.setDepartment(result.getString("department"));
                 user.setDateHired(result.getDate("date_hired"));
+                
+                // Populate address
+                Address address = new Address();
+                address.setBarangay(result.getString("barangay"));
+                address.setCity(result.getString("date_hired"));
+                address.setProvince(result.getString("province"));
+                address.setStreet(result.getString("street"));
+                address.setZipcode(result.getString("date_hired"));
+                user.setAddress(address);
             } else {
                 System.out.println("No user");
             }

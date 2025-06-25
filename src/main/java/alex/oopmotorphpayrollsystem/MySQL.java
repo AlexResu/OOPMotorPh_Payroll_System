@@ -972,7 +972,7 @@ public class MySQL {
             preparedStatement.setString(2, employee.getFirstName());
             preparedStatement.setDate(3, 
                     new java.sql.Date(employee.getBirthday().getTime()));
-            preparedStatement.setString(4, employee.getAddress());
+//            preparedStatement.setString(4, employee.getAddress());
             preparedStatement.setString(5, employee.getPhoneNumber());
             preparedStatement.setString(6, employee.getSssNumber());
             preparedStatement.setString(7, employee.getPhilhealthNumber());
@@ -1061,7 +1061,7 @@ public class MySQL {
             preparedStatement.setString(2, employee.getFirstName());
             preparedStatement.setDate(3, 
                     new java.sql.Date(employee.getBirthday().getTime()));
-            preparedStatement.setString(4, employee.getAddress());
+//            preparedStatement.setString(4, employee.getAddress());
             preparedStatement.setString(5, employee.getPhoneNumber());
             preparedStatement.setString(6, employee.getSssNumber());
             preparedStatement.setString(7, employee.getPhilhealthNumber());
@@ -1229,7 +1229,7 @@ public class MySQL {
             preparedStatement.setString(1, employee.getLastName());
             preparedStatement.setString(2, employee.getFirstName());
             preparedStatement.setDate(3, new java.sql.Date(employee.getBirthday().getTime()));
-            preparedStatement.setString(4, employee.getAddress());
+//            preparedStatement.setString(4, employee.getAddress());
             preparedStatement.setString(5, employee.getPhoneNumber());
             preparedStatement.setString(6, employee.getSssNumber());
             preparedStatement.setString(7, employee.getPhilhealthNumber());

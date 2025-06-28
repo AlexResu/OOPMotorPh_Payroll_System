@@ -446,6 +446,21 @@ public class SystemAdministratorDao {
         return null;
     }
     
+    // Unlocks a user's account and resets their login attempts.
+    public boolean unlockUserAccount(int employeeId) {
+        String sql = "UPDATE user_credentials SET is_locked = FALSE, login_attempts = 0 WHERE employee_id = ?";
+        // Uses the existing 'connection' object. Does not create/close its own.
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, employeeId);
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0; // Return true if the update was successful
+        } catch (SQLException e) {
+            System.err.println("Error unlocking account: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
     // Private helper method to map ResultSet to a list of User objectsHR
     private List<User> mapEmployees(ResultSet result){
         List<User> employees = new ArrayList<>();

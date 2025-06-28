@@ -7,18 +7,26 @@ package gui;
 import alex.oopmotorphpayrollsystem.AccountAccess;
 import gui.UserHomePage;
 import dao.AccountAccessDao;
-
+import alex.oopmotorphpayrollsystem.User;
+import dao.UserDao;
+import javax.swing.JOptionPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 /**
  *
  * @author Alex Resurreccion
  */
 public class LoginGui extends javax.swing.JFrame {
-
+    private final UserDao userDao;
+    private final AccountAccessDao accountAccessDao;
     /**
      * Creates new form LoginGui
      */
     public LoginGui() {
         initComponents();
+        userDao = new UserDao(); // Initialize the DAO
+        accountAccessDao = new AccountAccessDao();
+        setLocationRelativeTo(null); 
         invalidInputsLabel.setVisible(false);
     }
 
@@ -230,8 +238,7 @@ public class LoginGui extends javax.swing.JFrame {
     }//GEN-LAST:event_userIDValueActionPerformed
 
     private void passwordValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordValueActionPerformed
-        invalidInputsLabel.setVisible(false);
-        loginUser();
+        loginkButton.doClick();
     }//GEN-LAST:event_passwordValueActionPerformed
 
     private void closeWindowLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindowLabelMouseClicked
@@ -239,28 +246,64 @@ public class LoginGui extends javax.swing.JFrame {
     }//GEN-LAST:event_closeWindowLabelMouseClicked
 
     private void loginkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginkButtonActionPerformed
-        loginUser();
+        String employeeIdStr = userIDValue.getText();
+        String password = new String(passwordValue.getPassword());
+
+        if (employeeIdStr.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Employee ID and Password cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Use the new userDao to check for locked status first.
+        if (userDao.isAccountLocked(employeeIdStr)) {
+            JOptionPane.showMessageDialog(this, "This account is locked. Please contact an administrator.", "Account Locked", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Use the new userDao's authenticate method. It returns a User object on success, null on failure.
+        User authenticatedUser = userDao.authenticate(employeeIdStr, password);
+
+        if (authenticatedUser != null) {
+            // SUCCESS!
+            // Now, use your original AccountAccessDao to get the object needed by UserHomePage
+            int employeeId = Integer.parseInt(employeeIdStr);
+            AccountAccess account = accountAccessDao.login(employeeId, password);
+
+            // This should not be null if authentication succeeded, but it's a good safety check.
+            if (account != null) {
+                 JOptionPane.showMessageDialog(this, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                UserHomePage homePage = new UserHomePage(account); // This now uses the correct object type
+                homePage.setVisible(true);
+                this.dispose();
+            } else {
+                 // This case is unlikely but handles potential data inconsistency.
+                 JOptionPane.showMessageDialog(this, "Login failed due to a system error.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+           
+        } else {
+            // FAILED LOGIN
+            handleFailedLogin(employeeIdStr);
+        }
+    }                                            
+
+    // Helper method to handle the logic for a failed login attempt.
+    private void handleFailedLogin(String employeeId) {
+        // We check the attempts only if the user actually exists.
+        // The getLoginAttempts will be > 0 only if a failed attempt was just recorded.
+        int attempts = userDao.getLoginAttempts(employeeId);
+        if (attempts > 0) {
+            int remainingAttempts = 3 - attempts;
+            if (remainingAttempts <= 0) {
+                JOptionPane.showMessageDialog(this, "You have exceeded the maximum login attempts. Your account is now locked.", "Account Locked", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid Employee ID or password. You have " + remainingAttempts + " attempt(s) remaining.", "Login Failed", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            // If attempts are 0, it means the employee ID was not found in the database.
+            JOptionPane.showMessageDialog(this, "Invalid Employee ID or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_loginkButtonActionPerformed
 
-    private void loginUser(){
-        String employeeNumberText = userIDValue.getText();
-        int employeeNumber = Integer.parseInt(employeeNumberText);
-        String password = new String(passwordValue.getPassword());
-        AccountAccessDao accountDao = new AccountAccessDao();
-        AccountAccess account = accountDao.login(employeeNumber, password);
-        if (account != null){
-            UserHomePage frame = new UserHomePage(account);
-            frame.setVisible(true);
-            dispose();
-        }
-        else {
-            System.out.println("Wrong credentials");
-            // Display an error message if the login credentials are invalid
-            invalidInputsLabel.setSize(112,20);
-            invalidInputsLabel.setVisible(true);
-            loginPage.repaint();
-        }
-    }
     private void loginPageMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginPageMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_loginPageMousePressed

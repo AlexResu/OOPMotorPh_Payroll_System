@@ -767,8 +767,10 @@ public class EmpMyDetails extends javax.swing.JPanel {
         user.setPhoneNumber(empPhoneNumValue.getText());
         
         //update UI to get province, city, etc.
-//        boolean isUpdated = employeeDao.save(empAddressValue.getText(), empPhoneNumValue.getText(), user.getEmployeeID());
-        boolean isUpdated = true;
+        boolean isUpdated = employeeDao.save(
+                addressStreetValue.getText(), addressBarangayValue.getText(), addressCityValue.getText(),
+                addressProvinceValue.getText(), addressZipcodeValue.getText(), 
+                empPhoneNumValue.getText(), user.getEmployeeID());
         if(isUpdated){
             empSuccessUpdated.setVisible(true);
             empSubmitButton.setEnabled(false);

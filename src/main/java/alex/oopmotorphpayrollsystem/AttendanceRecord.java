@@ -4,6 +4,7 @@
  */
 package alex.oopmotorphpayrollsystem;
 
+import dao.EmployeeDao;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.Date;
@@ -44,7 +45,6 @@ public class AttendanceRecord {
     public AttendanceRecord(int employeeID, Date date) {
         this.employeeID = employeeID;
         this.date = date;
-        initAttendanceRecord();
     }
     
     // Getter methods for employee ID, date, time-in, and time-out
@@ -85,27 +85,6 @@ public class AttendanceRecord {
     public double calculateWorkHours() {
         long diff = timeOut.getTime() - timeIn.getTime();
         return diff / (1000.0 * 60 * 60); // Convert milliseconds to hours
-    }
-    
-    /**
-     * Initializes the attendance record by fetching the time-in and time-out from the database.
-     * This method queries the database to get the attendance for the given employee on the current date.
-     */
-    private void initAttendanceRecord(){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = formatter.format(new Date());
-        MySQL mySQL = new MySQL();
-        ResultSet result = mySQL.getEmployeeAttendanceByNumber(employeeID, formattedDate);
-        try { 
-            if (result.next()) {
-                System.out.println(result.getTime("time_in"));
-                System.out.println(result.getTime("time_out"));
-                this.timeIn = result.getTime("time_in");
-                this.timeOut = result.getTime("time_out");
-            }
-        } catch (SQLException ex) {
-        }
-        mySQL.close();
     }
     
     /**

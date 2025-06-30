@@ -10,6 +10,7 @@ import alex.oopmotorphpayrollsystem.HRPersonnel;
 import alex.oopmotorphpayrollsystem.SystemAdministrator;
 import alex.oopmotorphpayrollsystem.User;
 import alex.oopmotorphpayrollsystem.LeaveRequest;
+import dao.AttendanceRecordDao;
 import dao.EmployeeDao;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -108,7 +109,8 @@ public class HomePagePanel extends javax.swing.JPanel {
     }
     
     private void loadTimeLog(){
-        AttendanceRecord attendance = new AttendanceRecord(user.getEmployeeID(), new Date());
+        AttendanceRecordDao attendanceRecordDao = new AttendanceRecordDao();
+        AttendanceRecord attendance = attendanceRecordDao.getAttendanceRecord(user.getEmployeeID(), new Date());
         SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm");
         
         SimpleDateFormat dateFormatter = new SimpleDateFormat("MM-dd-yyyy");

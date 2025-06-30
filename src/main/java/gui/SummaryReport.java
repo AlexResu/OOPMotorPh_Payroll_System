@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import java.io.File;
+import java.sql.ResultSet;
 import javax.swing.JScrollBar;
 
 /**
@@ -46,28 +47,28 @@ public class SummaryReport extends javax.swing.JPanel {
     
     private void loadPayrollData(){
         HRPersonnelDao hrPersonnelDao = new HRPersonnelDao();
-        this.payrollList = hrPersonnelDao.loadSummaryReport(
+        ResultSet payrollList = hrPersonnelDao.loadSummaryReport(
                 filterMonthlyvalue.getMonth() + 1, filterMonthlyYearValue.getYear());
-        DefaultTableModel model = (DefaultTableModel) payrollReportTable.getModel();
-        model.setRowCount(0);
-        boolean hasPending = false;
-        for (Payroll payroll : payrollList) {
-            Employee emp = payroll.getEmployee();
-            Deductions deduct = payroll.getDeductions();
-            Benefits benefit = emp.getBenefits();
-            Object data[] = {
-                emp.getEmployeeID(),
-                emp.getFirstName() + " " + emp.getLastName(),
-                emp.getPosition(),
-                payroll.getGrossIncome(),
-                deduct.calculateTotalDeductions(),
-                benefit.calculateTotalAllowance(),
-                payroll.getNetPay(),
-            };
-
-            // Add the row to the table model
-            model.addRow(data);
-        }
+//        TODO - use new view for generating summary report
+//        DefaultTableModel model = (DefaultTableModel) payrollReportTable.getModel();
+//        model.setRowCount(0);
+//        for (Payroll payroll : payrollList) {
+//            Employee emp = payroll.getEmployee();
+//            Deductions deduct = payroll.getDeductions();
+//            Benefits benefit = emp.getBenefits();
+//            Object data[] = {
+//                emp.getEmployeeID(),
+//                emp.getFirstName() + " " + emp.getLastName(),
+//                emp.getPosition(),
+//                payroll.getGrossIncome(),
+//                deduct.calculateTotalDeductions(),
+//                benefit.calculateTotalAllowance(),
+//                payroll.getNetPay(),
+//            };
+//
+//            // Add the row to the table model
+//            model.addRow(data);
+//        }
     }
 
     /**

@@ -58,4 +58,10 @@ public class AttendanceRecordTest {   private AttendanceRecord attendanceRecord;
         // Test that the calculation of work hours is correct (9 hours in this case)
         assertEquals(9.0, attendanceRecord.calculateWorkHours(), 0.01);
     }
+    
+    @Test
+    void testIsTimeSet() {
+    assertTrue(attendanceRecord.isTimeSet());
+    }
+
 }

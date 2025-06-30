@@ -34,40 +34,55 @@ public class AttendanceRecordDao {
         this.conn = DbConnection.getConnection();
     }
     
-
-    public AttendanceRecord initAttendanceRecord(int employeeID){
+    public AttendanceRecord getAttendanceRecord(int employeeID, Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = formatter.format(new Date());
+        String formattedDate = formatter.format(date);
+
         try {
-
-            // Define the query
-            String query = "SELECT * FROM attendance_record "
-                    + "WHERE employee_id = ? AND date = ?";
-            
-            preparedStatement = conn.prepareStatement(query);
-
-            // Setting parameters
+            // First: Try to retrieve the existing attendance record
+            String selectQuery = "SELECT * FROM attendance_record WHERE employee_id = ? AND date = ?";
+            preparedStatement = conn.prepareStatement(selectQuery);
             preparedStatement.setInt(1, employeeID);
             preparedStatement.setString(2, formattedDate);
 
-            // Execute the query
             rs = preparedStatement.executeQuery();
-            
+
             if (rs.next()) {
-                AttendanceRecord attendanceRecord = new AttendanceRecord(
-                    rs.getInt("employee_id"), 
-                    rs.getDate("date"), 
-                    rs.getTime("time_in"), 
+                return new AttendanceRecord(
+                    rs.getInt("employee_id"),
+                    rs.getDate("date"),
+                    rs.getTime("time_in"),
                     rs.getTime("time_out")
                 );
+            } else {
+                // No existing record, so insert a new one
+                String insertQuery = "INSERT INTO attendance_record (employee_id, date, time_in, time_out) VALUES (?, ?, NULL, NULL)";
+                preparedStatement = conn.prepareStatement(insertQuery);
+                preparedStatement.setInt(1, employeeID);
+                preparedStatement.setString(2, formattedDate);
+                preparedStatement.executeUpdate();
 
-                return attendanceRecord;
+                // Retrieve the newly created record
+                preparedStatement = conn.prepareStatement(selectQuery);
+                preparedStatement.setInt(1, employeeID);
+                preparedStatement.setString(2, formattedDate);
+                rs = preparedStatement.executeQuery();
+
+                if (rs.next()) {
+                    return new AttendanceRecord(
+                        rs.getInt("employee_id"),
+                        rs.getDate("date"),
+                        rs.getTime("time_in"),
+                        rs.getTime("time_out")
+                    );
+                }
             }
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
             e.printStackTrace();
         }
+
         return null;
-    }   
+    }
 }
 

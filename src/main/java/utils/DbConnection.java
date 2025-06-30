@@ -19,13 +19,22 @@ public class DbConnection {
     private static Connection conn = null;
 
     public static Connection getConnection() {
-        if (conn == null) {
-            try {
-                conn = DriverManager.getConnection(URL, USER, PASS);
-                System.out.println("Database connected.");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        try {
+            conn = DriverManager.getConnection(URL, USER, PASS);
+            System.out.println("Database connected.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return conn;
+    }
+    
+    public static Connection getConnectionWithTransaction(){
+        try {
+            conn = DriverManager.getConnection(URL, USER, PASS);
+            conn.setAutoCommit(false);
+            System.out.println("Database connected with transaction.");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return conn;
     }

@@ -4,14 +4,14 @@
  */
 package gui;
 
-import alex.oopmotorphpayrollsystem.AccountAccess;
-import alex.oopmotorphpayrollsystem.AttendanceRecord;
-import alex.oopmotorphpayrollsystem.User;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.Employee;
+import models.AccountAccess;
+import models.AttendanceRecord;
+import models.User;
+import models.HRPersonnel;
+import models.Employee;
 import gui.AdminAddNewEmp;
 import gui.ConfirmationPopUp;
-import alex.oopmotorphpayrollsystem.SystemAdministrator;
+import models.SystemAdministrator;
 import dao.HRPersonnelDao;
 import dao.SystemAdministratorDao;
 import java.util.*;

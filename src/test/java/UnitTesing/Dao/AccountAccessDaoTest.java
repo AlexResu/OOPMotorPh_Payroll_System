@@ -4,7 +4,7 @@
  */
 package UnitTesing.Dao;
 
-import alex.oopmotorphpayrollsystem.AccountAccess;
+import models.AccountAccess;
 import dao.AccountAccessDao;
 import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import dao.AccountAccessDao;
-import alex.oopmotorphpayrollsystem.User;
+import models.User;
 import dao.UserDao;
 
 /**

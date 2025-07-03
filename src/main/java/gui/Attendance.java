@@ -4,11 +4,11 @@
  */
 package gui;
 
-import alex.oopmotorphpayrollsystem.AccountAccess;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.AttendanceRecord;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.User;
+import models.AccountAccess;
+import models.Employee;
+import models.AttendanceRecord;
+import models.HRPersonnel;
+import models.User;
 import dao.EmployeeDao;
 import dao.HRPersonnelDao;
 import java.util.List;

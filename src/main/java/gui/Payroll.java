@@ -4,7 +4,8 @@
  */
 package gui;
 
-import alex.oopmotorphpayrollsystem.AccountAccess;
+import models.HRPersonnel;
+import models.AccountAccess;
 import alex.oopmotorphpayrollsystem.*;
 import dao.HRPersonnelDao;
 import java.text.SimpleDateFormat;

@@ -4,14 +4,14 @@
  */
 package gui;
 
-import alex.oopmotorphpayrollsystem.AccountAccess;
-import alex.oopmotorphpayrollsystem.Address;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.Benefits;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.User;
-import alex.oopmotorphpayrollsystem.Helpers;
-import alex.oopmotorphpayrollsystem.SystemAdministrator;
+import models.AccountAccess;
+import models.Address;
+import models.Employee;
+import models.Benefits;
+import models.HRPersonnel;
+import models.User;
+import models.Helpers;
+import models.SystemAdministrator;
 import dao.EmployeeDao;
 import dao.HRPersonnelDao;
 import dao.SystemAdministratorDao;

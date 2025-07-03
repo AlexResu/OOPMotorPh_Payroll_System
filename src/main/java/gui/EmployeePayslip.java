@@ -4,15 +4,15 @@
  */
 package gui;
 
-import alex.oopmotorphpayrollsystem.AccountAccess;
-import alex.oopmotorphpayrollsystem.PayrollExcelDownload;
-import alex.oopmotorphpayrollsystem.PayrollSummaryExcel;
-import alex.oopmotorphpayrollsystem.User;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.Benefits;
-import alex.oopmotorphpayrollsystem.Deductions;
-import alex.oopmotorphpayrollsystem.Payroll;
+import models.AccountAccess;
+import models.PayrollExcelDownload;
+import models.PayrollSummaryExcel;
+import models.User;
+import models.Employee;
+import models.HRPersonnel;
+import models.Benefits;
+import models.Deductions;
+import models.Payroll;
 import dao.EmployeeDao;
 import dao.HRPersonnelDao;
 import java.io.File;

@@ -4,14 +4,14 @@
  */
 package UnitTesing.Dao;
 
-import alex.oopmotorphpayrollsystem.Address;
-import alex.oopmotorphpayrollsystem.AttendanceRecord;
-import alex.oopmotorphpayrollsystem.Benefits;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.LeaveRequest;
-import alex.oopmotorphpayrollsystem.Payroll;
-import alex.oopmotorphpayrollsystem.User;
+import models.Address;
+import models.AttendanceRecord;
+import models.Benefits;
+import models.Employee;
+import models.HRPersonnel;
+import models.LeaveRequest;
+import models.Payroll;
+import models.User;
 import java.sql.Connection;
 import dao.HRPersonnelDao;
 import java.io.ByteArrayOutputStream;

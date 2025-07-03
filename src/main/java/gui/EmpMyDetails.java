@@ -4,10 +4,10 @@
  */
 package gui;
 
-import alex.oopmotorphpayrollsystem.AccountAccess;
-import alex.oopmotorphpayrollsystem.Address;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.Benefits;
+import models.AccountAccess;
+import models.Address;
+import models.Employee;
+import models.Benefits;
 import dao.EmployeeDao;
 import java.util.Timer;
 import java.util.TimerTask;

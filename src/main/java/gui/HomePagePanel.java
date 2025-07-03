@@ -3,13 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package gui;
-import alex.oopmotorphpayrollsystem.AccountAccess;
-import alex.oopmotorphpayrollsystem.AttendanceRecord;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.SystemAdministrator;
-import alex.oopmotorphpayrollsystem.User;
-import alex.oopmotorphpayrollsystem.LeaveRequest;
+import models.AccountAccess;
+import models.AttendanceRecord;
+import models.Employee;
+import models.HRPersonnel;
+import models.SystemAdministrator;
+import models.User;
+import models.LeaveRequest;
 import dao.AttendanceRecordDao;
 import dao.EmployeeDao;
 import java.text.SimpleDateFormat;

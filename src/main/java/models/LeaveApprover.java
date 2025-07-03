@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package alex.oopmotorphpayrollsystem;
-import java.util.*;
+package models;
 
 /**
  * Interface class
  * @author Alex Resurreccion
  */
-interface PayrollProcessor { 
-    boolean processPayroll(Date startDate, Date endDate);
+interface LeaveApprover { 
+    void approveLeave(LeaveRequest leave);
+    
 }

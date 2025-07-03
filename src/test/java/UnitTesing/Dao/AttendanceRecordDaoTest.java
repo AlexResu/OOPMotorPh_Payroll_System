@@ -4,7 +4,7 @@
  */
 package UnitTesing.Dao;
 
-import alex.oopmotorphpayrollsystem.AttendanceRecord;
+import models.AttendanceRecord;
 import dao.AttendanceRecordDao;
 import java.sql.Connection;
 import java.sql.SQLException;

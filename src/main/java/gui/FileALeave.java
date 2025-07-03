@@ -4,8 +4,8 @@
  */
 package gui;
 
-import alex.oopmotorphpayrollsystem.LeaveRequest;
-import alex.oopmotorphpayrollsystem.Employee;
+import models.LeaveRequest;
+import models.Employee;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Calendar;

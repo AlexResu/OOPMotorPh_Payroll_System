@@ -1,4 +1,4 @@
-package alex.oopmotorphpayrollsystem;
+package models;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;

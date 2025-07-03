@@ -4,7 +4,7 @@
  */
 package UnitTesing.Dao;
 
-import alex.oopmotorphpayrollsystem.User;
+import models.User;
 import dao.UserDao;
 import java.sql.Connection;
 import java.sql.SQLException;

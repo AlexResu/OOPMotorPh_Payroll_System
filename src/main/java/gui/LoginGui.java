@@ -4,7 +4,7 @@
  */
 package gui;
 
-import alex.oopmotorphpayrollsystem.AccountAccess;
+import models.AccountAccess;
 import gui.UserHomePage;
 import dao.AccountAccessDao;
 

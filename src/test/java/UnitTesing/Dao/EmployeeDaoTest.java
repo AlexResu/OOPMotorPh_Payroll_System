@@ -4,10 +4,10 @@
  */
 package UnitTesing.Dao;
 
-import alex.oopmotorphpayrollsystem.AttendanceRecord;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.LeaveRequest;
-import alex.oopmotorphpayrollsystem.Payroll;
+import models.AttendanceRecord;
+import models.Employee;
+import models.LeaveRequest;
+import models.Payroll;
 import dao.EmployeeDao;
 import java.sql.Connection;
 import java.sql.DriverManager;

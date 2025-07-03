@@ -4,12 +4,12 @@
  */
 package dao;
 
-import alex.oopmotorphpayrollsystem.Address;
-import alex.oopmotorphpayrollsystem.Benefits;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.SystemAdministrator;
-import alex.oopmotorphpayrollsystem.User;
+import models.Address;
+import models.Benefits;
+import models.Employee;
+import models.HRPersonnel;
+import models.SystemAdministrator;
+import models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

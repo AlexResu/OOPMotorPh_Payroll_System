@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package models;
+package utils;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import models.Payroll;
 
 public class PayrollSummaryExcel {
     public static void generatePayrollReport(List<Payroll> payrollList, File fileToSave) {

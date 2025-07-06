@@ -40,6 +40,10 @@
             <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
             <url>file:${project.basedir}/lib</url>
         </repository>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -105,6 +109,11 @@
             <artifactId>jasperreports-javaflow</artifactId>
             <version>7.0.3</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports-pdf</artifactId>
+            <version>7.0.3</version>
         </dependency>
     </dependencies>
     <properties>

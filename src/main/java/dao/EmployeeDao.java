@@ -139,6 +139,10 @@ public class EmployeeDao {
             preparedStatement.setString(9, "PENDING");
             // Execute the query
             rowsAffected = preparedStatement.executeUpdate();
+            if(rowsAffected == 1){
+                EmailSenderDao emailSenderDao = new EmailSenderDao();
+                emailSenderDao.newLeaveNotification(leave);
+            }
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
             e.printStackTrace();
@@ -452,7 +456,8 @@ public class EmployeeDao {
         try {
             // Define the query
             String query = "INSERT INTO attendance_record ("
-                    + "employee_id, date, time_in) VALUES (?, ?, ?)";
+                    + "employee_id, date, time_in) VALUES (?, ?, ?)" +
+                      "ON DUPLICATE KEY UPDATE time_in = VALUES(time_in)";;
 
             // Prepare the statement
             PreparedStatement preparedStatement = conn.prepareStatement(query);

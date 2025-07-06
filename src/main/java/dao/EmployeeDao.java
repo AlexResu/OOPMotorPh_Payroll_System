@@ -529,7 +529,7 @@ public class EmployeeDao {
                 emp.setPagibigNumber(rs.getString("pagibig_number"));
                 emp.setStatus(rs.getString("status"));
                 emp.setPosition(rs.getString("position"));
-                emp.setImmediateSupervisor(rs.getString("immediate_supervisor"));
+                emp.setImmediateSupervisor(rs.getInt("immediate_supervisor"));
                 emp.setDateHired(rs.getDate("date_hired"));
 
                 Benefits benefit = new Benefits(

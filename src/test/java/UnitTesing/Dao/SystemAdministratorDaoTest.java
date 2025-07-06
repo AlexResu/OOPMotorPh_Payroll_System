@@ -75,6 +75,7 @@ public class SystemAdministratorDaoTest {
         employee.setPagibigNumber("9999321");
         employee.setStatus("Regular");
         employee.setPosition("Sales & Marketing");
+        employee.setImmediateSupervisor(10001);
         boolean result = systemAdministratorDao.addNewEmployee(employee);
         assertTrue(result);
         System.out.println("Employee has been created successfully");
@@ -350,6 +351,7 @@ public class SystemAdministratorDaoTest {
         employee.setPagibigNumber("9999321");
         employee.setStatus("Regular");
         employee.setPosition("Sales & Marketing");
+        employee.setImmediateSupervisor(10001);
         boolean result = systemAdministratorDao.addNewEmployee(employee);
         assertTrue(result);
         
@@ -389,6 +391,7 @@ public class SystemAdministratorDaoTest {
         employee.setPagibigNumber("9999321");
         employee.setStatus("Regular");
         employee.setPosition("Sales & Marketing");
+        employee.setImmediateSupervisor(10001);
         boolean result = systemAdministratorDao.addNewEmployee(employee);
         assertTrue(result);
         

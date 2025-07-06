@@ -25,7 +25,7 @@ public class EmployeeTest {
         employee.setFirstName("John");
         employee.setLastName("Doe");
         employee.setStatus("Active");
-        employee.setImmediateSupervisor("Jane Smith");
+        employee.setImmediateSupervisor(10005);
         employee.setDepartment("IT");
         
         benefits = new Benefits(30000, 15000, 200, 2000, 1000, 500);
@@ -48,9 +48,9 @@ public class EmployeeTest {
 
     @Test
     void testGetAndSetImmediateSupervisor() {
-        assertEquals("Jane Smith", employee.getImmediateSupervisor());
-        employee.setImmediateSupervisor("Mark Johnson");
-        assertEquals("Mark Johnson", employee.getImmediateSupervisor());
+        assertEquals(10005, employee.getImmediateSupervisor());
+        employee.setImmediateSupervisor(10015);
+        assertEquals(10015, employee.getImmediateSupervisor());
     }
 
     @Test

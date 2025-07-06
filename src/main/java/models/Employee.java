@@ -15,7 +15,7 @@ import java.util.*;
  */
 public class Employee extends User {
     private String status;
-    private String immediateSupervisor;
+    private int immediateSupervisor;
     private String department;
     private Benefits benefits; // Composition: Employee "HAS-A" Benefits
     
@@ -46,7 +46,7 @@ public class Employee extends User {
         return status;
     }
     
-    public String getImmediateSupervisor() {
+    public int getImmediateSupervisor() {
         return immediateSupervisor;
     }
     
@@ -59,7 +59,7 @@ public class Employee extends User {
         this.status = status;
     }
     
-    public void setImmediateSupervisor(String immediateSupervisor) {
+    public void setImmediateSupervisor(int immediateSupervisor) {
         this.immediateSupervisor = immediateSupervisor;
     }
     

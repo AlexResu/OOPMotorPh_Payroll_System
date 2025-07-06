@@ -223,14 +223,6 @@ public class HRPersonnelDao {
         return rowsAffected == 1;
     }
     
-    private Integer getSupervisorId(String name) throws SQLException {
-        String query = "SELECT employee_id FROM employees WHERE first_name = ? AND is_deleted = 0";
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1, name);
-        ResultSet rs = ps.executeQuery();
-        return rs.next() ? rs.getInt("employee_id") : null;
-    }
-    
     private int getStatusId(String statusName) throws SQLException {
         String query = "SELECT status_id FROM status WHERE type = ?";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -276,7 +268,7 @@ public class HRPersonnelDao {
             preparedStatement.setString(4, employee.getPhoneNumber());
             preparedStatement.setInt(5, getStatusId(employee.getStatus()));
             preparedStatement.setInt(6, getPositionId(employee.getPosition()));
-            preparedStatement.setObject(7, getSupervisorId(employee.getImmediateSupervisor()), java.sql.Types.INTEGER); // Nullable
+            preparedStatement.setObject(7, employee.getImmediateSupervisor(), java.sql.Types.INTEGER); // Nullable
             preparedStatement.setInt(8, employee.getEmployeeID());
 
             System.out.println("Executing Query: " + preparedStatement.toString());
@@ -487,7 +479,7 @@ public class HRPersonnelDao {
      * @return A list of attendance records for the given date range.
      */
     public List<AttendanceRecord> loadAttendanceList(
-            int employeeId, Date startDate, Date endDate){
+            Date startDate, Date endDate){
         try {
             // Create a statement object
             statement = connection.createStatement();
@@ -498,19 +490,12 @@ public class HRPersonnelDao {
                "INNER JOIN employees e ON e.employee_id = a.employee_id " +
                "INNER JOIN positions p ON p.position_id = e.position_id " +
                "WHERE a.date BETWEEN ? AND ?";
-            if(employeeId != 0){
-                query += "AND a.employee_id = ? ";
-            }
             query += "ORDER BY date DESC";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             
             preparedStatement.setDate(1, new java.sql.Date(startDate.getTime()));
             preparedStatement.setDate(2, new java.sql.Date(endDate.getTime()));
-            
-            if(employeeId != 0){
-                preparedStatement.setInt(3, employeeId);
-            }
 
             result = preparedStatement.executeQuery();
             List<AttendanceRecord> attendances = mapAttendance(result);
@@ -579,7 +564,7 @@ public class HRPersonnelDao {
             emp.setPagibigNumber(result.getString("pagibig_number"));
             emp.setStatus(result.getString("status"));
             emp.setPosition(result.getString("position"));
-            emp.setImmediateSupervisor(result.getString("immediate_supervisor"));
+            emp.setImmediateSupervisor(result.getInt("immediate_supervisor"));
             emp.setDateHired(result.getDate("date_hired"));
 
             Benefits benefit = new Benefits(

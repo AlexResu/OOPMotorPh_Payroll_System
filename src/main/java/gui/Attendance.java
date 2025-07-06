@@ -57,7 +57,7 @@ public class Attendance extends javax.swing.JPanel {
         } else {
             if(user instanceof HRPersonnel){
                 attendance = hrPersonnelDao.loadAttendanceList(
-                        user.getEmployeeID(), startDateValue.getDate(), endDateValue.getDate());
+                        startDateValue.getDate(), endDateValue.getDate());
             } else {
                 attendance = employeeDao.loadAttendanceList(
                         startDateValue.getDate(), endDateValue.getDate(), user.getEmployeeID());

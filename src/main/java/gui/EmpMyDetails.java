@@ -43,7 +43,7 @@ public class EmpMyDetails extends javax.swing.JPanel {
         empStatusValue.setText(user.getStatus());
         empDateHiredValue.setText("01/01/2025");
         empPositionValue.setText(user.getPosition());
-        empImmediateSupValue.setText(user.getImmediateSupervisor());
+        empImmediateSupValue.setText(String.valueOf(user.getImmediateSupervisor()));
         empPhoneNumValue.setText(user.getPhoneNumber());
         empPersonalEmailValue.setText("@example.motorph.com.ph");
         Address address = user.getAddress();
@@ -172,6 +172,7 @@ public class EmpMyDetails extends javax.swing.JPanel {
         empImmediateSupValue.setForeground(new java.awt.Color(0, 0, 0));
         empImmediateSupValue.setToolTipText("");
         empImmediateSupValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        empImmediateSupValue.setEnabled(false);
         empImmediateSupValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 empImmediateSupValueActionPerformed(evt);
@@ -537,6 +538,7 @@ public class EmpMyDetails extends javax.swing.JPanel {
         empRoleValue.setBackground(new java.awt.Color(227, 227, 227));
         empRoleValue.setForeground(new java.awt.Color(0, 0, 0));
         empRoleValue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "System Administrator", "HR Personnel", "Employee" }));
+        empRoleValue.setEnabled(false);
         empRoleValue.setLightWeightPopupEnabled(false);
         empRoleValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

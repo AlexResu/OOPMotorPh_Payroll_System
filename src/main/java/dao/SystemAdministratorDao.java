@@ -238,13 +238,6 @@ public class SystemAdministratorDao {
         return rs.next() ? rs.getInt("position_id") : 0;
     }
     
-    private int getEmployeeRoleId() throws SQLException {
-        String query = "SELECT role_id FROM roles WHERE role_name = 'Employee'";
-        PreparedStatement ps = connection.prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
-        return rs.next() ? rs.getInt("role_id") : 0;
-    }
-    
     // Update an existing employee in the system
     public boolean updateEmployee(User employee) {
         int rowsAffected = 0;
@@ -268,8 +261,8 @@ public class SystemAdministratorDao {
             if (employee instanceof Employee emp) {
                 preparedStatement.setInt(5, getStatusId(emp.getStatus()));
                 preparedStatement.setInt(6, getPositionId(emp.getPosition()));
-                if (emp.getImmediateSupervisor() != null) {
-                    preparedStatement.setObject(7, getSupervisorId(((Employee) employee).getImmediateSupervisor()), java.sql.Types.INTEGER); // Nullable
+                if (emp.getImmediateSupervisor() != 0) {
+                    preparedStatement.setObject(7, ((Employee) employee).getImmediateSupervisor(), java.sql.Types.INTEGER); // Nullable
                 } else {
                     preparedStatement.setNull(7, java.sql.Types.INTEGER);
                 }
@@ -499,7 +492,7 @@ public class SystemAdministratorDao {
                 if (user instanceof Employee){
                     ((Employee) user).setStatus(result.getString("status"));
                     ((Employee) user).setPosition(result.getString("position"));
-                    ((Employee) user).setImmediateSupervisor(result.getString("immediate_supervisor"));
+                    ((Employee) user).setImmediateSupervisor(result.getInt("immediate_supervisor"));
 
                     Benefits benefit = new Benefits(
                             result.getInt("basic_salary"),

@@ -62,6 +62,10 @@ public class HRPersonnelDaoTest {
         
         LeaveRequest leaveToFind = new LeaveRequest();
         leaveToFind.setLeaveID(10);
+        leaveToFind.setStartDate(new Date());
+        leaveToFind.setEndDate(new Date());
+        Employee employee = new Employee(10001);
+        leaveToFind.setEmployee(employee);
         HRPersonnel user = new HRPersonnel(10006);
         hrPersonnelDao.approveLeaveRequest(leaveToFind, user);
         
@@ -80,7 +84,12 @@ public class HRPersonnelDaoTest {
         System.out.println("Test for Approve Leave Request - Invalid Id");
         
         LeaveRequest leaveToFind = new LeaveRequest();
+        
         leaveToFind.setLeaveID(999999999);
+        leaveToFind.setStartDate(new Date());
+        leaveToFind.setEndDate(new Date());
+        Employee employee = new Employee(10001);
+        leaveToFind.setEmployee(employee);
         HRPersonnel user = new HRPersonnel(999999999);
         hrPersonnelDao.approveLeaveRequest(leaveToFind, user);
         
@@ -98,6 +107,10 @@ public class HRPersonnelDaoTest {
         // Approve already Approved leave
         LeaveRequest leaveToFind = new LeaveRequest();
         leaveToFind.setLeaveID(2);
+        leaveToFind.setStartDate(new Date());
+        leaveToFind.setEndDate(new Date());
+        Employee employee = new Employee(10001);
+        leaveToFind.setEmployee(employee);
         HRPersonnel user = new HRPersonnel(10006);
         hrPersonnelDao.approveLeaveRequest(leaveToFind, user);
         
@@ -126,6 +139,10 @@ public class HRPersonnelDaoTest {
         
         LeaveRequest leaveToFind = new LeaveRequest();
         leaveToFind.setLeaveID(10);
+        leaveToFind.setStartDate(new Date());
+        leaveToFind.setEndDate(new Date());
+        Employee employee = new Employee(10001);
+        leaveToFind.setEmployee(employee);
         HRPersonnel user = new HRPersonnel(10006);
         hrPersonnelDao.declineLeaveRequest(leaveToFind, user);
         
@@ -145,6 +162,10 @@ public class HRPersonnelDaoTest {
         
         LeaveRequest leaveToFind = new LeaveRequest();
         leaveToFind.setLeaveID(999999999);
+        leaveToFind.setStartDate(new Date());
+        leaveToFind.setEndDate(new Date());
+        Employee employee = new Employee(10001);
+        leaveToFind.setEmployee(employee);
         HRPersonnel user = new HRPersonnel(999999999);
         hrPersonnelDao.declineLeaveRequest(leaveToFind, user);
         
@@ -162,6 +183,10 @@ public class HRPersonnelDaoTest {
         // Approve already Approved leave
         LeaveRequest leaveToFind = new LeaveRequest();
         leaveToFind.setLeaveID(2);
+        leaveToFind.setStartDate(new Date());
+        leaveToFind.setEndDate(new Date());
+        Employee employee = new Employee(10001);
+        leaveToFind.setEmployee(employee);
         HRPersonnel user = new HRPersonnel(10006);
         hrPersonnelDao.declineLeaveRequest(leaveToFind, user);
         
@@ -213,6 +238,7 @@ public class HRPersonnelDaoTest {
         employee.setPagibigNumber("9999321");
         employee.setStatus("Regular");
         employee.setPosition("Sales & Marketing");
+        employee.setImmediateSupervisor(10001);
         boolean result = hrPersonnelDao.addNewEmployee(employee);
         assertTrue(result);
         System.out.println("Employee has been created successfully");
@@ -306,6 +332,7 @@ public class HRPersonnelDaoTest {
         employee.setPagibigNumber("9999321");
         employee.setStatus("Regular");
         employee.setPosition("Sales & Marketing");
+        employee.setImmediateSupervisor(10001);
         boolean result = hrPersonnelDao.updateEmployee(employee);
         assertTrue(result);
         System.out.println("Employee has been updated successfully");
@@ -430,6 +457,7 @@ public class HRPersonnelDaoTest {
         employee.setPagibigNumber("9999321");
         employee.setStatus("Regular");
         employee.setPosition("Sales & Marketing");
+        employee.setImmediateSupervisor(10001);
         boolean result = hrPersonnelDao.addNewEmployee(employee);
         assertTrue(result);
         
@@ -465,9 +493,9 @@ public class HRPersonnelDaoTest {
         localDate = LocalDate.of(2024, 6, 15);
         Date dateUntil = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        List<AttendanceRecord> attendance = hrPersonnelDao.loadAttendanceList(10008, dateFrom, dateUntil);
+        List<AttendanceRecord> attendance = hrPersonnelDao.loadAttendanceList(dateFrom, dateUntil);
         assertFalse(attendance.isEmpty());
-        System.out.println("Attendance record with Date Range is not empty for employee 10008");
+        System.out.println("Attendance record with Date Range is not empty");
         for (AttendanceRecord record : attendance) {
             System.out.println(
                     record.getDate() + " (" + record.getTimeIn() 
@@ -477,14 +505,14 @@ public class HRPersonnelDaoTest {
     
     @Test
     public void testLoadAttendanceListDateRangeInvalidEmployee() {
-        System.out.println("Test for Load AttendanceList with Date Range - Invalid Employee");
-        LocalDate localDate = LocalDate.of(2024, 6, 10);
+        System.out.println("Test for Load AttendanceList with Date Range - Invalid Date");
+        LocalDate localDate = LocalDate.of(2002, 1, 10);
         Date dateFrom = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         
-        localDate = LocalDate.of(2024, 6, 15);
+        localDate = LocalDate.of(2003, 6, 15);
         Date dateUntil = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         List<AttendanceRecord> attendance = hrPersonnelDao.loadAttendanceList(
-                99999999, dateFrom, dateUntil);
+                dateFrom, dateUntil);
         assertTrue(attendance.isEmpty());
         System.out.println("Attendance record with Date Range is empty for invalid employee");
     }
@@ -658,6 +686,7 @@ public class HRPersonnelDaoTest {
         employee.setPagibigNumber("9999321");
         employee.setStatus("Regular");
         employee.setPosition("Sales & Marketing");
+        employee.setImmediateSupervisor(10001);
         boolean result = hrPersonnelDao.addNewEmployee(employee);
         assertTrue(result);
         

@@ -25,6 +25,9 @@ import java.util.List;
  */
 public class UserDao {
     private Connection conn;
+    private Statement statement = null;
+    private ResultSet rs = null;
+    private PreparedStatement preparedStatement = null;
 
     // Kept your original constructor
     public UserDao(Connection conn) {
@@ -265,25 +268,6 @@ public class UserDao {
         }
         return ""; // Return empty string if not found
     }
-}
-
-/**
- * A simple data container class to hold user information for the JTable.
- */
-class UserDetails {
-    private final String employeeId;
-    private final String name;
-    private final boolean isLocked;
-
-    public UserDetails(String employeeId, String name, boolean isLocked) {
-        this.employeeId = employeeId;
-        this.name = name;
-        this.isLocked = isLocked;
-    }
-
-    public String getEmployeeId() { return employeeId; }
-    public String getName() { return name; }
-    public boolean isLocked() { return isLocked; }
     
     public User getUserInfo(int employeeId, String role, boolean isAuth){
         User user = null;
@@ -313,7 +297,7 @@ class UserDetails {
                     user = new Employee(); // Assign Employee role
                     // Set additional employee details
                     ((Employee)user).setStatus(rs.getString("status"));
-                    ((Employee)user).setImmediateSupervisor(rs.getString("immediate_supervisor"));
+                    ((Employee)user).setImmediateSupervisor(rs.getInt("immediate_supervisor"));
                     
                     // Create Benefits object and assign to Employee
                     Benefits benefit = new Benefits(
@@ -358,6 +342,25 @@ class UserDetails {
         }
         return user; // Return the populated user object or null if no data found
     }
+}
+
+/**
+ * A simple data container class to hold user information for the JTable.
+ */
+class UserDetails {
+    private final String employeeId;
+    private final String name;
+    private final boolean isLocked;
+
+    public UserDetails(String employeeId, String name, boolean isLocked) {
+        this.employeeId = employeeId;
+        this.name = name;
+        this.isLocked = isLocked;
+    }
+
+    public String getEmployeeId() { return employeeId; }
+    public String getName() { return name; }
+    public boolean isLocked() { return isLocked; }
 }
 
 

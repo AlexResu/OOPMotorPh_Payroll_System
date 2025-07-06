@@ -7,11 +7,11 @@ package gui;
 import models.AccountAccess;
 import gui.UserHomePage;
 import dao.AccountAccessDao;
-import alex.oopmotorphpayrollsystem.User;
 import dao.UserDao;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import models.User;
 /**
  *
  * @author Alex Resurreccion

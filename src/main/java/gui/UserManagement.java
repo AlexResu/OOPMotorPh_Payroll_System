@@ -169,6 +169,7 @@ public class UserManagement extends javax.swing.JPanel {
         add(searchEmpValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 180, 30));
 
         adminEmpMngSearchButton.setForeground(new java.awt.Color(255, 255, 255));
+        adminEmpMngSearchButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\searchIcon.png")); // NOI18N
         adminEmpMngSearchButton.setFocusPainted(false);
         adminEmpMngSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -90,7 +90,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpFirstNameValue), addNewEmpWarnFN, validation2));
         fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpBirthValue), addNewEmpWarnBirth, validation5));
         fields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPhoneNumValue), addNewEmpWarnPhone, validation3));
-        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpImmediateSupValue), addNewEmpWarnISup, validation6));
+        empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpImmediateSupValue1), addNewEmpWarnISup, validation4));
         empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpBasicSalaryValue), addNewEmpWarnBSal, validation4));
         empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpGrossSemiValue), addNewEmpWarnGSMR, validation4));
         empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpHourlyRateValue), addNewEmpWarnHRate, validation4));
@@ -105,7 +105,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         addNewEmpSuccessCreatedLabel.setVisible(false);
         addNewEmpErrorFill.setVisible(false);
             
-
         if(action.equals("Update")){
             addNewEmpSuccessCreatedLabel.setText("Successfully updated information. This window will automatically close in 3 seconds.");
             addNewEmpLabel.setText("Update Employee");
@@ -115,6 +114,8 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
             newEmpCancelButton.setText("Go Back");
         }
         addNewEmpWarnBirth.setVisible(false);
+        
+        // initialize newEmpImmediateSupValue
         
     }
     
@@ -141,7 +142,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         if(editableUser instanceof Employee){
             enableAllEmpOnlyFields();
             newEmpStatusValue.setSelectedItem(((Employee) editableUser).getStatus());
-            newEmpImmediateSupValue.setText(((Employee) editableUser).getImmediateSupervisor());
+            newEmpImmediateSupValue1.setText(String.valueOf(((Employee) editableUser).getImmediateSupervisor()));
             newEmpBasicSalaryValue.setText(String.valueOf(((Employee) editableUser).getBenefitsBasicSalary()));
             newEmpGrossSemiValue.setText(String.valueOf(((Employee) editableUser).getBenefitsGrossSemiMonthlyRate()));
             newEmpHourlyRateValue.setText(String.valueOf(((Employee) editableUser).getBenefitsHourlyRate()));
@@ -156,7 +157,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         
     private void enableAllEmpOnlyFields(){
         newEmpStatusValue.setEnabled(true);
-        newEmpImmediateSupValue.setEnabled(true);
+        newEmpImmediateSupValue1.setEnabled(true);
         newEmpBasicSalaryValue.setEnabled(true);
         newEmpGrossSemiValue.setEnabled(true);
         newEmpHourlyRateValue.setEnabled(true);
@@ -167,7 +168,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     
     private void disableAllEmpOnlyFields(){
         newEmpStatusValue.setEnabled(false);
-        newEmpImmediateSupValue.setEnabled(false);
+        newEmpImmediateSupValue1.setEnabled(false);
         newEmpBasicSalaryValue.setEnabled(false);
         newEmpGrossSemiValue.setEnabled(false);
         newEmpHourlyRateValue.setEnabled(false);
@@ -176,7 +177,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         newEmpClothingAllowValue.setEnabled(false);
         
         newEmpStatusValue.setSelectedItem(null);
-        newEmpImmediateSupValue.setText(null);
+        newEmpImmediateSupValue1.setText(null);
         newEmpBasicSalaryValue.setText(null);
         newEmpGrossSemiValue.setText(null);
         newEmpHourlyRateValue.setText(null);
@@ -290,7 +291,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JSeparator();
         newEmpStatusValue = new javax.swing.JComboBox<>();
         newEmpPositionValue = new javax.swing.JComboBox<>();
-        newEmpImmediateSupValue = new javax.swing.JTextField();
+        newEmpImmediateSupValue1 = new javax.swing.JTextField();
         addNewEmpWarnISup = new javax.swing.JLabel();
         newEmpDateHiredValue = new com.toedter.calendar.JDateChooser();
         addressStreet = new javax.swing.JLabel();
@@ -302,6 +303,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         addressZipcodeValue = new javax.swing.JTextField();
         addressCityValue = new javax.swing.JTextField();
         addressBarangayValue = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         exitButton = new javax.swing.JLabel();
         addNewEmpLabel = new javax.swing.JLabel();
 
@@ -328,7 +330,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
 
         newEmpImmediateSup.setBackground(new java.awt.Color(255, 255, 255));
         newEmpImmediateSup.setForeground(new java.awt.Color(0, 0, 0));
-        newEmpImmediateSup.setText(" Immediate Supervisor*");
+        newEmpImmediateSup.setText(" Immediate Supervisor ID*");
         newEmpImmediateSup.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         addNewEmpForm.add(newEmpImmediateSup, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 190, 30));
 
@@ -819,20 +821,21 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         });
         addNewEmpForm.add(newEmpPositionValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 230, 190, 30));
 
-        newEmpImmediateSupValue.setBackground(new java.awt.Color(255, 255, 255));
-        newEmpImmediateSupValue.setForeground(new java.awt.Color(0, 0, 0));
-        newEmpImmediateSupValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        newEmpImmediateSupValue.addActionListener(new java.awt.event.ActionListener() {
+        newEmpImmediateSupValue1.setBackground(new java.awt.Color(255, 255, 255));
+        newEmpImmediateSupValue1.setForeground(new java.awt.Color(0, 0, 0));
+        newEmpImmediateSupValue1.setToolTipText("");
+        newEmpImmediateSupValue1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        newEmpImmediateSupValue1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newEmpImmediateSupValueActionPerformed(evt);
+                newEmpImmediateSupValue1ActionPerformed(evt);
             }
         });
-        addNewEmpForm.add(newEmpImmediateSupValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 190, 30));
+        addNewEmpForm.add(newEmpImmediateSupValue1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 190, 30));
 
         addNewEmpWarnISup.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         addNewEmpWarnISup.setForeground(new java.awt.Color(204, 0, 51));
         addNewEmpWarnISup.setText("This is required.");
-        addNewEmpForm.add(addNewEmpWarnISup, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, -1, 20));
+        addNewEmpForm.add(addNewEmpWarnISup, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 80, 20));
 
         newEmpDateHiredValue.setBackground(new java.awt.Color(255, 255, 255));
         newEmpDateHiredValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -914,6 +917,10 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         });
         addNewEmpForm.add(addressBarangayValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 570, 260, 30));
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
+        jLabel1.setText("This should be the Employee ID of the Supervisor.");
+        addNewEmpForm.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 230, 30));
+
         jScrollPane1.setViewportView(addNewEmpForm);
 
         AddNewEmpGradientPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 62, 820, 500));
@@ -971,9 +978,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
             editableUser = new Employee();
         }
         boolean isClear = Helpers.validateForm(fields);
-        System.out.println(editableUser instanceof Employee);
-        System.out.println(editableUser instanceof HRPersonnel);
-        System.out.println(editableUser instanceof SystemAdministrator);
         if(editableUser instanceof Employee ){
             isClear = Helpers.validateForm(empOnlyFields) && isClear;
         }
@@ -981,7 +985,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         
         addNewEmpErrorFill.setText("Error: Please fill the required (*) fields. ");
         addNewEmpErrorFill.setVisible(!isClear);
-        System.out.println(isClear);
         if(isClear){
             Address address = new Address();
             address.setStreet(addressStreetValue.getText());
@@ -1003,7 +1006,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
             
             if(role.equals("Employee")){
                 ((Employee) editableUser).setStatus((String) newEmpStatusValue.getSelectedItem());
-                ((Employee) editableUser).setImmediateSupervisor(newEmpImmediateSupValue.getText());
+                ((Employee) editableUser).setImmediateSupervisor(Integer.parseInt(newEmpImmediateSupValue1.getText()));
                 Benefits benefit = new Benefits();
                 benefit.setBasicSalary(Double.parseDouble(newEmpBasicSalaryValue.getText()));
                 benefit.setGrossSemiMonthlyRate(Double.parseDouble(newEmpGrossSemiValue.getText()));
@@ -1029,7 +1032,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
                     result = systemAdminDao.updateEmployee(editableUser);
                 }
             }
-            System.out.println(result);
             if(result){
                 addNewEmpSuccessCreatedLabel.setVisible(true);
                 newEmpSubmitButton.setEnabled(false);
@@ -1119,9 +1121,9 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_newEmpPositionValueActionPerformed
 
-    private void newEmpImmediateSupValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpImmediateSupValueActionPerformed
+    private void newEmpImmediateSupValue1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpImmediateSupValue1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_newEmpImmediateSupValueActionPerformed
+    }//GEN-LAST:event_newEmpImmediateSupValue1ActionPerformed
 
     private void jScrollPane1MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane1MouseWheelMoved
          int rotation = evt.getWheelRotation();
@@ -1222,6 +1224,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     private javax.swing.JTextField addressZipcodeValue;
     private javax.swing.JLabel empInfo;
     private javax.swing.JLabel exitButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -1251,7 +1254,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     private javax.swing.JLabel newEmpID;
     private javax.swing.JTextField newEmpIDValue;
     private javax.swing.JLabel newEmpImmediateSup;
-    private javax.swing.JTextField newEmpImmediateSupValue;
+    private javax.swing.JTextField newEmpImmediateSupValue1;
     private javax.swing.JLabel newEmpLastName;
     private javax.swing.JTextField newEmpLastNameValue;
     private javax.swing.JLabel newEmpPagIbig;

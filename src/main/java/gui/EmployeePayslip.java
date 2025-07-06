@@ -6,7 +6,7 @@ package gui;
 
 import models.AccountAccess;
 import models.PayrollExcelDownload;
-import models.PayrollSummaryExcel;
+import utils.PayrollSummaryExcel;
 import models.User;
 import models.Employee;
 import models.HRPersonnel;
@@ -16,16 +16,22 @@ import models.Payroll;
 import dao.EmployeeDao;
 import dao.HRPersonnelDao;
 import java.io.File;
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
+import utils.DbConnection;
+import static utils.DbConnection.getConnection;
+import utils.ReportGenerator;
 
 /**
  *
@@ -55,7 +61,7 @@ public class EmployeePayslip extends javax.swing.JPanel {
             searchEmp.setVisible(false);
             searchEmpValue.setVisible(false);
         }
-        timeInTimeOutRecordedLabel.setVisible(false);
+        noDataLabel.setVisible(false);
     }
     
     private void populateEmployeeList() {
@@ -89,16 +95,16 @@ public class EmployeePayslip extends javax.swing.JPanel {
             }
         }
         
-        if(payroll.getPayrollID() != null){
+        if(payroll != null){
             this.payslip = payroll;
             System.out.println("Employee ID" + payroll.getEmployee().getEmployeeID());
             download.setEnabled(true);
-            timeInTimeOutRecordedLabel.setVisible(false);
+            noDataLabel.setVisible(false);
             mapPayrollView();
         } else {
             clearPayroll();
             download.setEnabled(false);
-            timeInTimeOutRecordedLabel.setVisible(true);
+            noDataLabel.setVisible(true);
         }
     }
     
@@ -308,7 +314,7 @@ public class EmployeePayslip extends javax.swing.JPanel {
         selectPeriod = new javax.swing.JLabel();
         selectPeriodValue = new javax.swing.JComboBox<>();
         download = new javax.swing.JButton();
-        timeInTimeOutRecordedLabel = new javax.swing.JLabel();
+        noDataLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(860, 590));
@@ -747,10 +753,10 @@ public class EmployeePayslip extends javax.swing.JPanel {
         });
         add(download, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 120, 40));
 
-        timeInTimeOutRecordedLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        timeInTimeOutRecordedLabel.setForeground(new java.awt.Color(204, 0, 0));
-        timeInTimeOutRecordedLabel.setText("No data available for the selected period.");
-        add(timeInTimeOutRecordedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 126, -1, 30));
+        noDataLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        noDataLabel.setForeground(new java.awt.Color(204, 0, 0));
+        noDataLabel.setText("No data available for the selected period.");
+        add(noDataLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 126, -1, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchEmpValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchEmpValueActionPerformed
@@ -762,14 +768,29 @@ public class EmployeePayslip extends javax.swing.JPanel {
     }//GEN-LAST:event_selectPeriodValueActionPerformed
 
     private void downloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Save Payroll Report");
-        fileChooser.setSelectedFile(new File("Payslip.xlsx")); // Default name
+        try (Connection conn = DbConnection.getConnection()) {
+            ReportGenerator generator = new ReportGenerator();
 
-        int userSelection = fileChooser.showSaveDialog(null);
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-            PayrollExcelDownload.exportPayrollToExcel(this.payslip, fileToSave);
+            String source = "resources/Reports/EmployeePayslipReport.jrxml";
+
+            // Output PDF path
+            String userHome = System.getProperty("user.home");
+            String fileName = payslip.getPayrollID() + "_" 
+                    + payslip.getEmployee().getLastName()+ ".pdf";
+            String outputPath = userHome + "/Downloads/payslip_" +  fileName;
+
+            // Optional: Report parameters
+            Map<String, Object> params = new HashMap<>();
+            params.put("employee_id", payslip.getEmployee().getEmployeeID());
+            params.put("payslip_no", payslip.getPayrollID());
+
+            boolean isReportGenerated = generator.generateReport(conn, source, outputPath, params);
+            DownloadPDFPopUp frame = new DownloadPDFPopUp();
+            frame.setVisible(true);
+            frame.updateStatus(isReportGenerated, fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error generating report: " + e.getMessage(), "Report Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_downloadActionPerformed
 
@@ -822,6 +843,7 @@ public class EmployeePayslip extends javax.swing.JPanel {
     private javax.swing.JLabel monthlyRatevalue;
     private javax.swing.JLabel netPay;
     private javax.swing.JLabel netPayValue;
+    private javax.swing.JLabel noDataLabel;
     private javax.swing.JLabel overtime;
     private javax.swing.JLabel overtimeValue;
     private javax.swing.JLabel pagibigDeduction;
@@ -853,7 +875,6 @@ public class EmployeePayslip extends javax.swing.JPanel {
     private javax.swing.JLabel summary;
     private javax.swing.JLabel taxDeduction;
     private javax.swing.JLabel taxDeductionValue;
-    private javax.swing.JLabel timeInTimeOutRecordedLabel;
     private javax.swing.JLabel totalBenefits;
     private javax.swing.JLabel totalBenefitsValue;
     private javax.swing.JLabel totalDeduction;

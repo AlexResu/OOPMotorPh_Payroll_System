@@ -113,23 +113,31 @@ public class Payroll extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) payrollReportTable.getModel();
         model.setRowCount(0);
         boolean hasPending = false;
-        for (Map<String, Object> payroll : payrollList) {
-            Object data[] = {
-                payroll.get("payslip_no"),
-                payroll.get("employee_id"),
-                payroll.get("position_department"),
-                payroll.get("employee_name"),
-                payroll.get("take_home_pay"),
-//                payroll.get("status"),
-            };
+        
+        // Check if there's data
+        if (payrollList != null && !payrollList.isEmpty()) {
+            noDataLabel.setVisible(false); // hide label if data exists
+            
+            for (Map<String, Object> payroll : payrollList) {
+                Object data[] = {
+                    payroll.get("payslip_no"),
+                    payroll.get("employee_id"),
+                    payroll.get("position_department"),
+                    payroll.get("employee_name"),
+                    payroll.get("take_home_pay"),
+    //                payroll.get("status"),
+                };
 
-            // Add the row to the table model
-            model.addRow(data);
-            if ("Pending".equals(payroll.get("status"))) {
-                hasPending = true;
+                // Add the row to the table model
+                model.addRow(data);
+                if ("Pending".equals(payroll.get("status"))) {
+                    hasPending = true;
+                }
             }
+        } else {
+            noDataLabel.setVisible(true); // show label if no data
         }
-        calculate.setEnabled(hasPending);
+            calculate.setEnabled(hasPending);
     }
 
     /**
@@ -147,7 +155,7 @@ public class Payroll extends javax.swing.JPanel {
         selectPeriod = new javax.swing.JLabel();
         selectPeriodValue = new javax.swing.JComboBox<>();
         calculate = new javax.swing.JButton();
-        days = new javax.swing.JLabel();
+        noDataLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(860, 590));
@@ -219,7 +227,7 @@ public class Payroll extends javax.swing.JPanel {
                 selectPeriodValueActionPerformed(evt);
             }
         });
-        add(selectPeriodValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 230, 30));
+        add(selectPeriodValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 270, 30));
 
         calculate.setBackground(new java.awt.Color(255, 255, 255));
         calculate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -234,10 +242,10 @@ public class Payroll extends javax.swing.JPanel {
         });
         add(calculate, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 70, 100, 50));
 
-        days.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        days.setForeground(new java.awt.Color(255, 0, 51));
-        days.setText("No data available for the selected period");
-        add(days, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 230, 30));
+        noDataLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        noDataLabel.setForeground(new java.awt.Color(255, 0, 51));
+        noDataLabel.setText("No data available for the selected period");
+        add(noDataLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 80, 230, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void selectPeriodValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectPeriodValueActionPerformed
@@ -268,8 +276,8 @@ public class Payroll extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton calculate;
-    private javax.swing.JLabel days;
     private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JLabel noDataLabel;
     private javax.swing.JLabel payrollReport;
     private javax.swing.JTable payrollReportTable;
     private javax.swing.JLabel selectPeriod;

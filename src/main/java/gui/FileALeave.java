@@ -15,6 +15,7 @@ import dao.EmployeeDao;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JScrollBar;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -37,6 +38,7 @@ public class FileALeave extends javax.swing.JFrame {
         this.parentPanel = parentPanel;
         initComponents();
         jLabel3.setVisible(false);
+        days1.setVisible(false);
         firstName.setText(user.getFirstName());
         lastName.setText(user.getLastName());
         empNumber.setText(Integer.toString(user.getEmployeeID()));
@@ -193,6 +195,7 @@ public class FileALeave extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         days = new javax.swing.JLabel();
+        days1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -368,7 +371,7 @@ public class FileALeave extends javax.swing.JFrame {
                 cancelActionPerformed(evt);
             }
         });
-        jPanel2.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 570, 130, 40));
+        jPanel2.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 540, 130, 40));
 
         submit.setBackground(new java.awt.Color(0, 153, 0));
         submit.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -381,7 +384,7 @@ public class FileALeave extends javax.swing.JFrame {
                 submitActionPerformed(evt);
             }
         });
-        jPanel2.add(submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 570, 130, 40));
+        jPanel2.add(submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 540, 130, 40));
 
         jLabel21.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(0, 0, 0));
@@ -392,13 +395,18 @@ public class FileALeave extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 255));
         jLabel3.setText("Successfully leave request submitted");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 630, 240, -1));
-        jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 650, 10));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 600, 440, -1));
+        jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 650, 10));
 
         days.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         days.setForeground(new java.awt.Color(255, 0, 51));
         days.setText("You only have # of days left for this leave type.");
         jPanel2.add(days, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 320, 20));
+
+        days1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        days1.setForeground(new java.awt.Color(255, 0, 51));
+        days1.setText("Cannot proceed please input valid inputs.");
+        jPanel2.add(days1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 620, 220, 20));
 
         jScrollPane3.setViewportView(jPanel2);
 
@@ -443,6 +451,22 @@ public class FileALeave extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelActionPerformed
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
+        days1.setVisible(false);
+        String durationText = dayApplied.getText();
+        String reasonText = reason.getText();
+        Object selectedType = type.getSelectedItem();
+        if (durationText == null || durationText.trim().isEmpty() 
+                || dateFrom.getDate() == null
+                || dateUntil.getDate() == null
+                || reasonText == null || reasonText.trim().isEmpty()
+                || selectedType == null || selectedType.toString().trim().isEmpty()) {
+            days1.setVisible(true);
+            return;
+        } else {
+            jLabel3.setVisible(true);
+            jLabel3.setText("Sending leave request to HR for approval");
+        }
+        
         EmployeeDao employeeDao = new EmployeeDao();
         LeaveRequest newLeave = new LeaveRequest();
         newLeave.setEmployee(user);
@@ -452,20 +476,38 @@ public class FileALeave extends javax.swing.JFrame {
         newLeave.setReason(reason.getText());
         newLeave.setLeaveType((String) type.getSelectedItem());
         
-        boolean result = employeeDao.createLeaveRequest(newLeave);
-        
-        if(result){
-            jLabel3.setVisible(true);
-            Timer timer = new Timer();
-            // Schedule a task to run dispose after 3 seconds.
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    dispose();
-                    parentPanel.loadLeaveRecords();
+        // Run DB task in background
+        SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                EmployeeDao employeeDao = new EmployeeDao();
+                return employeeDao.createLeaveRequest(newLeave);
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    boolean result = get();
+                    if (result) {
+                        jLabel3.setText("Successfully submitted leave request. This page will close in 3 seconds.");
+                        new java.util.Timer().schedule(new java.util.TimerTask() {
+                            @Override
+                            public void run() {
+                                dispose();
+                                parentPanel.loadLeaveRecords();
+                            }
+                        }, 3000);
+                    } else {
+                        jLabel3.setText("Oops! Something went wrong while submitting your leave request. Please try again.");
+                    }
+                } catch (Exception ex) {
+                    jLabel3.setText("An unexpected error occurred.");
+                    ex.printStackTrace();
                 }
-            }, 3000);
-        } 
+            }
+        };
+
+        worker.execute(); // Start background task
     }//GEN-LAST:event_submitActionPerformed
 
     private void jScrollPane3MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane3MouseWheelMoved
@@ -519,6 +561,7 @@ public class FileALeave extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dateUntil;
     private javax.swing.JTextField dayApplied;
     private javax.swing.JLabel days;
+    private javax.swing.JLabel days1;
     private javax.swing.JTextField empNumber;
     private javax.swing.JTextField firstName;
     private javax.swing.JLabel jLabel1;

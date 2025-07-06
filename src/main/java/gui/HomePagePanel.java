@@ -177,6 +177,7 @@ public class HomePagePanel extends javax.swing.JPanel {
         timeInTimeOutRecordedLabel = new javax.swing.JLabel();
 
         empHomePage.setBackground(new java.awt.Color(255, 255, 255));
+        empHomePage.setPreferredSize(new java.awt.Dimension(860, 590));
         empHomePage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         empPhoto.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\MotorPhApp\\resources\\Employee Icon.png")); // NOI18N

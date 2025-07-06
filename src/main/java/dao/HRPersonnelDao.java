@@ -75,6 +75,8 @@ public class HRPersonnelDao {
             if(rowsAffected == 1) {
                 leaveRequest.setApprovedBy(hrPersonnel);
                 leaveRequest.setLeaveStatus("APPROVED");
+                EmailSenderDao emailSenderDao = new EmailSenderDao();
+                emailSenderDao.newLeaveUpdateNotification(leaveRequest);
             }
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
@@ -111,6 +113,8 @@ public class HRPersonnelDao {
             if(rowsAffected == 1){
                 leaveRequest.setApprovedBy(hrPersonnel);
                 leaveRequest.setLeaveStatus("DECLINED");
+                EmailSenderDao emailSenderDao = new EmailSenderDao();
+                emailSenderDao.newLeaveUpdateNotification(leaveRequest);
             }
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
@@ -428,7 +432,7 @@ public class HRPersonnelDao {
             statement = connection.createStatement();
 
             // Define the query
-            String query = "SELECT e.*, uc.role_id FROM employees e "
+            String query = "SELECT e.*, uc.role_id FROM employee_view e "
                     + "LEFT JOIN user_credentials uc "
                     + " ON e.employee_id = uc.employee_id "
                     + "WHERE date_hired >= CURDATE() - INTERVAL 7 DAY "
@@ -531,13 +535,11 @@ public class HRPersonnelDao {
             statement = connection.createStatement();
 
             // Define the query
-            String query = "SELECT * FROM monthly_employee_payslip_view WHERE `Month` = ?";
-            
+            String query = "SELECT * FROM payroll_summary_report_view WHERE `Month` = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            String period = year + "-" + month;
+            String period = String.format("%04d-%02d", year, month);
             preparedStatement.setString(1, period);
-
-            // Execute the query
+            
             return preparedStatement.executeQuery();
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
@@ -766,6 +768,7 @@ public class HRPersonnelDao {
                "l.*, " +
                "lt.type_name AS leave_type, " +
                "d.name AS department, " +
+               "e.employee_id, " +
                "e.first_name, " +
                "e.last_name, " +
                "e2.employee_id AS approver_id, " +

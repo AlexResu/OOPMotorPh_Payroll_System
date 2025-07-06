@@ -353,7 +353,7 @@ public class HRPersonnelDaoTest {
     
     @Test
     public void testLoadEmployeeListSearchSuccess() {
-        System.out.println("Test for Load Employee List - Success");
+        System.out.println("Test for Load Employee List Search - Success");
         List<User> employees = hrPersonnelDao.loadEmployeeList("10015");
         assertFalse(employees.isEmpty());
         for (User employee : employees) {

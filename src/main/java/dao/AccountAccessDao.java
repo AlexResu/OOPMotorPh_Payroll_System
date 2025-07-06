@@ -11,12 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import utils.DbConnection;
 import models.AccountAccess;
-import models.Address;
-import models.Benefits;
-import models.Employee;
-import models.HRPersonnel;
-import models.SystemAdministrator;
-import models.User;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 /**
@@ -106,6 +100,33 @@ public class AccountAccessDao {
                 e.printStackTrace();
             }
 
+        } catch (SQLException e) {
+            System.err.println("Error while executing SQL query!");
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+    
+    public AccountAccess getAccountEmail(int employeeId){
+        try {
+            // Create a statement object
+            statement = connection.createStatement();
+
+            // Define the query
+            String query = "SELECT email FROM user_credentials " +
+               "WHERE employee_id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, employeeId);
+
+            // Execute the query
+            result = preparedStatement.executeQuery();
+            AccountAccess account = new AccountAccess();
+            if (result.next()) {
+                account.setEmail(result.getString("email"));
+                return account;
+            }
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
             e.printStackTrace();

@@ -22,6 +22,15 @@ public class AccountAccess {
     private List<String> permissions;
     private boolean isAuthenticated;
     private String role;
+    private String email;
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
     
     //  Constructor that initializes the permissions list and sets the authentication status to false.
     // @param permissions List of permissions granted to the user

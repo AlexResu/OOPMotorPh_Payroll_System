@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
 import javax.swing.JScrollBar;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -37,19 +38,26 @@ public class LeaveRequests extends javax.swing.JPanel {
         initComponents();
         loadLeavesList();
         initListeners();
+        jLabel3.setVisible(false);
     }
     
     private void initListeners(){
         leaveRequeststable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                int selectedRow = leaveRequeststable.getSelectedRow();
-                // get selectedRow employee and call to new frame
-                LeaveRequest selectedUser = null;
-                if (selectedRow != -1) { // Ensure a row is selected
-                    selectedUser = leaves.get(selectedRow); 
+                if (e.getValueIsAdjusting()) {
+                    return; // Ignore intermediate states
                 }
-                if (selectedUser.getLeaveStatus().equals("PENDING")) {
+
+                int selectedRow = leaveRequeststable.getSelectedRow();
+                if (selectedRow == -1 || selectedRow >= leaves.size()) {
+                    approve.setEnabled(false);
+                    decline.setEnabled(false);
+                    return;
+                }
+
+                LeaveRequest selectedUser = leaves.get(selectedRow);
+                if (selectedUser != null && "PENDING".equals(selectedUser.getLeaveStatus())) {
                     approve.setEnabled(true);
                     decline.setEnabled(true);
                 } else {
@@ -61,14 +69,14 @@ public class LeaveRequests extends javax.swing.JPanel {
     }
     
     protected void loadLeavesList(){
+        DefaultTableModel model = (DefaultTableModel) leaveRequeststable.getModel();
+        model.setRowCount(0);
         HRPersonnelDao hrPersonnelDao = new HRPersonnelDao();
         if((String) leaveRemarks.getSelectedItem() == null){
             leaves = hrPersonnelDao.loadLeaveRequest();
         } else {
             leaves = hrPersonnelDao.loadLeaveRequest((String) leaveRemarks.getSelectedItem());
         }
-        DefaultTableModel model = (DefaultTableModel) leaveRequeststable.getModel();
-        model.setRowCount(0);
         for (LeaveRequest leave : leaves) {
             Employee employee = leave.getEmployee();
             Object data[] = {
@@ -106,6 +114,7 @@ public class LeaveRequests extends javax.swing.JPanel {
         leaveRequeststable = new javax.swing.JTable();
         leaveRequests = new javax.swing.JLabel();
         leaveRemarks = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(860, 590));
@@ -129,7 +138,7 @@ public class LeaveRequests extends javax.swing.JPanel {
                 approveActionPerformed(evt);
             }
         });
-        add(approve, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 140, 50));
+        add(approve, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 90, 140, 50));
 
         decline.setBackground(new java.awt.Color(255, 255, 255));
         decline.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -143,7 +152,7 @@ public class LeaveRequests extends javax.swing.JPanel {
                 declineActionPerformed(evt);
             }
         });
-        add(decline, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 80, 140, 50));
+        add(decline, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 90, 140, 50));
 
         jScrollPane9.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
@@ -222,30 +231,74 @@ public class LeaveRequests extends javax.swing.JPanel {
             }
         });
         add(leaveRemarks, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 210, 30));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel3.setText("Sending email notification. Please wait...");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, 250, 20));
     }// </editor-fold>//GEN-END:initComponents
 
     private void approveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveActionPerformed
-        HRPersonnelDao hrPersonnelDao = new HRPersonnelDao();
-        int selectedRow = leaveRequeststable.getSelectedRow();
-                // get selectedRow employee and call to new frame
-        LeaveRequest selectedLeave = null;
-        if (selectedRow != -1) { // Ensure a row is selected
-            selectedLeave = leaves.get(selectedRow); 
-        }
-        hrPersonnelDao.approveLeaveRequest(selectedLeave, user);
-        loadLeavesList();
+        jLabel3.setVisible(true);
+        boolean result;
+        SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                HRPersonnelDao hrPersonnelDao = new HRPersonnelDao();
+                int selectedRow = leaveRequeststable.getSelectedRow();
+                LeaveRequest selectedLeave = null;
+                if (selectedRow != -1) { // Ensure a row is selected
+                    selectedLeave = leaves.get(selectedRow); 
+                }
+                return hrPersonnelDao.approveLeaveRequest(selectedLeave, user);
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    boolean result = get();
+                    if (result) {
+                        loadLeavesList();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                jLabel3.setVisible(false);
+            }
+        };
+
+        worker.execute();
     }//GEN-LAST:event_approveActionPerformed
 
     private void declineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineActionPerformed
-        HRPersonnelDao hrPersonnelDao = new HRPersonnelDao();
-        int selectedRow = leaveRequeststable.getSelectedRow();
-                // get selectedRow employee and call to new frame
-        LeaveRequest selectedLeave = null;
-        if (selectedRow != -1) { // Ensure a row is selected
-            selectedLeave = leaves.get(selectedRow); 
-        }
-        hrPersonnelDao.declineLeaveRequest(selectedLeave, user);
-        loadLeavesList();
+        jLabel3.setVisible(true);
+        SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                HRPersonnelDao hrPersonnelDao = new HRPersonnelDao();
+                int selectedRow = leaveRequeststable.getSelectedRow();
+                LeaveRequest selectedLeave = null;
+                if (selectedRow != -1) { // Ensure a row is selected
+                    selectedLeave = leaves.get(selectedRow); 
+                }
+                return hrPersonnelDao.declineLeaveRequest(selectedLeave, user);
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    boolean result = get();
+                    if (result) {
+                        loadLeavesList();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                jLabel3.setVisible(false);
+            }
+        };
+
+        worker.execute();
     }//GEN-LAST:event_declineActionPerformed
 
     private void leaveRemarksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveRemarksActionPerformed
@@ -267,6 +320,7 @@ public class LeaveRequests extends javax.swing.JPanel {
     private javax.swing.JButton approve;
     private javax.swing.JButton decline;
     private javax.swing.JLabel fileterMonth;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JComboBox<String> leaveRemarks;
     private javax.swing.JLabel leaveRequests;

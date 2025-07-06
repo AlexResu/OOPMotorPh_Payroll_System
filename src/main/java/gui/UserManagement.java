@@ -14,6 +14,7 @@ import gui.ConfirmationPopUp;
 import models.SystemAdministrator;
 import dao.HRPersonnelDao;
 import dao.SystemAdministratorDao;
+import dao.UserDao;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -28,84 +29,111 @@ public class UserManagement extends javax.swing.JPanel {
     private AccountAccess account;
     private User user;
     private List<User> employees;
+    private final UserDao userDao;
+    private DefaultTableModel tableModel;
     
     /**
      * Creates new form HREmployeeManagement
      */
     public UserManagement() {
         initComponents();
+        this.userDao = new UserDao();
+        initializeTable();
+        initListeners();
     }
     
     public UserManagement(AccountAccess account, User user) {
         this.account = account;
         this.user = user;
+        this.userDao = new UserDao();
         initComponents();
-        loadEmployeeList();
+        initializeTable();
+        loadEmployeeList();;
         initListeners();
         if(user instanceof SystemAdministrator){
             employeeList.setText("User List");
             searchEmp.setText("Search User");
             addNew.setText("Add new user");
+            unlockAccountButton.setVisible(true);
+        } else {
+            unlockAccountButton.setVisible(false);
+        }    
+    }
+    
+    private void initializeTable() {
+        String[] columns = {"Employee no.", "Last Name", "First Name", "SSS no.", "Philhealth no.", "TIN no.", "PagIbig no.", "Lock Status"};
+        tableModel = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        EmpMngTable.setModel(tableModel);
+    }
+    
+    protected void loadEmployeeList() {
+        HRPersonnelDao hrPersonnelDao = new HRPersonnelDao();
+        SystemAdministratorDao systemAdminDao = new SystemAdministratorDao();
+        
+        if (user instanceof HRPersonnel || user instanceof SystemAdministrator) {
+            // This is your original logic to fetch the full employee list
+            if (user instanceof HRPersonnel) {
+                HRPersonnel hrUser = (HRPersonnel) user;
+                if (searchEmpValue.getText().trim().isEmpty()) {
+                    employees = hrPersonnelDao.loadEmployeeList();
+                } else {
+                    employees = hrPersonnelDao.loadEmployeeList(searchEmpValue.getText());
+                }
+            } else {
+                SystemAdministrator adminUser = (SystemAdministrator) user;
+                if (searchEmpValue.getText().trim().isEmpty()) {
+                    employees = systemAdminDao.loadEmployeeList();
+                } else {
+                    employees = systemAdminDao.loadEmployeeList(searchEmpValue.getText());
+                }
+            }
+        }
+        
+        tableModel.setRowCount(0); // Clear the table before populating
+        if (employees != null) {
+            for (User emp : employees) {
+                // For each employee, get their lock status
+                boolean isLocked = userDao.isAccountLocked(String.valueOf(emp.getEmployeeID()));
+                
+                Object[] rowData = {
+                    emp.getEmployeeID(),
+                    emp.getLastName(),
+                    emp.getFirstName(),
+                    emp.getSssNumber(),
+                    emp.getPhilhealthNumber(),
+                    emp.getTinNumber(),
+                    emp.getPagibigNumber(),
+                    isLocked ? "Locked" : "Active" // The 8th column
+                };
+                tableModel.addRow(rowData);
+            }
         }
     }
     
     private void initListeners(){
-        EmpMngTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                // If at least one row is selected, enable the button
-                if (EmpMngTable.getSelectedRowCount() > 0) {
-                    view.setEnabled(true);
-                    edit.setEnabled(true);
-                    delete.setEnabled(true);
-                } else {
-                    view.setEnabled(false);
-                    edit.setEnabled(false);
-                    delete.setEnabled(false);
+            EmpMngTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    // If at least one row is selected, enable the button
+                    if (EmpMngTable.getSelectedRowCount() > 0) {
+                        view.setEnabled(true);
+                        edit.setEnabled(true);
+                        delete.setEnabled(true);
+                        unlockAccountButton.setEnabled(true);
+                    } else {
+                        view.setEnabled(false);
+                        edit.setEnabled(false);
+                        delete.setEnabled(false);
+                        unlockAccountButton.setEnabled(false);
+                    }
                 }
-            }
-        });
-    }
-    
-    protected void loadEmployeeList(){
-        HRPersonnelDao hrPersonnelDao = new HRPersonnelDao();
-        SystemAdministratorDao systemAdminDao = new SystemAdministratorDao();
-        if (user instanceof HRPersonnel || user instanceof SystemAdministrator) {
-            // Cast user to HRPersonnel or SystemAdministrator, depending on the instance type
-            if (user instanceof HRPersonnel) {
-                HRPersonnel hrUser = (HRPersonnel) user;  // Cast to HRPersonnel
-                if (searchEmpValue.getText().trim().isEmpty()) {
-                    employees = hrPersonnelDao.loadEmployeeList();  // No search term
-                } else {
-                    employees = hrPersonnelDao.loadEmployeeList(searchEmpValue.getText());  // With search term
-                }
-            } else {
-                SystemAdministrator adminUser = (SystemAdministrator) user;  // Cast to SystemAdministrator
-                if (searchEmpValue.getText().trim().isEmpty()) {
-                    employees = systemAdminDao.loadEmployeeList();  // No search term
-                } else {
-                    employees = systemAdminDao.loadEmployeeList(searchEmpValue.getText());  // With search term
-                }
-            }
+            });
         }
-        DefaultTableModel model = (DefaultTableModel) EmpMngTable.getModel();
-        model.setRowCount(0);
-        for (User emp : employees) {
-            Object data[] = {
-                emp.getEmployeeID(),
-                emp.getLastName(),
-                emp.getFirstName(),
-                emp.getSssNumber(),
-                emp.getPhilhealthNumber(),
-                emp.getTinNumber(),
-                emp.getPagibigNumber()
-            };
-
-            // Add the row to the table model
-            model.addRow(data);
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -125,6 +153,7 @@ public class UserManagement extends javax.swing.JPanel {
         delete = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         EmpMngTable = new javax.swing.JTable();
+        unlockAccountButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(860, 590));
@@ -135,17 +164,11 @@ public class UserManagement extends javax.swing.JPanel {
         employeeList.setText("Employee List");
         add(employeeList, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
-        searchEmp.setForeground(new java.awt.Color(0, 0, 0));
         searchEmp.setText("Search Employee");
         add(searchEmp, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 140, -1));
-
-        searchEmpValue.setBackground(new java.awt.Color(255, 255, 255));
-        searchEmpValue.setForeground(new java.awt.Color(0, 0, 0));
         add(searchEmpValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 180, 30));
 
-        adminEmpMngSearchButton.setBackground(new java.awt.Color(255, 255, 255));
         adminEmpMngSearchButton.setForeground(new java.awt.Color(255, 255, 255));
-        adminEmpMngSearchButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\searchIcon.png")); // NOI18N
         adminEmpMngSearchButton.setFocusPainted(false);
         adminEmpMngSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,7 +179,6 @@ public class UserManagement extends javax.swing.JPanel {
 
         addNew.setBackground(new java.awt.Color(0, 153, 51));
         addNew.setForeground(new java.awt.Color(255, 255, 255));
-        addNew.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\icons8-add-48.png")); // NOI18N
         addNew.setText("Add new employee");
         addNew.setBorder(null);
         addNew.setFocusPainted(false);
@@ -169,7 +191,6 @@ public class UserManagement extends javax.swing.JPanel {
 
         view.setBackground(new java.awt.Color(0, 0, 204));
         view.setForeground(new java.awt.Color(255, 255, 255));
-        view.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\icons8-view-48.png")); // NOI18N
         view.setText("View");
         view.setBorder(null);
         view.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -189,7 +210,6 @@ public class UserManagement extends javax.swing.JPanel {
 
         edit.setBackground(new java.awt.Color(255, 102, 0));
         edit.setForeground(new java.awt.Color(255, 255, 255));
-        edit.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\icons8-edit-48.png")); // NOI18N
         edit.setText("Edit");
         edit.setBorder(null);
         edit.setEnabled(false);
@@ -203,7 +223,6 @@ public class UserManagement extends javax.swing.JPanel {
 
         delete.setBackground(new java.awt.Color(204, 0, 0));
         delete.setForeground(new java.awt.Color(255, 255, 255));
-        delete.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\icons8-delete-48.png")); // NOI18N
         delete.setText("Delete");
         delete.setBorder(null);
         delete.setEnabled(false);
@@ -222,9 +241,7 @@ public class UserManagement extends javax.swing.JPanel {
         });
 
         EmpMngTable.setAutoCreateRowSorter(true);
-        EmpMngTable.setBackground(new java.awt.Color(255, 255, 255));
         EmpMngTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        EmpMngTable.setForeground(new java.awt.Color(0, 0, 0));
         EmpMngTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"10001", "Garcia", "Manuel III", "10/11/1983", "966-860-270", "Regular", "Chief Executive Officer"},
@@ -348,6 +365,22 @@ public class UserManagement extends javax.swing.JPanel {
         jScrollPane4.setViewportView(EmpMngTable);
 
         add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 860, 440));
+
+        unlockAccountButton.setBackground(new java.awt.Color(204, 0, 204));
+        unlockAccountButton.setForeground(new java.awt.Color(255, 255, 255));
+        unlockAccountButton.setText("Unlock");
+        unlockAccountButton.setBorder(null);
+        unlockAccountButton.setEnabled(false);
+        unlockAccountButton.setFocusPainted(false);
+        unlockAccountButton.setMaximumSize(new java.awt.Dimension(25, 16));
+        unlockAccountButton.setMinimumSize(new java.awt.Dimension(25, 16));
+        unlockAccountButton.setPreferredSize(new java.awt.Dimension(25, 16));
+        unlockAccountButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                unlockAccountButtonActionPerformed(evt);
+            }
+        });
+        add(unlockAccountButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 140, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void adminEmpMngSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminEmpMngSearchButtonActionPerformed
@@ -406,6 +439,46 @@ public class UserManagement extends javax.swing.JPanel {
                 verticalScrollBar.setValue(verticalScrollBar.getValue() + scrollAmount);
     }//GEN-LAST:event_jScrollPane4MouseWheelMoved
 
+    private void unlockAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unlockAccountButtonActionPerformed
+        int selectedRow = EmpMngTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a user from the table to unlock.", "No User Selected", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            int employeeId = Integer.parseInt(EmpMngTable.getValueAt(selectedRow, 0).toString());
+            String lockStatus = EmpMngTable.getValueAt(selectedRow, 7).toString(); // Check the 8th column (index 7)
+
+            if ("Active".equals(lockStatus)) {
+                JOptionPane.showMessageDialog(this, "This account is already active.", "Account Active", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            int confirm = JOptionPane.showConfirmDialog(
+                    this,
+                    "Are you sure you want to unlock the account for employee ID: " + employeeId + "?",
+                    "Confirm Account Unlock",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                SystemAdministratorDao adminDao = new SystemAdministratorDao();
+                boolean success = adminDao.unlockUserAccount(employeeId);
+                if (success) {
+                    JOptionPane.showMessageDialog(this, "Account for employee " + employeeId + " has been successfully unlocked.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    loadEmployeeList();
+                    revalidate();
+                    repaint();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to unlock the account. The user may not exist.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "The selected row does not contain a valid Employee ID.", "Data Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_unlockAccountButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable EmpMngTable;
@@ -417,6 +490,7 @@ public class UserManagement extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel searchEmp;
     private javax.swing.JTextField searchEmpValue;
+    private javax.swing.JButton unlockAccountButton;
     private javax.swing.JButton view;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,12 +6,13 @@ package gui;
 import javax.swing.*;
 import java.util.*;
 import keeptoo.KGradientPanel;
-import alex.oopmotorphpayrollsystem.AccountAccess;
-import alex.oopmotorphpayrollsystem.User;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.SystemAdministrator;
+import models.AccountAccess;
+import models.User;
+import models.Employee;
+import models.HRPersonnel;
+import models.SystemAdministrator;
 import dao.AccountAccessDao;
+import dao.UserDao;
 import gui.LoginGui;
 
 /**
@@ -37,8 +38,8 @@ public class UserHomePage extends javax.swing.JFrame {
     }
      
     private void initAll(){
-        AccountAccessDao accountDao = new AccountAccessDao();
-        user = accountDao.getUserInfo(account.getEmployeeNumber(), account.getRole(), account.getIsAuthenticated());
+        UserDao userDao = new UserDao();
+        user = userDao.getUserInfo(account.getEmployeeNumber(), account.getRole(), account.getIsAuthenticated());
         initComponents();
         welcomeLabel.setText("Welcome, " + user.getFirstName());
         adminProfile.setText(account.getRole());

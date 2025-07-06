@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package UnitTesing;
-import alex.oopmotorphpayrollsystem.User;
+import models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.Date;
@@ -26,7 +26,7 @@ class UserTest {
         user.setLastName("Dela Cruz");
         user.setBirthday(new Date());
         user.setPosition("Software Developer");
-        user.setAddress("Manila, Philippines");
+//        user.setAddress("Manila, Philippines");
         user.setPhoneNumber("09123456789");
         user.setSssNumber("12-3456789-0");
         user.setPhilhealthNumber("1234-5678-9012");
@@ -59,11 +59,6 @@ class UserTest {
     @Test
     void testSetAndGetPosition() {
         assertEquals("Software Developer", user.getPosition());
-    }
-
-    @Test
-    void testSetAndGetAddress() {
-        assertEquals("Manila, Philippines", user.getAddress());
     }
 
     @Test

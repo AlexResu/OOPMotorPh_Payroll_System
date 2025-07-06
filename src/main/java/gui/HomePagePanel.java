@@ -3,13 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package gui;
-import alex.oopmotorphpayrollsystem.AccountAccess;
-import alex.oopmotorphpayrollsystem.AttendanceRecord;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.SystemAdministrator;
-import alex.oopmotorphpayrollsystem.User;
-import alex.oopmotorphpayrollsystem.LeaveRequest;
+import models.AccountAccess;
+import models.AttendanceRecord;
+import models.Employee;
+import models.HRPersonnel;
+import models.SystemAdministrator;
+import models.User;
+import models.LeaveRequest;
+import dao.AttendanceRecordDao;
 import dao.EmployeeDao;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -108,7 +109,8 @@ public class HomePagePanel extends javax.swing.JPanel {
     }
     
     private void loadTimeLog(){
-        AttendanceRecord attendance = new AttendanceRecord(user.getEmployeeID(), new Date());
+        AttendanceRecordDao attendanceRecordDao = new AttendanceRecordDao();
+        AttendanceRecord attendance = attendanceRecordDao.getAttendanceRecord(user.getEmployeeID(), new Date());
         SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm");
         
         SimpleDateFormat dateFormatter = new SimpleDateFormat("MM-dd-yyyy");
@@ -175,6 +177,7 @@ public class HomePagePanel extends javax.swing.JPanel {
         timeInTimeOutRecordedLabel = new javax.swing.JLabel();
 
         empHomePage.setBackground(new java.awt.Color(255, 255, 255));
+        empHomePage.setPreferredSize(new java.awt.Dimension(860, 590));
         empHomePage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         empPhoto.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\MotorPhApp\\resources\\Employee Icon.png")); // NOI18N

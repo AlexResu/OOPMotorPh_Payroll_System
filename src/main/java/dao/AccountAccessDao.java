@@ -4,20 +4,13 @@
  */
 package dao;
 
-import alex.oopmotorphpayrollsystem.MySQL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import utils.DbConnection;
-import alex.oopmotorphpayrollsystem.AccountAccess;
-import alex.oopmotorphpayrollsystem.Address;
-import alex.oopmotorphpayrollsystem.Benefits;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.SystemAdministrator;
-import alex.oopmotorphpayrollsystem.User;
+import models.AccountAccess;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 /**
@@ -54,13 +47,17 @@ public class AccountAccessDao {
             statement = connection.createStatement();
 
             // Define the query
-            String query = "SELECT employee_id, password, role_name "
-                    + "FROM user_credentials uc " 
-                    + "JOIN roles r ON r.role_id = uc.role_id WHERE employee_id = "
-                    + employeeNumber ;
+            String query = "SELECT employee_id, password, role_name " +
+               "FROM user_credentials uc " +
+               "JOIN roles r ON r.role_id = uc.role_id " +
+               "WHERE employee_id = ? AND password = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, employeeNumber);
+            preparedStatement.setString(2, password);
 
             // Execute the query
-            result = statement.executeQuery(query);
+            result = preparedStatement.executeQuery();
             AccountAccess account = new AccountAccess();
             if (result.next()) {
                 // Populate model object from DB data
@@ -111,77 +108,30 @@ public class AccountAccessDao {
         return null;
     }
     
-    public User getUserInfo(int employeeId, String role, boolean isAuth){
-        User user = null;
-        
-        // don't fetch info if not yet login
-        if(employeeId == 0 || isAuth == false){
-            return user;
-        }
+    public AccountAccess getAccountEmail(int employeeId){
         try {
             // Create a statement object
             statement = connection.createStatement();
 
             // Define the query
-            String query = "SELECT * FROM employee_view " 
-                    + "WHERE employee_id = " + employeeId ;
+            String query = "SELECT email FROM user_credentials " +
+               "WHERE employee_id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, employeeId);
 
             // Execute the query
-            result = statement.executeQuery(query);
-            // If user exists, populate user information based on role
+            result = preparedStatement.executeQuery();
+            AccountAccess account = new AccountAccess();
             if (result.next()) {
-                
-                if ("HR Personnel".equals(role)) {
-                    user = new HRPersonnel();
-                } else if ("System Admin".equals(role)) {
-                    user = new SystemAdministrator();
-                } else {
-                    user = new Employee(); // Assign Employee role
-                    // Set additional employee details
-                    ((Employee)user).setStatus(result.getString("status"));
-                    ((Employee)user).setImmediateSupervisor(result.getString("immediate_supervisor"));
-                    
-                    // Create Benefits object and assign to Employee
-                    Benefits benefit = new Benefits(
-                        result.getInt("basic_salary"),
-                        result.getInt("gross_semi_monthly_rate"),
-                        result.getInt("hourly_rate"),
-                        result.getInt("rice_subsidy"),
-                        result.getInt("phone_allowance"),
-                        result.getInt("clothing_allowance")
-                    );
-                    ((Employee)user).setBenefits(benefit);
-                }
-                
-                // Set common employee details
-                user.setEmployeeID(result.getInt("employee_id"));
-                user.setLastName(result.getString("last_name"));
-                user.setFirstName(result.getString("first_name"));
-                user.setBirthday(result.getDate("birthdate"));
-                user.setPhoneNumber(result.getString("phone_number"));
-                user.setSssNumber(result.getString("sss_number"));
-                user.setPhilhealthNumber(result.getString("philhealth_number"));
-                user.setTinNumber(result.getString("tin_number"));
-                user.setPagibigNumber(result.getString("pagibig_number"));
-                user.setPosition(result.getString("position"));
-                user.setDepartment(result.getString("department"));
-                user.setDateHired(result.getDate("date_hired"));
-                
-                // Populate address
-                Address address = new Address();
-                address.setBarangay(result.getString("barangay"));
-                address.setCity(result.getString("date_hired"));
-                address.setProvince(result.getString("province"));
-                address.setStreet(result.getString("street"));
-                address.setZipcode(result.getString("date_hired"));
-                user.setAddress(address);
-            } else {
-                System.out.println("No user");
+                account.setEmail(result.getString("email"));
+                return account;
             }
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
             e.printStackTrace();
         }
-        return user; // Return the populated user object or null if no data found
+        
+        return null;
     }
 }

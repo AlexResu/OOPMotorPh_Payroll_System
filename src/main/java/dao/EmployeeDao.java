@@ -4,14 +4,14 @@
  */
 package dao;
 
-import alex.oopmotorphpayrollsystem.AttendanceRecord;
-import alex.oopmotorphpayrollsystem.Benefits;
-import alex.oopmotorphpayrollsystem.Deductions;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.LeaveRequest;
-import alex.oopmotorphpayrollsystem.MySQL;
-import alex.oopmotorphpayrollsystem.Payroll;
+import models.Address;
+import models.AttendanceRecord;
+import models.Benefits;
+import models.Deductions;
+import models.Employee;
+import models.HRPersonnel;
+import models.LeaveRequest;
+import models.Payroll;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,7 +49,7 @@ public class EmployeeDao {
     
     
     public boolean save(
-            String street, String barangay, String city, String address, 
+            String street, String barangay, String city,  
             String province, String zipcode, String phoneNumber, int employeeNumber){
         try {
             // Step 1: Get employee_id and address_id
@@ -57,7 +57,7 @@ public class EmployeeDao {
                     + "WHERE employee_id = ?";
             PreparedStatement selectStmt = conn.prepareStatement(selectQuery);
             selectStmt.setInt(1, employeeNumber);
-
+            
             ResultSet rs = selectStmt.executeQuery();
 
             if (rs.next()) {
@@ -65,7 +65,7 @@ public class EmployeeDao {
                 int addressId = rs.getInt("address_id");
 
                 // Step 2: Update address
-                String addressQuery = "UPDATE address SET street = "
+                String addressQuery = "UPDATE address SET street = ?, "
                         + " barangay = ?, city = ?, province = ?, zipcode = ? "
                         + "WHERE address_id = ?";
                 PreparedStatement addressStmt = conn.prepareStatement(addressQuery);
@@ -86,7 +86,7 @@ public class EmployeeDao {
                 empStmt.setInt(2, employeeId);
 
                 int employeeRows = empStmt.executeUpdate();
-
+                
                 return addressRows == 1 && employeeRows == 1;
             } else {
                 System.out.println("Employee not found.");
@@ -139,6 +139,10 @@ public class EmployeeDao {
             preparedStatement.setString(9, "PENDING");
             // Execute the query
             rowsAffected = preparedStatement.executeUpdate();
+            if(rowsAffected == 1){
+                EmailSenderDao emailSenderDao = new EmailSenderDao();
+                emailSenderDao.newLeaveNotification(leave);
+            }
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
             e.printStackTrace();
@@ -198,11 +202,11 @@ public class EmployeeDao {
         try {
             // Define the query
             String query = "SELECT " +
-                "COALESCE(SUM(CASE WHEN lt.type_name = 'EL - Emergency Leave' "
+                "COALESCE(SUM(CASE WHEN lt.type_name = 'Emergency Leave' "
                     + "THEN 1 ELSE 0 END), 0) AS emergency_leave_count, " +
-                "COALESCE(SUM(CASE WHEN lt.type_name = 'SL - Sick Leave' "
+                "COALESCE(SUM(CASE WHEN lt.type_name = 'Sick Leave' "
                     + "THEN 1 ELSE 0 END), 0) AS sick_leave_count, " +
-                "COALESCE(SUM(CASE WHEN lt.type_name = 'VL - Vacation Leave' "
+                "COALESCE(SUM(CASE WHEN lt.type_name = 'Vacation Leave' "
                     + "THEN 1 ELSE 0 END), 0) AS vacation_leave_count " +
                 "FROM leave_records lr " +
                 "JOIN leave_types lt ON lt.leave_type_id = lr.leave_type_id " +
@@ -229,41 +233,41 @@ public class EmployeeDao {
             if (rs.next()) {
                 System.out.println(rs.getInt("emergency_leave_count"));
                 Map<String, Object> el = new HashMap<>();
-                el.put("Type", "EL - Emergency Leave");
+                el.put("Type", "Emergency Leave");
                 el.put("Allowable", maxEmergency); // Hardcoded allowable limit
                 el.put("Available", maxEmergency - rs.getInt("emergency_leave_count"));
                 leaveCredits.add(el);
 
                 // Map for SL
                 Map<String, Object> sl = new HashMap<>();
-                sl.put("Type", "SL - Sick Leave");
+                sl.put("Type", "Sick Leave");
                 sl.put("Allowable", maxSick);
                 sl.put("Available", maxSick - rs.getInt("sick_leave_count"));
                 leaveCredits.add(sl);
 
                 // Map for VL
                 Map<String, Object> vl = new HashMap<>();
-                vl.put("Type", "VL - Vaction Leave");
+                vl.put("Type", "Vaction Leave");
                 vl.put("Allowable", maxVacation);
                 vl.put("Available", maxVacation - rs.getInt("vacation_leave_count"));
                 leaveCredits.add(vl);
             } else {
                 Map<String, Object> el = new HashMap<>();
-                el.put("Type", "EL - Emergency Leave");
+                el.put("Type", "Emergency Leave");
                 el.put("Allowable", maxEmergency); 
                 el.put("Available", maxEmergency);
                 leaveCredits.add(el);
                 
                 // Map for SL
                 Map<String, Object> sl = new HashMap<>();
-                sl.put("Type", "SL - Sick Leave");
+                sl.put("Type", "Sick Leave");
                 sl.put("Allowable", maxSick);
                 sl.put("Available", maxSick);
                 leaveCredits.add(sl);
 
                 // Map for VL
                 Map<String, Object> vl = new HashMap<>();
-                vl.put("Type", "VL - Vacation Leave");
+                vl.put("Type", "Vacation Leave");
                 vl.put("Allowable", maxVacation);
                 vl.put("Available", maxVacation);
                 leaveCredits.add(vl);
@@ -361,7 +365,6 @@ public class EmployeeDao {
     
     // Method to load the employee's payslip based on a date range
     public Payroll loadPayslip(int employeeId, Date startDate, Date endDate){
-        Payroll payslip = new Payroll();
         // Query the database to retrieve payslip details based on the employee and date range
         try {
             // Create a statement object
@@ -382,33 +385,33 @@ public class EmployeeDao {
             System.out.println("Executing Query: " + preparedStatement.toString());
             rs = preparedStatement.executeQuery();
             if(rs.next()){
-                payslip = mapPayroll(rs);
+                return mapPayroll(rs);
             }
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
             e.printStackTrace();
         }
-        return payslip;
+        return null;
     }
     
     // Helper method to map the ResultSet data to a Payroll object
     private Payroll mapPayroll(ResultSet result){
         Payroll pr = new Payroll();
         try { 
-            pr.setGrossIncome(result.getInt("gross_income"));
-            pr.setHoursWorked(result.getInt("hours_worked"));
-            pr.setNetPay(result.getInt("take_home_pay"));
-            pr.setOvertimeHours(result.getInt("overtime_hours"));
+            pr.setGrossIncome(result.getDouble("gross_income"));
+            pr.setHoursWorked(result.getDouble("hours_worked"));
+            pr.setNetPay(result.getDouble("take_home_pay"));
+            pr.setOvertimeHours(result.getDouble("overtime_hours"));
 //            pr.setPaymentDate(result.getDate("payment_date"));
             pr.setPayrollID(result.getString("payslip_no"));
             pr.setWeekPeriodEnd(result.getDate("period_end"));
             pr.setWeekPeriodStart(result.getDate("period_start"));
             
             Deductions deduction = new Deductions();
-            deduction.setPagIbigDeduction(result.getInt("pagibig_deduction"));
-            deduction.setPhilhealthDeduction(result.getInt("philhealth_deduction"));
-            deduction.setSssDeduction(result.getInt("sss_deduction"));
-            deduction.setTaxDeduction(result.getInt("withholding_deduction"));
+            deduction.setPagIbigDeduction(result.getDouble("pagibig_deduction"));
+            deduction.setPhilhealthDeduction(result.getDouble("philhealth_deduction"));
+            deduction.setSssDeduction(result.getDouble("sss_deduction"));
+            deduction.setTaxDeduction(result.getDouble("withholding_deduction"));
             pr.setDeductions(deduction);
             
             Employee emp = new Employee();
@@ -429,12 +432,12 @@ public class EmployeeDao {
             emp.setDepartment(department);
 
             Benefits benefit = new Benefits(
-                    result.getInt("basic_salary"),
-                    result.getInt("gross_income"),
-                    result.getInt("hourly_rate"),
-                    result.getInt("rice_subsidy"),
-                    result.getInt("phone_allowance"),
-                    result.getInt("clothing_allowance")
+                    result.getDouble("basic_salary"),
+                    result.getDouble("gross_income"),
+                    result.getDouble("hourly_rate"),
+                    result.getDouble("rice_subsidy"),
+                    result.getDouble("phone_allowance"),
+                    result.getDouble("clothing_allowance")
                 );
             emp.setBenefits(benefit);
             pr.setEmployee(emp);
@@ -449,12 +452,12 @@ public class EmployeeDao {
     public void timeIn(int employeeNumber) {
         LocalDate currentDate = LocalDate.now();
         LocalDateTime currentTime = LocalDateTime.now();
-        int rowsAffected = 0;
         
         try {
             // Define the query
             String query = "INSERT INTO attendance_record ("
-                    + "employee_id, date, time_in) VALUES (?, ?, ?)";
+                    + "employee_id, date, time_in) VALUES (?, ?, ?)" +
+                      "ON DUPLICATE KEY UPDATE time_in = VALUES(time_in)";;
 
             // Prepare the statement
             PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -465,8 +468,7 @@ public class EmployeeDao {
             preparedStatement.setTimestamp(3, Timestamp.valueOf(currentTime));
 
             // Execute the query
-            rowsAffected = preparedStatement.executeUpdate();
-            System.out.println(rowsAffected);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
             e.printStackTrace();
@@ -498,6 +500,63 @@ public class EmployeeDao {
             System.err.println("Error while executing SQL query!");
             e.printStackTrace();
         }
+    }
+    
+    public Employee getEmployeeDetailsByNumber (int employeeNumber) {
+        try {
+            // Create a statement object
+            statement = conn.createStatement();
+
+            // Define the query
+            String query = "SELECT * FROM employee_view WHERE employee_id = ?";
+            
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, employeeNumber);
+
+            // Execute the query
+            rs = preparedStatement.executeQuery();
+            
+            if(rs.next()){
+                Employee emp = new Employee();
+                emp.setEmployeeID(rs.getInt("employee_id"));
+                emp.setLastName(rs.getString("last_name"));
+                emp.setFirstName(rs.getString("first_name"));
+                emp.setBirthday(rs.getDate("birthdate"));
+                emp.setPhoneNumber(rs.getString("phone_number"));
+                emp.setSssNumber(rs.getString("sss_number"));
+                emp.setPhilhealthNumber(rs.getString("philhealth_number"));
+                emp.setTinNumber(rs.getString("tin_number"));
+                emp.setPagibigNumber(rs.getString("pagibig_number"));
+                emp.setStatus(rs.getString("status"));
+                emp.setPosition(rs.getString("position"));
+                emp.setImmediateSupervisor(rs.getString("immediate_supervisor"));
+                emp.setDateHired(rs.getDate("date_hired"));
+
+                Benefits benefit = new Benefits(
+                        rs.getInt("basic_salary"),
+                        rs.getInt("gross_semi_monthly_rate"),
+                        rs.getInt("hourly_rate"),
+                        rs.getInt("rice_subsidy"),
+                        rs.getInt("phone_allowance"),
+                        rs.getInt("clothing_allowance")
+                    );
+                emp.setBenefits(benefit);
+
+                Address address = new Address();
+                address.setBarangay(rs.getString("barangay"));
+                address.setCity(rs.getString("city"));
+                address.setProvince(rs.getString("province"));
+                address.setStreet(rs.getString("street"));
+                address.setZipcode(rs.getString("zipcode"));
+                emp.setAddress(address);
+
+                return emp;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error while executing SQL query!");
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 

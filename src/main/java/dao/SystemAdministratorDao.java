@@ -4,13 +4,12 @@
  */
 package dao;
 
-import alex.oopmotorphpayrollsystem.Address;
-import alex.oopmotorphpayrollsystem.Benefits;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.MySQL;
-import alex.oopmotorphpayrollsystem.SystemAdministrator;
-import alex.oopmotorphpayrollsystem.User;
+import models.Address;
+import models.Benefits;
+import models.Employee;
+import models.HRPersonnel;
+import models.SystemAdministrator;
+import models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,12 +39,13 @@ public class SystemAdministratorDao {
         this.connection = DbConnection.getConnection();
     }
     
-    // Add a new employee to the system. It uses MySQL helper to create an employee or user
+    // Add a new employee to the system.
     public boolean addNewEmployee(User employee) {
         boolean result;
         if(employee instanceof Employee){
             int rowsAffected = 0, empNum = 0;
             try {
+                boolean initialCommit  = connection.getAutoCommit();
                 connection.setAutoCommit(false); // Transaction start
 
                 // 1. Insert into address
@@ -117,7 +117,10 @@ public class SystemAdministratorDao {
                 psCred.setInt(3, 1); // default role_id
                 rowsAffected = psCred.executeUpdate();
 
-                connection.commit(); // Commit if all succeeded
+                if(initialCommit){
+                    connection.commit(); // Commit if all succeeded
+                    connection.setAutoCommit(initialCommit);
+                }
             } catch (SQLException e) {
                 System.err.println("Error while executing SQL query!");
                 e.printStackTrace();
@@ -126,18 +129,13 @@ public class SystemAdministratorDao {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-            } finally {
-                try {
-                    connection.setAutoCommit(true);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
             }
 
             return rowsAffected == 1;
         } else {
             int rowsAffected = 0, empNum = 0;
             try {
+                boolean initialCommit  = connection.getAutoCommit();
                 connection.setAutoCommit(false); // Transaction start
 
                 // 1. Insert into address
@@ -159,17 +157,17 @@ public class SystemAdministratorDao {
                 // 3. Insert into employees
                 String empQuery = "INSERT INTO employees ("
                         + "last_name, first_name, phone_number, birthdate, "
-                        + "is_deleted, date_hired, supervisor_id, status_id, "
-                        + "position_id, address_id) VALUES (?, ?, ?, ?, 0, CURDATE(), ?, ?, ?, ?, ?)";
+                        + "is_deleted, date_hired, "
+                        + "position_id, address_id) VALUES (?, ?, ?, ?, 0, CURDATE(), ?, ?)";
                 PreparedStatement psEmp = connection.prepareStatement(empQuery, Statement.RETURN_GENERATED_KEYS);
                 psEmp.setString(1, employee.getLastName());
                 psEmp.setString(2, employee.getFirstName());
                 psEmp.setString(3, employee.getPhoneNumber());
                 psEmp.setDate(4, new java.sql.Date(employee.getBirthday().getTime()));
-                psEmp.setObject(6, ((Employee) employee).getImmediateSupervisor(), java.sql.Types.INTEGER);
-                psEmp.setInt(7, getStatusId(((Employee) employee).getStatus()));
-                psEmp.setInt(8, getPositionId(employee.getPosition()));
-                psEmp.setInt(9, addressId);
+//                psEmp.setObject(6, ((Employee) employee).getImmediateSupervisor(), java.sql.Types.INTEGER);
+//                psEmp.setInt(7, getStatusId(((Employee) employee).getStatus()));
+                psEmp.setInt(5, getPositionId(employee.getPosition()));
+                psEmp.setInt(6, addressId);
                 psEmp.executeUpdate();
 
                 ResultSet rsEmp = psEmp.getGeneratedKeys();
@@ -197,10 +195,14 @@ public class SystemAdministratorDao {
                 psCred.setInt(3, role_id);
                 rowsAffected = psCred.executeUpdate();
 
-                connection.commit(); // Commit if all succeeded
+                if(initialCommit){
+                    connection.commit(); // Commit if all succeeded
+                    connection.setAutoCommit(initialCommit);
+                }
                 return rowsAffected == 1;
             } catch (SQLException e) {
                 System.err.println("Error while executing SQL query!");
+                System.out.println("SQL Error Message: " + e.getMessage());
                 e.printStackTrace();
                 try {
                     connection.rollback(); // Rollback if error
@@ -212,29 +214,35 @@ public class SystemAdministratorDao {
         return false;
     }
     
-    private Integer getSupervisorId(String firstName, String lastName) throws SQLException {
-        String query = "SELECT id FROM employees WHERE first_name = ? AND last_name = ? AND is_deleted = 0";
+    private Integer getSupervisorId(String name) throws SQLException {
+        String query = "SELECT employee_id FROM employees WHERE first_name = ? AND is_deleted = 0";
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1, firstName);
-        ps.setString(2, lastName);
+        ps.setString(1, name);
         ResultSet rs = ps.executeQuery();
-        return rs.next() ? rs.getInt("id") : null;
+        return rs.next() ? rs.getInt("employee_id") : null;
     }
     
     private int getStatusId(String statusName) throws SQLException {
-        String query = "SELECT id FROM employment_status WHERE name = ?";
+        String query = "SELECT status_id FROM status WHERE type = ?";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, statusName);
         ResultSet rs = ps.executeQuery();
-        return rs.next() ? rs.getInt("id") : 0;
+        return rs.next() ? rs.getInt("status_id") : 0;
     }
     
     private int getPositionId(String positionName) throws SQLException {
-        String query = "SELECT id FROM position WHERE name = ?";
+        String query = "SELECT position_id FROM positions WHERE name = ?";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, positionName);
         ResultSet rs = ps.executeQuery();
-        return rs.next() ? rs.getInt("id") : 0;
+        return rs.next() ? rs.getInt("position_id") : 0;
+    }
+    
+    private int getEmployeeRoleId() throws SQLException {
+        String query = "SELECT role_id FROM roles WHERE role_name = 'Employee'";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+        return rs.next() ? rs.getInt("role_id") : 0;
     }
     
     // Update an existing employee in the system
@@ -258,14 +266,14 @@ public class SystemAdministratorDao {
             preparedStatement.setString(4, employee.getPhoneNumber());
 
             if (employee instanceof Employee emp) {
-//                preparedStatement.setInt(5, emp.getStatusId());
-//                preparedStatement.setInt(6, emp.getPositionId());
-//                if (emp.getSupervisorId() != 0) {
-//                    preparedStatement.setInt(7, emp.getSupervisorId());
-//                } else {
-//                    preparedStatement.setNull(7, java.sql.Types.INTEGER);
-//                }
-//                preparedStatement.setInt(8, emp.getSalaryId());
+                preparedStatement.setInt(5, getStatusId(emp.getStatus()));
+                preparedStatement.setInt(6, getPositionId(emp.getPosition()));
+                if (emp.getImmediateSupervisor() != null) {
+                    preparedStatement.setObject(7, getSupervisorId(((Employee) employee).getImmediateSupervisor()), java.sql.Types.INTEGER); // Nullable
+                } else {
+                    preparedStatement.setNull(7, java.sql.Types.INTEGER);
+                }
+//                preparedStatement.setInt(8, getSalaryId(emp.getSalary()));
 //                preparedStatement.setInt(9, emp.getAddressId());
                 preparedStatement.setInt(10, emp.getEmployeeID());
             } else {
@@ -327,7 +335,7 @@ public class SystemAdministratorDao {
             statement = connection.createStatement();
 
             // Define the query
-            String query = "UPDATE employees SET is_deleted = ? WHERE employee_id = ?";
+            String query = "UPDATE employees SET is_deleted = ? WHERE employee_id = ? AND is_deleted = False";
             
             // Prepare the statement
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -403,7 +411,7 @@ public class SystemAdministratorDao {
             statement = connection.createStatement();
 
             // Define the query
-            String query = "SELECT e.*, uc.role_id FROM employees e "
+            String query = "SELECT e.*, uc.role_id FROM employee_view e "
                     + "LEFT JOIN user_credentials uc "
                     + " ON e.employee_id = uc.employee_id "
                     + "WHERE date_hired >= CURDATE() - INTERVAL 7 DAY ";
@@ -413,6 +421,7 @@ public class SystemAdministratorDao {
             return employees;
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
+            System.out.println("SQL Error Message: " + e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -430,17 +439,14 @@ public class SystemAdministratorDao {
             
             result = statement.executeQuery(query);
             List<Integer> dashboardInfo = new ArrayList<>();
-            try { 
-                if (result.next()) {
-                    dashboardInfo.add(result.getInt("total"));
-                    dashboardInfo.add(result.getInt("new_employees"));
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex);
+            if (result.next()) {
+                dashboardInfo.add(result.getInt("total"));
+                dashboardInfo.add(result.getInt("new_employees"));
             }
             return dashboardInfo;
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
+            System.out.println("SQL Error Message: " + e.getMessage());
             e.printStackTrace();
         }
         return null;

@@ -3,10 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package gui;
-import alex.oopmotorphpayrollsystem.User;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.SystemAdministrator;
+import models.User;
+import models.HRPersonnel;
+import models.Employee;
+import models.SystemAdministrator;
 import dao.HRPersonnelDao;
 import dao.SystemAdministratorDao;
 import java.util.*;

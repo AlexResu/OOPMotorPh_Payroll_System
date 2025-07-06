@@ -4,23 +4,21 @@
  */
 package dao;
 
-import alex.oopmotorphpayrollsystem.Address;
-import alex.oopmotorphpayrollsystem.AttendanceRecord;
-import alex.oopmotorphpayrollsystem.Benefits;
-import alex.oopmotorphpayrollsystem.Deductions;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.LeaveRequest;
-import alex.oopmotorphpayrollsystem.Payroll;
-import alex.oopmotorphpayrollsystem.SystemAdministrator;
-import alex.oopmotorphpayrollsystem.User;
+import models.Address;
+import models.AttendanceRecord;
+import models.Benefits;
+import models.Deductions;
+import models.Employee;
+import models.HRPersonnel;
+import models.LeaveRequest;
+import models.Payroll;
+import models.SystemAdministrator;
+import models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -64,19 +62,21 @@ public class HRPersonnelDao {
             // Define the query
             String query = "UPDATE leave_records " +
                "SET approved_by = ?, remarks = 'APPROVED' " +
-               "WHERE id = ?";
+               "WHERE id = ? AND remarks = 'PENDING'";
 
             // Prepare the statement
             preparedStatement = connection.prepareStatement(query);
 
             // Set the parameters
-            preparedStatement.setInt(1, leaveRequest.getApprovedBy().getEmployeeID());
+            preparedStatement.setInt(1, hrPersonnel.getEmployeeID());
             preparedStatement.setInt(2, leaveRequest.getLeaveID());
             // Execute the query
             rowsAffected = preparedStatement.executeUpdate();
             if(rowsAffected == 1) {
                 leaveRequest.setApprovedBy(hrPersonnel);
                 leaveRequest.setLeaveStatus("APPROVED");
+                EmailSenderDao emailSenderDao = new EmailSenderDao();
+                emailSenderDao.newLeaveUpdateNotification(leaveRequest);
             }
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
@@ -100,19 +100,21 @@ public class HRPersonnelDao {
 
             // Define the query
             String query = "UPDATE leave_records "
-                    + "SET approved_by = ?, remarks = 'DECLINED' WHERE id = ?";
+                    + "SET approved_by = ?, remarks = 'DECLINED' WHERE id = ? AND remarks = 'PENDING'";
 
             // Prepare the statement
             preparedStatement = connection.prepareStatement(query);
 
             // Set the parameters
-            preparedStatement.setInt(1, leaveRequest.getApprovedBy().getEmployeeID());
+            preparedStatement.setInt(1, hrPersonnel.getEmployeeID());
             preparedStatement.setInt(2, leaveRequest.getLeaveID());
             // Execute the query
             rowsAffected = preparedStatement.executeUpdate();
             if(rowsAffected == 1){
                 leaveRequest.setApprovedBy(hrPersonnel);
                 leaveRequest.setLeaveStatus("DECLINED");
+                EmailSenderDao emailSenderDao = new EmailSenderDao();
+                emailSenderDao.newLeaveUpdateNotification(leaveRequest);
             }
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
@@ -131,8 +133,8 @@ public class HRPersonnelDao {
     public boolean addNewEmployee(Employee employee) {
         int employeeId = 0;
         int rowsAffected = 0;
-
         try {
+            boolean initialCommit  = connection.getAutoCommit();
             connection.setAutoCommit(false); // Transaction start
 
             // 1. Insert into address
@@ -200,52 +202,56 @@ public class HRPersonnelDao {
             PreparedStatement psCred = connection.prepareStatement(credQuery);
             psCred.setInt(1, employeeId);
             psCred.setString(2, employee.getLastName() + "123");
-            psCred.setInt(3, 1); // default role_id
+            psCred.setInt(3, getEmployeeRoleId());
             rowsAffected = psCred.executeUpdate();
-
-            connection.commit(); // Commit if all succeeded
+            
+            if(initialCommit){
+                connection.commit(); // Commit if all succeeded
+                connection.setAutoCommit(initialCommit);
+            }
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
+            System.out.println("SQL Error Message: " + e.getMessage());
             e.printStackTrace();
             try {
                 connection.rollback(); // Rollback if error
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
 
         return rowsAffected == 1;
     }
     
-    private Integer getSupervisorId(String firstName, String lastName) throws SQLException {
-        String query = "SELECT id FROM employees WHERE first_name = ? AND last_name = ? AND is_deleted = 0";
+    private Integer getSupervisorId(String name) throws SQLException {
+        String query = "SELECT employee_id FROM employees WHERE first_name = ? AND is_deleted = 0";
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1, firstName);
-        ps.setString(2, lastName);
+        ps.setString(1, name);
         ResultSet rs = ps.executeQuery();
-        return rs.next() ? rs.getInt("id") : null;
+        return rs.next() ? rs.getInt("employee_id") : null;
     }
     
     private int getStatusId(String statusName) throws SQLException {
-        String query = "SELECT id FROM employment_status WHERE name = ?";
+        String query = "SELECT status_id FROM status WHERE type = ?";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, statusName);
         ResultSet rs = ps.executeQuery();
-        return rs.next() ? rs.getInt("id") : 0;
+        return rs.next() ? rs.getInt("status_id") : 0;
     }
     
     private int getPositionId(String positionName) throws SQLException {
-        String query = "SELECT id FROM position WHERE name = ?";
+        String query = "SELECT position_id FROM positions WHERE name = ?";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, positionName);
         ResultSet rs = ps.executeQuery();
-        return rs.next() ? rs.getInt("id") : 0;
+        return rs.next() ? rs.getInt("position_id") : 0;
+    }
+    
+    private int getEmployeeRoleId() throws SQLException {
+        String query = "SELECT role_id FROM roles WHERE role_name = 'Employee'";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+        return rs.next() ? rs.getInt("role_id") : 0;
     }
     
     /**
@@ -254,59 +260,31 @@ public class HRPersonnelDao {
      * @param employee The employee to update.
      * @return true if employee is updated successfully, false otherwise.
      */
-    public boolean updateEmployee(User employee) {
+    public boolean updateEmployee(Employee employee) {
         int rowsAffected = 0;
 
         try {
             // Update employees table
             String query = "UPDATE employees SET last_name = ?, first_name = ?, birthdate = ?, "
-                         + "phone_number = ?, status_id = ?, position_id = ?, supervisor_id = ?, "
-                         + "salary_id = ?, address_id = ? WHERE employee_id = ?";
+                         + "phone_number = ?, status_id = ?, position_id = ?, supervisor_id = ? "
+                         + " WHERE employee_id = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employee.getLastName());
             preparedStatement.setString(2, employee.getFirstName());
             preparedStatement.setDate(3, new java.sql.Date(employee.getBirthday().getTime()));
             preparedStatement.setString(4, employee.getPhoneNumber());
-
-            if (employee instanceof Employee emp) {
-//                preparedStatement.setInt(5, emp.getStatusId());
-//                preparedStatement.setInt(6, emp.getPositionId());
-//                preparedStatement.setObject(7, emp.getSupervisorId(), java.sql.Types.INTEGER); // Nullable
-//                preparedStatement.setInt(8, emp.getSalaryId());
-//                preparedStatement.setInt(9, emp.getAddressId());
-            } else {
-                preparedStatement.setInt(5, 1); // default status
-                preparedStatement.setInt(6, 1); // default position
-                preparedStatement.setNull(7, java.sql.Types.INTEGER);
-                preparedStatement.setInt(8, 1); // default salary
-                preparedStatement.setInt(9, 1); // default address
-            }
-
-            preparedStatement.setInt(10, employee.getEmployeeID());
+            preparedStatement.setInt(5, getStatusId(employee.getStatus()));
+            preparedStatement.setInt(6, getPositionId(employee.getPosition()));
+            preparedStatement.setObject(7, getSupervisorId(employee.getImmediateSupervisor()), java.sql.Types.INTEGER); // Nullable
+            preparedStatement.setInt(8, employee.getEmployeeID());
 
             System.out.println("Executing Query: " + preparedStatement.toString());
             rowsAffected = preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             System.err.println("Error while executing employee update SQL!");
-            e.printStackTrace();
-        }
-
-        // Update role in user_credentials table
-        int roleId = (employee instanceof HRPersonnel) ? 2 :
-                     (employee instanceof SystemAdministrator) ? 3 : 1;
-
-        try {
-            String query = "UPDATE user_credentials SET role_id = ? WHERE employee_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, roleId);
-            preparedStatement.setInt(2, employee.getEmployeeID());
-
-            System.out.println("Executing Query: " + preparedStatement.toString());
-            rowsAffected = preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Error while updating user_credentials!");
+            System.out.println("SQL Error Message: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -321,13 +299,12 @@ public class HRPersonnelDao {
      */
     public boolean deleteEmployee(Employee employee) {
         int rowsAffected = 0;
-        System.out.println("deleteEmployeeByNumber");
         try {
             // Create a statement object
             statement = connection.createStatement();
 
             // Define the query
-            String query = "UPDATE employees SET is_deleted = ? WHERE employee_id = ?";
+            String query = "UPDATE employees SET is_deleted = ? WHERE employee_id = ? AND is_deleted = False";
             
             // Prepare the statement
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -455,7 +432,7 @@ public class HRPersonnelDao {
             statement = connection.createStatement();
 
             // Define the query
-            String query = "SELECT e.*, uc.role_id FROM employees e "
+            String query = "SELECT e.*, uc.role_id FROM employee_view e "
                     + "LEFT JOIN user_credentials uc "
                     + " ON e.employee_id = uc.employee_id "
                     + "WHERE date_hired >= CURDATE() - INTERVAL 7 DAY "
@@ -545,35 +522,6 @@ public class HRPersonnelDao {
         return null;
     }
     
-    /**
-     * Loads the summary payroll report from the database.
-     * 
-     * @return A list of payroll summary records.
-     */
-    public List<Payroll> loadSummaryReport(){
-        try {
-            // Create a statement object
-            statement = connection.createStatement();
-
-            // Define the query
-            String query = "SELECT * FROM payslip_view ORDER BY period_start DESC employee_id";
-
-            // Execute the query
-            result = statement.executeQuery(query);
-            
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-
-            // Execute the query
-            result = preparedStatement.executeQuery();
-            List<Payroll> payrolls = mapPayrolls(result);
-            return payrolls;
-        } catch (SQLException e) {
-            System.err.println("Error while executing SQL query!");
-            e.printStackTrace();
-        }
-        return null;
-    }
-    
      /**
      * Loads the summary payroll report for a specific month and year.
      * 
@@ -581,25 +529,21 @@ public class HRPersonnelDao {
      * @param year The year for the payroll summary.
      * @return A list of payroll summary records for the given month and year.
      */
-    public List<Payroll> loadSummaryReport(int month, int year){
+    public ResultSet loadSummaryReport(int month, int year){
         try {
             // Create a statement object
             statement = connection.createStatement();
 
             // Define the query
-            String query = "SELECT * FROM payslip_view ";
-
-            // Execute the query
-            result = statement.executeQuery(query);
-            
+            String query = "SELECT * FROM payroll_summary_report_view WHERE `Month` = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-
-            // Execute the query
-            result = preparedStatement.executeQuery();
-            List<Payroll> payrolls = mapPayrolls(result);
-            return payrolls;
+            String period = String.format("%04d-%02d", year, month);
+            preparedStatement.setString(1, period);
+            
+            return preparedStatement.executeQuery();
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
+            System.out.println("SQL Error Message: " + e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -662,39 +606,24 @@ public class HRPersonnelDao {
         return emp;
     }
     
-    // Maps a ResultSet containing payroll data to a List of Payroll objects.
-    private List<Payroll> mapPayrolls(ResultSet result){
-        List<Payroll> payroll = new ArrayList<>();
-        try {
-            while (result.next()) {
-                Payroll pr = mapPayroll(result);
-                
-                payroll.add(pr);
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        return payroll;
-    }
-    
     // Maps a single row of ResultSet to a Payroll object
     private Payroll mapPayroll(ResultSet result){
         Payroll pr = new Payroll();
         try { 
-            pr.setGrossIncome(result.getInt("gross_income"));
-            pr.setHoursWorked(result.getInt("hours_worked"));
-            pr.setNetPay(result.getInt("take_home_pay"));
-            pr.setOvertimeHours(result.getInt("overtime_hours"));
+            pr.setGrossIncome(result.getDouble("gross_income"));
+            pr.setHoursWorked(result.getDouble("hours_worked"));
+            pr.setNetPay(result.getDouble("take_home_pay"));
+            pr.setOvertimeHours(result.getDouble("overtime_hours"));
 //            pr.setPaymentDate(result.getDate("payment_date"));
             pr.setPayrollID(result.getString("payslip_no"));
             pr.setWeekPeriodEnd(result.getDate("period_end"));
             pr.setWeekPeriodStart(result.getDate("period_start"));
             
             Deductions deduction = new Deductions();
-            deduction.setPagIbigDeduction(result.getInt("pagibig_deduction"));
-            deduction.setPhilhealthDeduction(result.getInt("philhealth_deduction"));
-            deduction.setSssDeduction(result.getInt("sss_deduction"));
-            deduction.setTaxDeduction(result.getInt("withholding_deduction"));
+            deduction.setPagIbigDeduction(result.getDouble("pagibig_deduction"));
+            deduction.setPhilhealthDeduction(result.getDouble("philhealth_deduction"));
+            deduction.setSssDeduction(result.getDouble("sss_deduction"));
+            deduction.setTaxDeduction(result.getDouble("withholding_deduction"));
             pr.setDeductions(deduction);
             
             Employee emp = new Employee();
@@ -715,12 +644,12 @@ public class HRPersonnelDao {
             emp.setDepartment(department);
 
             Benefits benefit = new Benefits(
-                    result.getInt("basic_salary"),
-                    result.getInt("gross_income"),
-                    result.getInt("hourly_rate"),
-                    result.getInt("rice_subsidy"),
-                    result.getInt("phone_allowance"),
-                    result.getInt("clothing_allowance")
+                    result.getDouble("basic_salary"),
+                    result.getDouble("gross_income"),
+                    result.getDouble("hourly_rate"),
+                    result.getDouble("rice_subsidy"),
+                    result.getDouble("phone_allowance"),
+                    result.getDouble("clothing_allowance")
                 );
             emp.setBenefits(benefit);
             pr.setEmployee(emp);
@@ -811,7 +740,7 @@ public class HRPersonnelDao {
                "e2.last_name AS approver_last_name " +
                "FROM leave_records l " +
                "LEFT JOIN employees e ON e.employee_id = l.employee_id " +
-               "LEFT JOIN employees e2 ON e2.employee_id = e.supervisor_id " +
+               "LEFT JOIN employees e2 ON e2.employee_id = l.approved_by " +
                "LEFT JOIN positions p ON e.position_id = p.position_id " +
                "LEFT JOIN department d ON p.department_id = d.department_id " +
                "LEFT JOIN leave_types lt ON l.leave_type_id = lt.leave_type_id " +
@@ -839,6 +768,7 @@ public class HRPersonnelDao {
                "l.*, " +
                "lt.type_name AS leave_type, " +
                "d.name AS department, " +
+               "e.employee_id, " +
                "e.first_name, " +
                "e.last_name, " +
                "e2.employee_id AS approver_id, " +
@@ -846,7 +776,7 @@ public class HRPersonnelDao {
                "e2.last_name AS approver_last_name " +
                "FROM leave_records l " +
                "LEFT JOIN employees e ON e.employee_id = l.employee_id " +
-               "LEFT JOIN employees e2 ON e2.employee_id = e.supervisor_id " +
+               "LEFT JOIN employees e2 ON e2.employee_id = l.approved_by " +
                "LEFT JOIN positions p ON e.position_id = p.position_id " +
                "LEFT JOIN department d ON p.department_id = d.department_id " +
                "LEFT JOIN leave_types lt ON l.leave_type_id = lt.leave_type_id ";
@@ -937,8 +867,8 @@ public class HRPersonnelDao {
             result = preparedStatement.executeQuery();
             if(result.next()){
                 payslip = mapPayroll(result);
+                return payslip;
             }
-            return payslip;
         } catch (SQLException e) {
             System.err.println("Error while executing SQL query!");
             e.printStackTrace();

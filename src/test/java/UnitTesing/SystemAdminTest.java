@@ -4,7 +4,7 @@
  */
 package UnitTesing;
 
-import alex.oopmotorphpayrollsystem.SystemAdministrator;
+import models.SystemAdministrator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;

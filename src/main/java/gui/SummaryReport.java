@@ -4,13 +4,13 @@
  */
 package gui;
 
-import alex.oopmotorphpayrollsystem.AccountAccess;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.Employee;
-import alex.oopmotorphpayrollsystem.Payroll;
-import alex.oopmotorphpayrollsystem.Deductions;
-import alex.oopmotorphpayrollsystem.Benefits;
-import alex.oopmotorphpayrollsystem.PayrollSummaryExcel;
+import models.AccountAccess;
+import models.HRPersonnel;
+import models.Employee;
+import models.Payroll;
+import models.Deductions;
+import models.Benefits;
+import utils.PayrollSummaryExcel;
 import dao.HRPersonnelDao;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +19,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import java.io.File;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.HashMap;
 import javax.swing.JScrollBar;
+import utils.DbConnection;
+import utils.ReportGenerator;
 
 /**
  *
@@ -45,29 +50,53 @@ public class SummaryReport extends javax.swing.JPanel {
     }
     
     private void loadPayrollData(){
+        days.setVisible(false);
         HRPersonnelDao hrPersonnelDao = new HRPersonnelDao();
-        this.payrollList = hrPersonnelDao.loadSummaryReport(
+        ResultSet payrollList = hrPersonnelDao.loadSummaryReport(
                 filterMonthlyvalue.getMonth() + 1, filterMonthlyYearValue.getYear());
         DefaultTableModel model = (DefaultTableModel) payrollReportTable.getModel();
         model.setRowCount(0);
-        boolean hasPending = false;
-        for (Payroll payroll : payrollList) {
-            Employee emp = payroll.getEmployee();
-            Deductions deduct = payroll.getDeductions();
-            Benefits benefit = emp.getBenefits();
-            Object data[] = {
-                emp.getEmployeeID(),
-                emp.getFirstName() + " " + emp.getLastName(),
-                emp.getPosition(),
-                payroll.getGrossIncome(),
-                deduct.calculateTotalDeductions(),
-                benefit.calculateTotalAllowance(),
-                payroll.getNetPay(),
-            };
-
-            // Add the row to the table model
-            model.addRow(data);
+        if(payrollList == null){
+            days.setVisible(true);
+            downloadSummary.setEnabled(false);
         }
+        try{
+            if(!payrollList.isBeforeFirst()){
+                days.setVisible(true);
+                downloadSummary.setEnabled(false);
+            }
+            while(payrollList.next()){
+                Object data[] = {
+                    payrollList.getString("Employee No"),
+                    payrollList.getString("Employee Full Name"),
+                    payrollList.getString("Position"),
+                    payrollList.getString("Gross Income"),
+                    String.format("%.2f", (
+                        payrollList.getDouble("Social Security Contribution") + 
+                        payrollList.getDouble("Philhealth Contribution") + 
+                        payrollList.getDouble("Pag-Ibig Contribution") +
+                        payrollList.getDouble("Withholding Tax")
+                    )),
+                    String.format("%.2f", (
+                        payrollList.getDouble("Rice Subsidy") + 
+                        payrollList.getDouble("Phone Allowance") + 
+                        payrollList.getDouble("Clothing Allowance")
+                    )),
+                    payrollList.getDouble("Net Pay"),
+                };
+
+                // Add the row to the table model
+                model.addRow(data);
+                days.setVisible(false);
+                downloadSummary.setEnabled(true);
+            }
+        } catch (Exception e){
+            System.err.println("Something went wrong.");
+            e.printStackTrace();
+            days.setVisible(true);
+            downloadSummary.setEnabled(false);
+        }
+        
     }
 
     /**
@@ -205,7 +234,7 @@ public class SummaryReport extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 860, Short.MAX_VALUE)
+            .addGap(0, 870, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -225,18 +254,35 @@ public class SummaryReport extends javax.swing.JPanel {
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
         loadPayrollData();
-        
     }//GEN-LAST:event_searchActionPerformed
 
     private void downloadSummaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadSummaryActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Save Payroll Report");
-        fileChooser.setSelectedFile(new File("Payroll_Report.xlsx")); // Default name
+        int month = filterMonthlyvalue.getMonth() + 1;
+        int year = filterMonthlyYearValue.getYear();
+        
+        try (Connection conn = DbConnection.getConnection()) {
+            ReportGenerator generator = new ReportGenerator();
 
-        int userSelection = fileChooser.showSaveDialog(null);
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-            PayrollSummaryExcel.generatePayrollReport(this.payrollList, fileToSave);
+            String source = "resources/Reports/PayrollSummaryReport.jrxml";
+
+            // Output PDF path
+            String userHome = System.getProperty("user.home");
+            String fileName = year +"_" + month +".pdf";
+            String outputPath = userHome + "/Downloads/payroll_summary_report_" 
+                    + fileName;
+
+            // Optional: Report parameters
+            Map<String, Object> params = new HashMap<>();
+            String period = String.format("%04d-%02d", year, month);
+            params.put("Month", period);
+
+            boolean isReportGenerated = generator.generateReport(conn, source, outputPath, params);
+            DownloadPDFPopUp frame = new DownloadPDFPopUp();
+            frame.setVisible(true);
+            frame.updateStatus(isReportGenerated, fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error generating report: " + e.getMessage(), "Report Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_downloadSummaryActionPerformed
 

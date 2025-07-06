@@ -1,8 +1,10 @@
+CREATE DATABASE  IF NOT EXISTS `payrollsystem_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `payrollsystem_db`;
 -- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
--- Host: localhost    Database: payrollsystem_db
+-- Host: 127.0.0.1    Database: payrollsystem_db
 -- ------------------------------------------------------
--- Server version	9.3.0
+-- Server version	8.0.42
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -254,9 +256,9 @@ DROP TABLE IF EXISTS `employees`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `employees` (
   `employee_id` int NOT NULL AUTO_INCREMENT,
-  `last_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `first_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `phone_number` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `last_name` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `first_name` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `phone_number` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `date_hired` date NOT NULL DEFAULT (curdate()),
@@ -290,6 +292,24 @@ LOCK TABLES `employees` WRITE;
 INSERT INTO `employees` VALUES (10001,'Garcia','Manuel III','966-860-270','1983-10-11',0,'2025-03-01',1,NULL,1,1,35),(10002,'Lim','Antonio','171-867-411','1988-06-19',0,'2025-03-01',2,10001,1,2,36),(10003,'Aquino','Bianca Sofia','966-889-370','1989-08-04',0,'2025-03-01',2,10001,1,3,37),(10004,'Reyes','Isabella','786-868-477','1994-06-16',0,'2025-03-01',2,10001,1,4,38),(10005,'Hernandez','Eduard','088-861-012','1989-09-23',0,'2025-03-01',5,10002,1,5,39),(10006,'Villanueva','Andrea Mae','918-621-603','1988-02-14',0,'2025-03-01',5,10002,1,6,40),(10007,'San Jose','Brad ','797-009-261','1996-03-15',0,'2025-03-01',7,10006,1,7,41),(10008,'Romualdez','Alice','983-606-797','1992-05-14',0,'2025-03-01',8,10007,1,8,42),(10009,'Atienza','Rosie ','266-036-427','1948-09-24',0,'2025-03-01',8,10007,1,8,43),(10010,'Alvaro','Roderick','053-381-386','1988-03-30',0,'2025-03-01',5,10003,1,9,44),(10011,'Salcedo','Anthony','070-766-300','1993-09-14',0,'2025-03-01',11,10010,1,10,45),(10012,'Lopez','Josie ','478-355-427','1987-01-14',0,'2025-03-01',12,10011,1,11,46),(10013,'Farala','Martha','329-034-366','1942-01-11',0,'2025-03-01',13,10011,1,12,47),(10014,'Martinez','Leila','877-110-749','1970-07-11',0,'2025-03-01',13,10011,1,12,48),(10015,'Romualdez','Fredrick ','023-079-009','1985-03-10',0,'2025-03-01',15,10002,1,13,49),(10016,'Mata','Christian','783-776-744','1987-10-21',0,'2025-03-21',7,10015,1,14,50),(10017,'De Leon','Selena ','975-432-139','1975-02-20',0,'2025-03-01',17,10015,1,14,51),(10018,'San Jose','Allison ','179-075-129','1986-06-24',0,'2025-03-01',18,10016,1,15,52),(10019,'Rosario','Cydney ','868-819-912','1996-10-06',0,'2025-03-01',18,10016,1,15,53),(10020,'Bautista','Mark ','683-725-348','1991-02-12',0,'2025-03-01',20,10016,1,15,54),(10021,'Lazaro','Darlene ','740-721-558','1985-11-25',0,'2025-03-01',20,10016,2,15,55),(10022,'Delos Santos','Kolby ','739-443-033','1980-02-26',0,'2025-03-01',13,10016,2,15,56),(10023,'Santos','Vella ','955-879-269','1983-12-31',0,'2025-03-01',18,10016,2,15,57),(10024,'Del Rosario','Tomas','882-550-989','1978-12-18',0,'2025-03-01',18,10016,2,15,58),(10025,'Tolentino','Jacklyn ','675-757-366','1984-05-19',0,'2025-03-01',13,10017,2,15,59),(10026,'Gutierrez','Percival ','512-899-876','1970-12-18',0,'2025-03-01',26,10017,2,15,60),(10027,'Manalaysay','Garfield ','948-628-136','1986-08-28',0,'2025-03-01',26,10017,2,15,61),(10028,'Villegas','Lizeth ','332-372-215','1981-12-12',0,'2025-03-01',13,10017,2,15,62),(10029,'Ramos','Carol ','250-700-389','1978-08-20',0,'2025-03-01',18,10017,2,15,63),(10030,'Maceda','Emelia ','973-358-041','1973-04-14',0,'2025-03-01',8,10017,2,15,64),(10031,'Aguilar','Delia ','529-705-439','1989-01-27',0,'2025-03-01',18,10017,2,15,65),(10032,'Castro','John Rafael1','332-424-955 ','1992-02-09',0,'2025-03-01',32,10004,1,16,66),(10033,'Martinez','Carlos Ian','078-854-208','1990-11-16',0,'2025-03-01',32,10004,1,17,67),(10034,'Santos','Beatriz','526-639-511','1990-08-07',0,'2025-03-01',5,10004,1,17,68);
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_block_delete_employee` BEFORE DELETE ON `employees` FOR EACH ROW BEGIN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Deleting employees is not allowed. Set is_deleted = 1 instead.';
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `gov_id`
@@ -652,8 +672,6 @@ CREATE TABLE `user_credentials` (
   `employee_id` int NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `role_id` int DEFAULT NULL,
-  `login_attempts` int DEFAULT '0',
-  `is_locked` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`employee_id`),
   KEY `fk_role_id` (`role_id`),
   CONSTRAINT `fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE,
@@ -669,7 +687,7 @@ CREATE TABLE `user_credentials` (
 
 LOCK TABLES `user_credentials` WRITE;
 /*!40000 ALTER TABLE `user_credentials` DISABLE KEYS */;
-INSERT INTO `user_credentials` VALUES (10001,'Garcia01',3,0,0),(10002,'Lim02',3,0,0),(10003,'Aquino03',3,0,0),(10004,'Reyes04',3,0,0),(10005,'Hernandez05',3,0,0),(10006,'Villanueva06',2,0,0),(10007,'San Jose07',2,0,0),(10008,'Romualdez08',1,0,0),(10009,'Atienza09',1,0,0),(10010,'Alvaro10',2,0,0),(10011,'Salcedo11',2,0,0),(10012,'Lopez12',2,0,0),(10013,'Farala13',2,0,0),(10014,'Martinez14',2,0,0),(10015,'Romualdez15',1,0,0),(10016,'Mata16',1,0,0),(10017,'De Leon17',1,0,0),(10018,'San Jose18',1,0,0),(10019,'Rosario19',1,0,0),(10020,'Bautista20',1,0,0),(10021,'Lazaro21',1,0,0),(10022,'Delos Santos22',1,0,0),(10023,'Santos23',1,0,0),(10024,'Del Rosario24',1,0,0),(10025,'Tolentino25',1,0,0),(10026,'Gutierrez26',1,0,0),(10027,'Manalaysay27',1,0,0),(10028,'Villegas28',1,0,0),(10029,'Ramos29',1,0,0),(10030,'Maceda30',1,0,0),(10031,'Aguilar31',1,0,0),(10032,'Castro32',1,0,0),(10033,'Martinez33',1,0,0),(10034,'Santos34',1,0,0);
+INSERT INTO `user_credentials` VALUES (10001,'Garcia01',3),(10002,'Lim02',3),(10003,'Aquino03',3),(10004,'Reyes04',3),(10005,'Hernandez05',3),(10006,'Villanueva06',2),(10007,'San Jose07',2),(10008,'Romualdez08',1),(10009,'Atienza09',1),(10010,'Alvaro10',2),(10011,'Salcedo11',2),(10012,'Lopez12',2),(10013,'Farala13',2),(10014,'Martinez14',2),(10015,'Romualdez15',1),(10016,'Mata16',1),(10017,'De Leon17',1),(10018,'San Jose18',1),(10019,'Rosario19',1),(10020,'Bautista20',1),(10021,'Lazaro21',1),(10022,'Delos Santos22',1),(10023,'Santos23',1),(10024,'Del Rosario24',1),(10025,'Tolentino25',1),(10026,'Gutierrez26',1),(10027,'Manalaysay27',1),(10028,'Villegas28',1),(10029,'Ramos29',1),(10030,'Maceda30',1),(10031,'Aguilar31',1),(10032,'Castro32',1),(10033,'Martinez33',1),(10034,'Santos34',1);
 /*!40000 ALTER TABLE `user_credentials` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -744,4 +762,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-05 15:21:19
+-- Dump completed on 2025-06-27 19:22:14

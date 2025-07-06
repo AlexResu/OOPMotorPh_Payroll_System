@@ -8,9 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.*;
-import alex.oopmotorphpayrollsystem.HRPersonnel;
-import alex.oopmotorphpayrollsystem.LeaveRequest;
-import alex.oopmotorphpayrollsystem.Payroll;
+import models.HRPersonnel;
+import models.LeaveRequest;
+import models.Payroll;
+import models.User;
 
 /**
  *
@@ -23,21 +24,27 @@ public class HRPersonneTest {
     void setUp() {
         hrPersonnel = new HRPersonnel();
     }
-    
+
     @Test
-    void testApproveLeaveRequest() {
+    void testProcessPayrollReturnsTrue() {
+        Date startDate = new Date();
+        Date endDate = new Date();
+        boolean result = hrPersonnel.processPayroll(startDate, endDate);
+        assertTrue(result, "Payroll should return true as default implementation.");
+    }
+
+    @Test
+    void testApproveLeaveSetsStatusAndApprover() {
         LeaveRequest leaveRequest = new LeaveRequest();
-        hrPersonnel.approveLeaveRequest(leaveRequest);
+        hrPersonnel.approveLeave(leaveRequest);
+
         assertEquals("APPROVED", leaveRequest.getLeaveStatus());
         assertEquals(hrPersonnel, leaveRequest.getApprovedBy());
     }
-    
+
     @Test
-    void testDeclineLeaveRequest() {
-        LeaveRequest leaveRequest = new LeaveRequest();
-        hrPersonnel.declineLeaveRequest(leaveRequest);
-        assertEquals("DECLINED", leaveRequest.getLeaveStatus());
-        assertEquals(hrPersonnel, leaveRequest.getApprovedBy());
+    void testHRPersonnelInheritsUser() {
+        assertTrue(hrPersonnel instanceof User, "HRPersonnel should be a subclass of User");
     }
 }
 

@@ -627,7 +627,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         newEmpSubmitButton.setBackground(new java.awt.Color(255, 255, 255));
         newEmpSubmitButton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         newEmpSubmitButton.setForeground(new java.awt.Color(0, 0, 255));
-        newEmpSubmitButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\send.png")); // NOI18N
+        newEmpSubmitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/send.png"))); // NOI18N
         newEmpSubmitButton.setText("Submit");
         newEmpSubmitButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         newEmpSubmitButton.setFocusPainted(false);
@@ -665,7 +665,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         newEmpCancelButton.setBackground(new java.awt.Color(255, 255, 255));
         newEmpCancelButton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         newEmpCancelButton.setForeground(new java.awt.Color(204, 0, 0));
-        newEmpCancelButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\x-button.png")); // NOI18N
+        newEmpCancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/x-button.png"))); // NOI18N
         newEmpCancelButton.setText("Cancel");
         newEmpCancelButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         newEmpCancelButton.setFocusPainted(false);
@@ -925,7 +925,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
 
         AddNewEmpGradientPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 62, 820, 500));
 
-        exitButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\MotorPhApp\\resources\\icons8-close-window-48.png")); // NOI18N
+        exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-close-window-48.png"))); // NOI18N
         exitButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

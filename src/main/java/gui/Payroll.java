@@ -232,7 +232,7 @@ public class Payroll extends javax.swing.JPanel {
         calculate.setBackground(new java.awt.Color(255, 255, 255));
         calculate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         calculate.setForeground(new java.awt.Color(0, 0, 204));
-        calculate.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\calculator.png")); // NOI18N
+        calculate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check.png"))); // NOI18N
         calculate.setText("Approve");
         calculate.setBorder(null);
         calculate.addActionListener(new java.awt.event.ActionListener() {

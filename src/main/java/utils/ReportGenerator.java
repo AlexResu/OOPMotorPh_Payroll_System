@@ -4,6 +4,7 @@
  */
 package utils;
 
+import java.io.InputStream;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 import java.sql.Connection;
@@ -17,7 +18,8 @@ public class ReportGenerator {
             Map<String, Object> parameters) {
         try {
             // Compile JRXML to Jasper file
-            JasperReport jasperReport = JasperCompileManager.compileReport(source);
+            InputStream reportStream = getClass().getClassLoader().getResourceAsStream(source);
+            JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
 
             // Fill the report
             JasperPrint jasperPrint = JasperFillManager.fillReport(

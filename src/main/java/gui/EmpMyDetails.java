@@ -518,7 +518,7 @@ public class EmpMyDetails extends javax.swing.JPanel {
         empSubmitButton.setBackground(new java.awt.Color(255, 255, 255));
         empSubmitButton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         empSubmitButton.setForeground(new java.awt.Color(0, 0, 255));
-        empSubmitButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\send.png")); // NOI18N
+        empSubmitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/send.png"))); // NOI18N
         empSubmitButton.setText("Submit");
         empSubmitButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         empSubmitButton.setFocusPainted(false);

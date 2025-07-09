@@ -181,7 +181,7 @@ public class SummaryReport extends javax.swing.JPanel {
         downloadSummary.setBackground(new java.awt.Color(255, 255, 255));
         downloadSummary.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         downloadSummary.setForeground(new java.awt.Color(0, 0, 204));
-        downloadSummary.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\download (1).png")); // NOI18N
+        downloadSummary.setIcon(new javax.swing.ImageIcon(getClass().getResource("/download (1).png"))); // NOI18N
         downloadSummary.setText("Download Summary Report");
         downloadSummary.setBorder(null);
         downloadSummary.addActionListener(new java.awt.event.ActionListener() {
@@ -215,7 +215,7 @@ public class SummaryReport extends javax.swing.JPanel {
 
         search.setBackground(new java.awt.Color(255, 255, 255));
         search.setForeground(new java.awt.Color(255, 255, 255));
-        search.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\searchIcon.png")); // NOI18N
+        search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/searchIcon.png"))); // NOI18N
         search.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         search.setFocusPainted(false);
         search.addActionListener(new java.awt.event.ActionListener() {
@@ -263,7 +263,7 @@ public class SummaryReport extends javax.swing.JPanel {
         try (Connection conn = DbConnection.getConnection()) {
             ReportGenerator generator = new ReportGenerator();
 
-            String source = "resources/Reports/PayrollSummaryReport.jrxml";
+            String source = "Reports/PayrollSummaryReport.jrxml";
 
             // Output PDF path
             String userHome = System.getProperty("user.home");

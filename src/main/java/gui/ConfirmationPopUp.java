@@ -62,7 +62,7 @@ public class ConfirmationPopUp extends javax.swing.JFrame {
         deletePopup.setBackground(new java.awt.Color(255, 255, 255));
         deletePopup.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        deleteIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\MotorPhApp\\resources\\icons8-warning-48.png")); // NOI18N
+        deleteIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-warning-48.png"))); // NOI18N
         deletePopup.add(deleteIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 70, 70));
 
         deleteEmp.setBackground(new java.awt.Color(255, 255, 255));

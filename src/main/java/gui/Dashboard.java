@@ -169,7 +169,7 @@ public class Dashboard extends javax.swing.JPanel {
         jLabel2.setText("05:04 PM");
         kGradientPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 90, 40));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\timetable.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/timetable.png"))); // NOI18N
         kGradientPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 80, 90));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -183,7 +183,7 @@ public class Dashboard extends javax.swing.JPanel {
         kGradientPanel2.setkStartColor(new java.awt.Color(153, 0, 255));
         kGradientPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\group.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/group.png"))); // NOI18N
         kGradientPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 80, -1));
 
         jLabel3.setFont(new java.awt.Font("SimSun-ExtB", 1, 48)); // NOI18N
@@ -207,7 +207,7 @@ public class Dashboard extends javax.swing.JPanel {
         jLabel7.setText("New Employee");
         kGradientPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 150, 40));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\new-employee.png")); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new-employee.png"))); // NOI18N
         kGradientPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 90, 60));
 
         jLabel9.setFont(new java.awt.Font("SimSun-ExtB", 1, 48)); // NOI18N
@@ -217,7 +217,7 @@ public class Dashboard extends javax.swing.JPanel {
 
         add(kGradientPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 210, 220, 140));
 
-        empPhoto.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\MotorPhApp\\resources\\Employee Icon.png")); // NOI18N
+        empPhoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Employee Icon.png"))); // NOI18N
         empPhoto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         add(empPhoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 6, -1, 120));
 

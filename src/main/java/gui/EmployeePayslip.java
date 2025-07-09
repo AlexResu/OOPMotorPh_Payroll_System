@@ -359,7 +359,7 @@ public class EmployeePayslip extends javax.swing.JPanel {
         heading.setkStartColor(new java.awt.Color(0, 0, 204));
         heading.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        logo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\OPPORTUNITIES (8).png")); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/OPPORTUNITIES (8).png"))); // NOI18N
         heading.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 280, 70));
 
         employeePayslipPanel.add(heading, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 80));
@@ -713,7 +713,7 @@ public class EmployeePayslip extends javax.swing.JPanel {
         generate.setBackground(new java.awt.Color(255, 255, 255));
         generate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         generate.setForeground(new java.awt.Color(0, 0, 204));
-        generate.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\icons8-search-48.png")); // NOI18N
+        generate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/searchIcon.png"))); // NOI18N
         generate.setText("Search");
         generate.setBorder(null);
         generate.addActionListener(new java.awt.event.ActionListener() {
@@ -742,7 +742,7 @@ public class EmployeePayslip extends javax.swing.JPanel {
         download.setBackground(new java.awt.Color(255, 255, 255));
         download.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         download.setForeground(new java.awt.Color(0, 0, 204));
-        download.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\download (1).png")); // NOI18N
+        download.setIcon(new javax.swing.ImageIcon(getClass().getResource("/download (1).png"))); // NOI18N
         download.setText("Download");
         download.setBorder(null);
         download.setEnabled(false);
@@ -751,7 +751,7 @@ public class EmployeePayslip extends javax.swing.JPanel {
                 downloadActionPerformed(evt);
             }
         });
-        add(download, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 120, 40));
+        add(download, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 120, 50));
 
         noDataLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         noDataLabel.setForeground(new java.awt.Color(204, 0, 0));
@@ -771,7 +771,7 @@ public class EmployeePayslip extends javax.swing.JPanel {
         try (Connection conn = DbConnection.getConnection()) {
             ReportGenerator generator = new ReportGenerator();
 
-            String source = "resources/Reports/EmployeePayslipReport.jrxml";
+            String source = "Reports/EmployeePayslipReport.jrxml";
 
             // Output PDF path
             String userHome = System.getProperty("user.home");

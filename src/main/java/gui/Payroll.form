@@ -316,7 +316,7 @@
           <Color blue="cc" green="0" red="0" type="rgb"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Alex Resurreccion\Documents\NetBeansProjects\OOPMotorPhPayrollSystem\resources\calculator.png"/>
+          <Image iconType="3" name="/check.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Approve"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

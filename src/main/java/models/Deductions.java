@@ -97,7 +97,7 @@ public class Deductions {
     private void calculateSssDeduction(double basicSalary) {
         try{
             // Open the file containing SSS contribution data
-            File myObj = new File("resources/SSS Contribution.csv");
+            File myObj = new File(getClass().getClassLoader().getResource("SSS Contribution.csv").toURI());
             ArrayList<Double> amountDeduction;
             ArrayList<Double> salaryTable;
             // Initialize arrays to store salary table and corresponding deduction amounts
@@ -132,6 +132,8 @@ public class Deductions {
 //            }
              // Throw FileNotFoundException if the file is not found
         } catch(FileNotFoundException e) {
+            System.out.println(e);
+        } catch(Exception e){
             System.out.println(e);
         }
     }

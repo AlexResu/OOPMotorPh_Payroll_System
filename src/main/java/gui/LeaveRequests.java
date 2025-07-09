@@ -129,7 +129,7 @@ public class LeaveRequests extends javax.swing.JPanel {
         approve.setBackground(new java.awt.Color(255, 255, 255));
         approve.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         approve.setForeground(new java.awt.Color(0, 102, 0));
-        approve.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\check.png")); // NOI18N
+        approve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check.png"))); // NOI18N
         approve.setText("Approve");
         approve.setBorder(null);
         approve.setFocusPainted(false);
@@ -143,7 +143,7 @@ public class LeaveRequests extends javax.swing.JPanel {
         decline.setBackground(new java.awt.Color(255, 255, 255));
         decline.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         decline.setForeground(new java.awt.Color(153, 0, 0));
-        decline.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\remove.png")); // NOI18N
+        decline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/x-button.png"))); // NOI18N
         decline.setText("Decline");
         decline.setBorder(null);
         decline.setFocusPainted(false);

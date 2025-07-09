@@ -65,7 +65,7 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Alex Resurreccion\Documents\NetBeansProjects\OOPMotorPhPayrollSystem\resources\searchIcon.png"/>
+          <Image iconType="3" name="/searchIcon.png"/>
         </Property>
         <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
@@ -85,6 +85,9 @@
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/icons8-add-48.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Add new employee"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

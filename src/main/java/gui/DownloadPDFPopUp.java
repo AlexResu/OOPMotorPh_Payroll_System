@@ -52,7 +52,7 @@ public class DownloadPDFPopUp extends javax.swing.JFrame {
         deletePopup.setBackground(new java.awt.Color(255, 255, 255));
         deletePopup.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        deleteIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\download (1).png")); // NOI18N
+        deleteIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/download (1).png"))); // NOI18N
         deletePopup.add(deleteIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, 50));
 
         deleteEmp.setBackground(new java.awt.Color(255, 255, 255));

@@ -180,7 +180,7 @@ public class HomePagePanel extends javax.swing.JPanel {
         empHomePage.setPreferredSize(new java.awt.Dimension(860, 590));
         empHomePage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        empPhoto.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\MotorPhApp\\resources\\Employee Icon.png")); // NOI18N
+        empPhoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Employee Icon.png"))); // NOI18N
         empPhoto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         empHomePage.add(empPhoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 6, -1, 120));
 

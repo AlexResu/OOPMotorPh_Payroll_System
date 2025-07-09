@@ -182,7 +182,7 @@ AND payslip_no = $P{payslip_no}
 			<text><![CDATA[MotorPH]]></text>
 		</element>
 		<element kind="image" uuid="b013c6ef-d282-4356-a05c-bcc1b90e41da" x="30" y="0" width="125" height="79">
-			<expression><![CDATA["C:/Users/Alex Resurreccion/Documents/NetBeansProjects/OOPMotorPhPayrollSystem/resources/LogoPayslip.png"]]></expression>
+			<expression><![CDATA["LogoPayslip.png"]]></expression>
 			<box>
 				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

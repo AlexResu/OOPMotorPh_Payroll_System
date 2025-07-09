@@ -67,7 +67,7 @@ public class LoginGui extends javax.swing.JFrame {
         });
 
         motorPhLogo.setBackground(new java.awt.Color(255, 153, 255));
-        motorPhLogo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\OPPORTUNITIES (5).png")); // NOI18N
+        motorPhLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/OPPORTUNITIES (5).png"))); // NOI18N
         motorPhLogo.setMaximumSize(new java.awt.Dimension(74, 10));
 
         logInFieldPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -82,11 +82,9 @@ public class LoginGui extends javax.swing.JFrame {
         });
 
         userID.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        userID.setForeground(new java.awt.Color(0, 0, 0));
         userID.setText("User ID");
 
         password.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        password.setForeground(new java.awt.Color(0, 0, 0));
         password.setText("Password");
 
         login.setFont(new java.awt.Font("Cambria", 1, 36)); // NOI18N
@@ -176,7 +174,6 @@ public class LoginGui extends javax.swing.JFrame {
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        closeWindowLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\MotorPhApp\\resources\\icons8-close-window-48.png")); // NOI18N
         closeWindowLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         closeWindowLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -193,23 +190,22 @@ public class LoginGui extends javax.swing.JFrame {
         loginPageLayout.setHorizontalGroup(
             loginPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginPageLayout.createSequentialGroup()
-                .addGroup(loginPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPageLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(closeWindowLabel))
-                    .addGroup(loginPageLayout.createSequentialGroup()
-                        .addGap(406, 406, 406)
-                        .addComponent(motorPhLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 408, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(loginPageLayout.createSequentialGroup()
                 .addGap(471, 471, 471)
                 .addComponent(motorPhLabel)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPageLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 375, Short.MAX_VALUE)
                 .addComponent(logInFieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(362, 362, 362))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPageLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(loginPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPageLayout.createSequentialGroup()
+                        .addComponent(closeWindowLabel)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPageLayout.createSequentialGroup()
+                        .addComponent(motorPhLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(399, 399, 399))))
         );
         loginPageLayout.setVerticalGroup(
             loginPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

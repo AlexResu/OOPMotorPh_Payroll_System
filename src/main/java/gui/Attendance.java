@@ -188,7 +188,7 @@ public class Attendance extends javax.swing.JPanel {
 
         EmpAttendanceSearch.setBackground(new java.awt.Color(255, 255, 255));
         EmpAttendanceSearch.setForeground(new java.awt.Color(255, 255, 255));
-        EmpAttendanceSearch.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\searchIcon.png")); // NOI18N
+        EmpAttendanceSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/searchIcon.png"))); // NOI18N
         EmpAttendanceSearch.setFocusPainted(false);
         EmpAttendanceSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

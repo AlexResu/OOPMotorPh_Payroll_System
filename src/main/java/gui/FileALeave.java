@@ -205,21 +205,21 @@ public class FileALeave extends javax.swing.JFrame {
         kGradientPanel1.setkStartColor(new java.awt.Color(153, 0, 204));
         kGradientPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel15.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\OOPMotorPhPayrollSystem\\resources\\OPPORTUNITIES (5) - Copy.png")); // NOI18N
-        kGradientPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 190, 100));
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MotorPhLogo 5.png"))); // NOI18N
+        kGradientPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 90));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setText("LEAVE REQUEST FORM");
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        kGradientPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 340, 72));
+        kGradientPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 340, 72));
 
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("The company can use this form for the employeees to fill for leave.");
         kGradientPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 600, -1, -1));
 
-        jLabel27.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alex Resurreccion\\Documents\\NetBeansProjects\\MotorPhApp\\resources\\icons8-close-window-48.png")); // NOI18N
+        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-close-window-48.png"))); // NOI18N
         jLabel27.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel27.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

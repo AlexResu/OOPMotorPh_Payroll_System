@@ -113,7 +113,7 @@ Phone: (028) 911-5071 / (028) 911-5072 / (028) 911-5073
 Email: corporate@motorph.com]]></text>
 		</element>
 		<element kind="image" uuid="6b86d5b8-b71f-4d4e-b52b-bb5ba3077d78" x="-10" y="0" width="110" height="90">
-			<expression><![CDATA["C:/Users/Alex Resurreccion/Documents/NetBeansProjects/OOPMotorPhPayrollSystem/resources/MotorPhLogo6.png"]]></expression>
+			<expression><![CDATA["MotorPhLogo6.png"]]></expression>
 			<box>
 				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

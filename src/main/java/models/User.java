@@ -16,6 +16,9 @@ import java.util.Date;
  * @author Alex Resurreccion
  */
 public abstract class User {
+    private String status;
+    private int immediateSupervisor;
+    private Benefits benefits; // Composition: Employee "HAS-A" Benefits
     protected int employeeID;
     protected String password;
     protected String role;
@@ -44,6 +47,20 @@ public abstract class User {
     }
     
     // Encapsulation - Getters and Setters
+    
+    public String getStatus() {
+    return status;
+    }
+    
+    public int getImmediateSupervisor() {
+        return immediateSupervisor;
+    }
+    
+    // Benefits management: Getter and Setter methods
+    public Benefits getBenefits() {
+        return benefits;
+    }
+    
     public int getEmployeeID() {
         return employeeID;
     }
@@ -91,6 +108,14 @@ public abstract class User {
     
     public Address getAddress() {
         return address;
+    }
+       
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    public void setImmediateSupervisor(int immediateSupervisor) {
+        this.immediateSupervisor = immediateSupervisor;
     }
     
     public void setDateHired(Date dateHired) {
@@ -147,5 +172,66 @@ public abstract class User {
 
     public void setStreet(String text) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+       // Methods to fetch individual benefit components like salary, allowances
+    public double getBenefitsBasicSalary(){
+        return this.benefits.getBasicSalary();
+    }
+    
+    public double getBenefitsGrossSemiMonthlyRate() {
+        return this.benefits.getGrossSemiMonthlyRate();
+    }
+    
+    public double getBenefitsHourlyRate() {
+        return this.benefits.getHourlyRate();
+    }
+    
+    public double getBenefitsRiceSubsidy() {
+        return this.benefits.getRiceSubsidy();
+    }
+    
+    public double getBenefitsPhoneAllowance() {
+        return this.benefits.getPhoneAllowance();
+    }
+    
+    public double getBenefitsClothingAllowance() {
+        return this.benefits.getClothingAllowance();
+    }
+    
+    public void setBenefits(Benefits benefit){
+        this.benefits = benefit;
+    }
+    
+    // Setters for individual benefit components
+    public void setBenefitsBasicSalary(double basicSalary) {
+        this.benefits.setBasicSalary(basicSalary);
+    }
+    
+    public void setBenefitsGrossSemiMonthlyRate(double grossSemiMonthlyRate) {
+        this.benefits.setGrossSemiMonthlyRate(grossSemiMonthlyRate);
+    }
+    
+    public void setBenefitsHourlyRate(double hourlyRate) {
+        this.benefits.setHourlyRate(hourlyRate);
+    }
+    
+    public void setBenefitsRiceSubsidy(double riceSubsidy) {
+        this.benefits.setRiceSubsidy(riceSubsidy);
+    }
+    
+    public void setBenefitsPhoneAllowance(double phoneAllowance) {
+        this.benefits.setPhoneAllowance(phoneAllowance);
+    }
+    
+    public void setBenefitsClothingAllowance(double clothingAllowance) {
+        this.benefits.setClothingAllowance(clothingAllowance);
+    }
+    
+    // Calculate the total benefits provided to the employee
+    public double calculateTotalBenefits(){
+        return this.benefits.getClothingAllowance() + 
+                this.benefits.getPhoneAllowance() + 
+                this.benefits.getRiceSubsidy();
     }
 } 

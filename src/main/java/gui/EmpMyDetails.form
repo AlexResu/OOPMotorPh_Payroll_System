@@ -77,7 +77,6 @@
                     </LineBorder>
                   </Border>
                 </Property>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="empImmediateSupValueActionPerformed"/>
@@ -336,7 +335,6 @@
                     </LineBorder>
                   </Border>
                 </Property>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="empDateHiredValueActionPerformed"/>
@@ -712,7 +710,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="0" red="0" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Benefits"/>
+                <Property name="text" type="java.lang.String" value="Government ID"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1145,7 +1143,6 @@
                     <StringItem index="2" value="Employee"/>
                   </StringArray>
                 </Property>
-                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="lightWeightPopupEnabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -1176,7 +1173,6 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="dateFormatString" type="java.lang.String" value="MM/dd/yyyy"/>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

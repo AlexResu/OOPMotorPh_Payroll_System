@@ -69,7 +69,7 @@ public class DownloadPDFPopUp extends javax.swing.JFrame {
 
         messagePrompt.setBackground(new java.awt.Color(255, 255, 255));
         messagePrompt.setForeground(new java.awt.Color(0, 0, 255));
-        messagePrompt.setText("Successfully saved. Automatically closing in 3 seconds.");
+        messagePrompt.setText("Successfully saved. Automatically closing in 5 seconds.");
         deletePopup.add(messagePrompt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 350, 40));
 
         confirmation1.setBackground(new java.awt.Color(255, 255, 255));
@@ -135,13 +135,13 @@ public class DownloadPDFPopUp extends javax.swing.JFrame {
         } else {
             deleteEmp.setText("Download failed!");
             messagePrompt.setText(
-                    "Something went wrong. Automatically closing in 3 seconds.");
+                    "Something went wrong. Automatically closing in 5 seconds.");
             messagePrompt.setVisible(true);
         }
         revalidate();
         repaint();
         
-        Timer timer = new Timer(3000, e -> dispose());
+        Timer timer = new Timer(5000, e -> dispose());
         timer.setRepeats(false);
         timer.start();
     }

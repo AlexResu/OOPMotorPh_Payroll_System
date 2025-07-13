@@ -9,9 +9,14 @@ import models.Address;
 import models.Employee;
 import models.Benefits;
 import dao.EmployeeDao;
+import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.JComboBox;
 import javax.swing.JScrollBar;
+import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.plaf.basic.BasicComboPopup;
+import javax.swing.plaf.basic.ComboPopup;
 
 /**
  *
@@ -172,7 +177,6 @@ public class EmpMyDetails extends javax.swing.JPanel {
         empImmediateSupValue.setForeground(new java.awt.Color(0, 0, 0));
         empImmediateSupValue.setToolTipText("");
         empImmediateSupValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        empImmediateSupValue.setEnabled(false);
         empImmediateSupValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 empImmediateSupValueActionPerformed(evt);
@@ -258,7 +262,6 @@ public class EmpMyDetails extends javax.swing.JPanel {
         empDateHiredValue.setBackground(new java.awt.Color(227, 227, 227));
         empDateHiredValue.setForeground(new java.awt.Color(0, 0, 0));
         empDateHiredValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        empDateHiredValue.setEnabled(false);
         empDateHiredValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 empDateHiredValueActionPerformed(evt);
@@ -389,7 +392,7 @@ public class EmpMyDetails extends javax.swing.JPanel {
 
         empBenefits.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         empBenefits.setForeground(new java.awt.Color(0, 0, 204));
-        empBenefits.setText("Benefits");
+        empBenefits.setText("Government ID");
         jPanel3.add(empBenefits, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 1030, 90, 30));
 
         empPhilhealth.setBackground(new java.awt.Color(255, 255, 255));
@@ -538,7 +541,6 @@ public class EmpMyDetails extends javax.swing.JPanel {
         empRoleValue.setBackground(new java.awt.Color(227, 227, 227));
         empRoleValue.setForeground(new java.awt.Color(0, 0, 0));
         empRoleValue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "System Administrator", "HR Personnel", "Employee" }));
-        empRoleValue.setEnabled(false);
         empRoleValue.setLightWeightPopupEnabled(false);
         empRoleValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -551,7 +553,6 @@ public class EmpMyDetails extends javax.swing.JPanel {
         empBirthValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         empBirthValue.setForeground(new java.awt.Color(0, 0, 0));
         empBirthValue.setDateFormatString("MM/dd/yyyy");
-        empBirthValue.setEnabled(false);
         jPanel3.add(empBirthValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 190, 30));
 
         empSuccessUpdated.setFont(new java.awt.Font("Arial", 3, 12)); // NOI18N
@@ -790,7 +791,20 @@ public class EmpMyDetails extends javax.swing.JPanel {
     }//GEN-LAST:event_empSubmitButtonActionPerformed
 
     private void empRoleValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empRoleValueActionPerformed
-        // TODO add your handling code here:
+        empRoleValue.setEditable(false);
+        empRoleValue.setFocusable(false); // optional: avoid focus highlight
+
+        empRoleValue.setUI(new BasicComboBoxUI() {
+            @Override
+            protected ComboPopup createPopup() {
+                return new BasicComboPopup((JComboBox)empRoleValue) {
+                    @Override
+                    public void show() {
+                        // Do nothing: prevent the popup from showing
+                    }
+                };
+            }
+        });
     }//GEN-LAST:event_empRoleValueActionPerformed
 
     private void empPhoneNumValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empPhoneNumValueActionPerformed

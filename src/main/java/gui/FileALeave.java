@@ -217,7 +217,7 @@ public class FileALeave extends javax.swing.JFrame {
 
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("The company can use this form for the employeees to fill for leave.");
-        kGradientPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 600, -1, -1));
+        kGradientPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 600, -1, 30));
 
         jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-close-window-48.png"))); // NOI18N
         jLabel27.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -395,7 +395,7 @@ public class FileALeave extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 255));
         jLabel3.setText("Successfully leave request submitted");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 600, 420, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 600, 350, -1));
         jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 650, 10));
 
         days.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
@@ -464,7 +464,7 @@ public class FileALeave extends javax.swing.JFrame {
             return;
         } else {
             jLabel3.setVisible(true);
-            jLabel3.setText("Sending leave request to HR for approval");
+            jLabel3.setText("Sending leave request to HR for approval. Please wait...");
         }
         
         EmployeeDao employeeDao = new EmployeeDao();

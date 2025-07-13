@@ -41,185 +41,100 @@ public class SystemAdministratorDao {
     
     // Add a new employee to the system.
     public boolean addNewEmployee(User employee) {
-        boolean result;
-        if(employee instanceof Employee){
-            int rowsAffected = 0, empNum = 0;
-            try {
-                boolean initialCommit  = connection.getAutoCommit();
-                connection.setAutoCommit(false); // Transaction start
+        int rowsAffected = 0;
+        try {
+            boolean initialCommit  = connection.getAutoCommit();
+            connection.setAutoCommit(false); // Transaction start
 
-                // 1. Insert into address
-                String addressQuery = "INSERT INTO address (street, barangay, city, province, zipcode) VALUES (?, ?, ?, ?, ?)";
-                PreparedStatement psAddress = connection.prepareStatement(addressQuery, Statement.RETURN_GENERATED_KEYS);
-                psAddress.setString(1, employee.getAddress().getStreet());
-                psAddress.setString(2, employee.getAddress().getBarangay());
-                psAddress.setString(3, employee.getAddress().getCity());
-                psAddress.setString(4, employee.getAddress().getProvince());
-                psAddress.setString(5, employee.getAddress().getZipcode());
-                psAddress.executeUpdate();
+            // 1. Insert into address
+            String addressQuery = "INSERT INTO address (street, barangay, city, province, zipcode) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement psAddress = connection.prepareStatement(addressQuery, Statement.RETURN_GENERATED_KEYS);
+            psAddress.setString(1, employee.getAddress().getStreet());
+            psAddress.setString(2, employee.getAddress().getBarangay());
+            psAddress.setString(3, employee.getAddress().getCity());
+            psAddress.setString(4, employee.getAddress().getProvince());
+            psAddress.setString(5, employee.getAddress().getZipcode());
+            System.out.println("Executing Employee Update: " + psAddress);
+            psAddress.executeUpdate();
 
-                ResultSet rsAddress = psAddress.getGeneratedKeys();
-                int addressId = 0;
-                if (rsAddress.next()) {
-                    addressId = rsAddress.getInt(1);
-                }
-
-                // 2. Insert into salary
-                String salaryQuery = "INSERT INTO salary (basic_salary, gross_semi_monthly_rate, hourly_rate, effective_date) VALUES (?, ?, ?, CURDATE())";
-                PreparedStatement psSalary = connection.prepareStatement(salaryQuery, Statement.RETURN_GENERATED_KEYS);
-                Benefits benefit = ((Employee) employee).getBenefits();
-                psSalary.setDouble(1, benefit.getBasicSalary());
-                psSalary.setDouble(2, benefit.getGrossSemiMonthlyRate());
-                psSalary.setDouble(3, benefit.getHourlyRate());
-                psSalary.executeUpdate();
-
-                ResultSet rsSalary = psSalary.getGeneratedKeys();
-                int salaryId = 0;
-                if (rsSalary.next()) {
-                    salaryId = rsSalary.getInt(1);
-                }
-
-                // 3. Insert into employees
-                String empQuery = "INSERT INTO employees (last_name, first_name, phone_number, birthdate, is_deleted, date_hired, salary_id, supervisor_id, status_id, position_id, address_id) VALUES (?, ?, ?, ?, 0, CURDATE(), ?, ?, ?, ?, ?)";
-                PreparedStatement psEmp = connection.prepareStatement(empQuery, Statement.RETURN_GENERATED_KEYS);
-                psEmp.setString(1, employee.getLastName());
-                psEmp.setString(2, employee.getFirstName());
-                psEmp.setString(3, employee.getPhoneNumber());
-                psEmp.setDate(4, new java.sql.Date(employee.getBirthday().getTime()));
-                psEmp.setInt(5, salaryId);
-                psEmp.setObject(6, ((Employee) employee).getImmediateSupervisor(), java.sql.Types.INTEGER);
-                psEmp.setInt(7, getStatusId(((Employee) employee).getStatus()));
-                psEmp.setInt(8, getPositionId(employee.getPosition()));
-                psEmp.setInt(9, addressId);
-                psEmp.executeUpdate();
-
-                ResultSet rsEmp = psEmp.getGeneratedKeys();
-                int employeeId = 0;
-                if (rsEmp.next()) {
-                    employeeId = rsEmp.getInt(1);
-                }
-
-                // 4. Insert into gov_id
-                String govQuery = "INSERT INTO gov_id (sss_num, tin, philhealth, pagibig, employee_id) VALUES (?, ?, ?, ?, ?)";
-                PreparedStatement psGov = connection.prepareStatement(govQuery);
-                psGov.setString(1, employee.getSssNumber());
-                psGov.setString(2, employee.getTinNumber());
-                psGov.setString(3, employee.getPhilhealthNumber());
-                psGov.setString(4, employee.getPagibigNumber());
-                psGov.setInt(5, employeeId);
-                psGov.executeUpdate();
-
-                // 5. Insert into user_credentials
-                String credQuery = "INSERT INTO user_credentials (employee_id, password, role_id) VALUES (?, ?, ?)";
-                PreparedStatement psCred = connection.prepareStatement(credQuery);
-                psCred.setInt(1, employeeId);
-                psCred.setString(2, employee.getLastName() + "123");
-                psCred.setInt(3, 1); // default role_id
-                rowsAffected = psCred.executeUpdate();
-
-                if(initialCommit){
-                    connection.commit(); // Commit if all succeeded
-                    connection.setAutoCommit(initialCommit);
-                }
-            } catch (SQLException e) {
-                System.err.println("Error while executing SQL query!");
-                e.printStackTrace();
-                try {
-                    connection.rollback(); // Rollback if error
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+            ResultSet rsAddress = psAddress.getGeneratedKeys();
+            int addressId = 0;
+            if (rsAddress.next()) {
+                addressId = rsAddress.getInt(1);
             }
 
-            return rowsAffected == 1;
-        } else {
-            int rowsAffected = 0, empNum = 0;
+            // 2. Insert into salary
+            String salaryQuery = "INSERT INTO salary (basic_salary, gross_semi_monthly_rate, hourly_rate, effective_date) VALUES (?, ?, ?, CURDATE())";
+            PreparedStatement psSalary = connection.prepareStatement(salaryQuery, Statement.RETURN_GENERATED_KEYS);
+            Benefits benefit = employee.getBenefits();
+            psSalary.setDouble(1, benefit.getBasicSalary());
+            psSalary.setDouble(2, benefit.getGrossSemiMonthlyRate());
+            psSalary.setDouble(3, benefit.getHourlyRate());
+            System.out.println("Executing Employee Update: " + psSalary);
+            psSalary.executeUpdate();
+
+            ResultSet rsSalary = psSalary.getGeneratedKeys();
+            int salaryId = 0;
+            if (rsSalary.next()) {
+                salaryId = rsSalary.getInt(1);
+            }
+
+            // 3. Insert into employees
+            String empQuery = "INSERT INTO employees (last_name, first_name, phone_number, birthdate, is_deleted, date_hired, salary_id, supervisor_id, status_id, position_id, address_id) VALUES (?, ?, ?, ?, 0, CURDATE(), ?, ?, ?, ?, ?)";
+            PreparedStatement psEmp = connection.prepareStatement(empQuery, Statement.RETURN_GENERATED_KEYS);
+            psEmp.setString(1, employee.getLastName());
+            psEmp.setString(2, employee.getFirstName());
+            psEmp.setString(3, employee.getPhoneNumber());
+            psEmp.setDate(4, new java.sql.Date(employee.getBirthday().getTime()));
+            psEmp.setInt(5, salaryId);
+            psEmp.setObject(6, employee.getImmediateSupervisor(), java.sql.Types.INTEGER);
+            psEmp.setInt(7, getStatusId(employee.getStatus()));
+            psEmp.setInt(8, getPositionId(employee.getPosition()));
+            psEmp.setInt(9, addressId);
+            System.out.println("Executing Employee Update: " + psEmp);
+            psEmp.executeUpdate();
+
+            ResultSet rsEmp = psEmp.getGeneratedKeys();
+            int employeeId = 0;
+            if (rsEmp.next()) {
+                employeeId = rsEmp.getInt(1);
+            }
+
+            // 4. Insert into gov_id
+            String govQuery = "INSERT INTO gov_id (sss_num, tin, philhealth, pagibig, employee_id) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement psGov = connection.prepareStatement(govQuery);
+            psGov.setString(1, employee.getSssNumber());
+            psGov.setString(2, employee.getTinNumber());
+            psGov.setString(3, employee.getPhilhealthNumber());
+            psGov.setString(4, employee.getPagibigNumber());
+            psGov.setInt(5, employeeId);
+            System.out.println("Executing Employee Update: " + psGov);
+            psGov.executeUpdate();
+
+            // 5. Insert into user_credentials
+            String credQuery = "INSERT INTO user_credentials (employee_id, password, role_id) VALUES (?, ?, ?)";
+            PreparedStatement psCred = connection.prepareStatement(credQuery);
+            psCred.setInt(1, employeeId);
+            psCred.setString(2, employee.getLastName() + "123");
+            psCred.setInt(3, 1); // default role_id
+            System.out.println("Executing Employee Update: " + psCred);
+            rowsAffected = psCred.executeUpdate();
+
+            if(initialCommit){
+                connection.commit(); // Commit if all succeeded
+                connection.setAutoCommit(initialCommit);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error while executing SQL query!");
+            e.printStackTrace();
             try {
-                boolean initialCommit  = connection.getAutoCommit();
-                connection.setAutoCommit(false); // Transaction start
-
-                // 1. Insert into address
-                String addressQuery = "INSERT INTO address (street, barangay, city, province, zipcode) VALUES (?, ?, ?, ?, ?)";
-                PreparedStatement psAddress = connection.prepareStatement(addressQuery, Statement.RETURN_GENERATED_KEYS);
-                psAddress.setString(1, employee.getAddress().getStreet());
-                psAddress.setString(2, employee.getAddress().getBarangay());
-                psAddress.setString(3, employee.getAddress().getCity());
-                psAddress.setString(4, employee.getAddress().getProvince());
-                psAddress.setString(5, employee.getAddress().getZipcode());
-                psAddress.executeUpdate();
-
-                ResultSet rsAddress = psAddress.getGeneratedKeys();
-                int addressId = 0;
-                if (rsAddress.next()) {
-                    addressId = rsAddress.getInt(1);
-                }
-                
-                // 3. Insert into employees
-                String empQuery = "INSERT INTO employees ("
-                        + "last_name, first_name, phone_number, birthdate, "
-                        + "is_deleted, date_hired, "
-                        + "position_id, address_id) VALUES (?, ?, ?, ?, 0, CURDATE(), ?, ?)";
-                PreparedStatement psEmp = connection.prepareStatement(empQuery, Statement.RETURN_GENERATED_KEYS);
-                psEmp.setString(1, employee.getLastName());
-                psEmp.setString(2, employee.getFirstName());
-                psEmp.setString(3, employee.getPhoneNumber());
-                psEmp.setDate(4, new java.sql.Date(employee.getBirthday().getTime()));
-//                psEmp.setObject(6, ((Employee) employee).getImmediateSupervisor(), java.sql.Types.INTEGER);
-//                psEmp.setInt(7, getStatusId(((Employee) employee).getStatus()));
-                psEmp.setInt(5, getPositionId(employee.getPosition()));
-                psEmp.setInt(6, addressId);
-                psEmp.executeUpdate();
-
-                ResultSet rsEmp = psEmp.getGeneratedKeys();
-                int employeeId = 0;
-                if (rsEmp.next()) {
-                    employeeId = rsEmp.getInt(1);
-                }
-
-                // 4. Insert into gov_id
-                String govQuery = "INSERT INTO gov_id (sss_num, tin, philhealth, pagibig, employee_id) VALUES (?, ?, ?, ?, ?)";
-                PreparedStatement psGov = connection.prepareStatement(govQuery);
-                psGov.setString(1, employee.getSssNumber());
-                psGov.setString(2, employee.getTinNumber());
-                psGov.setString(3, employee.getPhilhealthNumber());
-                psGov.setString(4, employee.getPagibigNumber());
-                psGov.setInt(5, employeeId);
-                psGov.executeUpdate();
-
-                // 5. Insert into user_credentials
-                int role_id = (employee instanceof HRPersonnel) ? 2 : 3;
-                String credQuery = "INSERT INTO user_credentials (employee_id, password, role_id) VALUES (?, ?, ?)";
-                PreparedStatement psCred = connection.prepareStatement(credQuery);
-                psCred.setInt(1, employeeId);
-                psCred.setString(2, employee.getLastName() + "123");
-                psCred.setInt(3, role_id);
-                rowsAffected = psCred.executeUpdate();
-
-                if(initialCommit){
-                    connection.commit(); // Commit if all succeeded
-                    connection.setAutoCommit(initialCommit);
-                }
-                return rowsAffected == 1;
-            } catch (SQLException e) {
-                System.err.println("Error while executing SQL query!");
-                System.out.println("SQL Error Message: " + e.getMessage());
-                e.printStackTrace();
-                try {
-                    connection.rollback(); // Rollback if error
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                connection.rollback(); // Rollback if error
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
         }
-        return false;
-    }
-    
-    private Integer getSupervisorId(String name) throws SQLException {
-        String query = "SELECT employee_id FROM employees WHERE first_name = ? AND is_deleted = 0";
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1, name);
-        ResultSet rs = ps.executeQuery();
-        return rs.next() ? rs.getInt("employee_id") : null;
+
+        return rowsAffected == 1;
     }
     
     private int getStatusId(String statusName) throws SQLException {
@@ -238,6 +153,22 @@ public class SystemAdministratorDao {
         return rs.next() ? rs.getInt("position_id") : 0;
     }
     
+    private int getEmployeeAddressId(int employeeId) throws SQLException {
+        String query = "SELECT address_id FROM employees WHERE employee_id = ?";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, employeeId);
+        ResultSet rs = ps.executeQuery();
+        return rs.next() ? rs.getInt("address_id") : 0;
+    }
+    
+    private int getEmployeeSalaryId(int employeeId) throws SQLException {
+        String query = "SELECT salary_id FROM employees WHERE employee_id = ?";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, employeeId);
+        ResultSet rs = ps.executeQuery();
+        return rs.next() ? rs.getInt("salary_id") : 0;
+    }
+    
     // Update an existing employee in the system
     public boolean updateEmployee(User employee) {
         int rowsAffected = 0;
@@ -247,7 +178,7 @@ public class SystemAdministratorDao {
             String query = "UPDATE employees SET last_name = ?, first_name = ?, birthdate = ?, phone_number = ?";
 
             if (employee instanceof Employee) {
-                query += ", status_id = ?, position_id = ?, supervisor_id = ?, salary_id = ?, address_id = ?";
+                query += ", status_id = ?, position_id = ?, supervisor_id = ?";
             }
 
             query += " WHERE employee_id = ?";
@@ -262,28 +193,45 @@ public class SystemAdministratorDao {
                 preparedStatement.setInt(5, getStatusId(emp.getStatus()));
                 preparedStatement.setInt(6, getPositionId(emp.getPosition()));
                 if (emp.getImmediateSupervisor() != 0) {
-                    preparedStatement.setObject(7, ((Employee) employee).getImmediateSupervisor(), java.sql.Types.INTEGER); // Nullable
+                    preparedStatement.setObject(7, employee.getImmediateSupervisor(), java.sql.Types.INTEGER); // Nullable
                 } else {
                     preparedStatement.setNull(7, java.sql.Types.INTEGER);
                 }
 //                preparedStatement.setInt(8, getSalaryId(emp.getSalary()));
 //                preparedStatement.setInt(9, emp.getAddressId());
-                preparedStatement.setInt(10, emp.getEmployeeID());
+                preparedStatement.setInt(8, emp.getEmployeeID());
             } else {
                 preparedStatement.setInt(5, employee.getEmployeeID()); // employee_id
             }
 
             System.out.println("Executing Employee Update: " + preparedStatement);
-            rowsAffected = preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            System.err.println("Error updating employees table");
-            e.printStackTrace();
-        }
-
-        // Update gov_id table
-        try {
-            String govQuery = "UPDATE gov_id SET sss_number = ?, philhealth_number = ?, tin_number = ?, pagibig_number = ? WHERE employee_id = ?";
+            preparedStatement.executeUpdate();
+            
+            String addressQuery = "UPDATE address SET street = ?, barangay = ?, "
+                    + "city = ?, province = ?, zipcode = ? "
+                    + "WHERE address_id = ?";
+            PreparedStatement psAddress = connection.prepareStatement(addressQuery, Statement.RETURN_GENERATED_KEYS);
+            psAddress.setString(1, employee.getAddress().getStreet());
+            psAddress.setString(2, employee.getAddress().getBarangay());
+            psAddress.setString(3, employee.getAddress().getCity());
+            psAddress.setString(4, employee.getAddress().getProvince());
+            psAddress.setString(5, employee.getAddress().getZipcode());
+            psAddress.setInt(6, getEmployeeAddressId(employee.getEmployeeID()));
+            psAddress.executeUpdate();
+            
+            // Update salary
+            String salaryQuery = "UPDATE salary SET basic_salary = ?, "
+                    + "gross_semi_monthly_rate = ?, hourly_rate = ? "
+                    + "WHERE salary_id = ?";
+            PreparedStatement psSalary = connection.prepareStatement(salaryQuery, Statement.RETURN_GENERATED_KEYS);
+            Benefits benefit = employee.getBenefits();
+            psSalary.setDouble(1, benefit.getBasicSalary());
+            psSalary.setDouble(2, benefit.getGrossSemiMonthlyRate());
+            psSalary.setDouble(3, benefit.getHourlyRate());
+            psSalary.setInt(4, getEmployeeSalaryId(employee.getEmployeeID()));
+            psSalary.executeUpdate();
+            
+            String govQuery = "UPDATE gov_id SET sss_num = ?, philhealth = ?, tin = ?, pagibig = ? WHERE employee_id = ?";
             PreparedStatement govStmt = connection.prepareStatement(govQuery);
             govStmt.setString(1, employee.getSssNumber());
             govStmt.setString(2, employee.getPhilhealthNumber());
@@ -293,13 +241,7 @@ public class SystemAdministratorDao {
 
             System.out.println("Executing Gov ID Update: " + govStmt);
             govStmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Error updating gov_id table");
-            e.printStackTrace();
-        }
-
-        // Update user_credentials role
-        try {
+            
             int roleId = (employee instanceof HRPersonnel) ? 2 :
                          (employee instanceof SystemAdministrator) ? 3 : 1;
 
@@ -311,10 +253,11 @@ public class SystemAdministratorDao {
             System.out.println("Executing Role Update: " + credStmt);
             rowsAffected = credStmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Error updating user_credentials table");
+            System.err.println("Error updating employees table");
             e.printStackTrace();
         }
-
+        
+        System.out.println(rowsAffected);
         return rowsAffected == 1;
     }
 
@@ -483,27 +426,25 @@ public class SystemAdministratorDao {
                 
                 Address address = new Address();
                 address.setBarangay(result.getString("barangay"));
-                address.setCity(result.getString("date_hired"));
+                address.setCity(result.getString("city"));
                 address.setProvince(result.getString("province"));
                 address.setStreet(result.getString("street"));
-                address.setZipcode(result.getString("date_hired"));
+                address.setZipcode(result.getString("zipcode"));
                 user.setAddress(address);
                 
-                if (user instanceof Employee){
-                    ((Employee) user).setStatus(result.getString("status"));
-                    ((Employee) user).setPosition(result.getString("position"));
-                    ((Employee) user).setImmediateSupervisor(result.getInt("immediate_supervisor"));
+                user.setStatus(result.getString("status"));
+                user.setPosition(result.getString("position"));
+                user.setImmediateSupervisor(result.getInt("immediate_supervisor"));
 
-                    Benefits benefit = new Benefits(
-                            result.getInt("basic_salary"),
-                            result.getInt("gross_semi_monthly_rate"),
-                            result.getInt("hourly_rate"),
-                            result.getInt("rice_subsidy"),
-                            result.getInt("phone_allowance"),
-                            result.getInt("clothing_allowance")
-                        );
-                    ((Employee) user).setBenefits(benefit);
-                }
+                Benefits benefit = new Benefits(
+                        result.getInt("basic_salary"),
+                        result.getInt("gross_semi_monthly_rate"),
+                        result.getInt("hourly_rate"),
+                        result.getInt("rice_subsidy"),
+                        result.getInt("phone_allowance"),
+                        result.getInt("clothing_allowance")
+                    );
+                user.setBenefits(benefit);
                 employees.add(user);
             }
         } catch (SQLException ex) {

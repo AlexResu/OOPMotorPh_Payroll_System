@@ -5,10 +5,15 @@
 package models;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
+import java.awt.Component;
 import javax.swing.*;
 import java.util.*;
 import java.util.List;
 import java.text.SimpleDateFormat;
+import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.plaf.basic.BasicComboPopup;
+import javax.swing.plaf.basic.ComboPopup;
 
 /**
  *
@@ -19,6 +24,10 @@ public class Helpers {
         private InputField field;
         private JLabel label;
         private List<String> validationRules;
+        
+        public FieldWithLabel(InputField field){
+            this.field = field;
+        }
 
         public FieldWithLabel(InputField field, JLabel label, List<String> validationRules) {
             this.field = field;
@@ -42,6 +51,7 @@ public class Helpers {
     public static class InputField {
         private JTextField textField;
         private JDateChooser dateChooser;
+        private JComboBox comboBox;
 
         public InputField(JTextField textField) {
             this.textField = textField;
@@ -50,6 +60,10 @@ public class Helpers {
         public InputField(JDateChooser dateChooser) {
             this.dateChooser = dateChooser;
         }
+        
+        public InputField(JComboBox comboBox) {
+            this.comboBox = comboBox;
+        }
 
         public JTextField getTextField() {
             return textField;
@@ -57,6 +71,10 @@ public class Helpers {
 
         public JDateChooser getDateChooser() {
             return dateChooser;
+        }
+        
+        public JComboBox getComboBox() {
+            return comboBox;
         }
 
         public String getValue() {
@@ -150,18 +168,45 @@ public class Helpers {
     public static void disableFields(List<FieldWithLabel> fields) {
         for (FieldWithLabel fieldWithLabel : fields) {
             InputField inputField = fieldWithLabel.getField();
-            JLabel label = fieldWithLabel.getLabel();
+            if(inputField.getComboBox() != null){
+                inputField.getComboBox().setEditable(false);
+                
+                inputField.getComboBox().setFocusable(false); // optional: avoid focus highlight
+
+                inputField.getComboBox().setUI(new BasicComboBoxUI() {
+                    @Override
+                    protected ComboPopup createPopup() {
+                        return new BasicComboPopup(inputField.getComboBox()) {
+                            @Override
+                            public void show() {
+                                // Do nothing: prevent the popup from showing
+                            }
+                        };
+                    }
+                });
+            }
             
             // Disable text field if it exists
             if (inputField.getTextField() != null) {
-                inputField.getTextField().setEnabled(false);
+                inputField.getTextField().setEditable(false);
             }
 
             // Disable date chooser if it exists
             if (inputField.getDateChooser() != null) {
-                inputField.getDateChooser().setEnabled(false);
+                ((JTextFieldDateEditor) inputField.getDateChooser(
+                    ).getDateEditor()).setEditable(false);
+                
+                for (Component comp : inputField.getDateChooser().getComponents()) {
+                    if (comp instanceof JButton) {
+                        comp.setEnabled(false); // disables calendar popup button
+                    }
+                }
             }
-            label.setVisible(false);
+            
+            JLabel label = fieldWithLabel.getLabel();
+            if(label != null){
+                label.setVisible(false);
+            }
         }
     }
     

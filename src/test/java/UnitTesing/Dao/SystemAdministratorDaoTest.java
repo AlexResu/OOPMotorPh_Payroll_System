@@ -95,6 +95,11 @@ public class SystemAdministratorDaoTest {
         address.setProvince("Laguna");
         address.setZipcode("4027");
         employee.setAddress(address);
+        Benefits benefit = new Benefits();
+        benefit.setBasicSalary(30000);
+        benefit.setGrossSemiMonthlyRate(15000);
+        benefit.setHourlyRate(125);
+        employee.setBenefits(benefit);
         employee.setLastName("Doe");
         employee.setFirstName("John");
         employee.setPhoneNumber("099-123-456");
@@ -103,7 +108,9 @@ public class SystemAdministratorDaoTest {
         employee.setTinNumber("22222222");
         employee.setPhilhealthNumber("321-4535-312");
         employee.setPagibigNumber("9999321");
+        employee.setStatus("Regular");
         employee.setPosition("Sales & Marketing");
+        employee.setImmediateSupervisor(10001);
         boolean result = systemAdministratorDao.addNewEmployee(employee);
         assertTrue(result);
         System.out.println("Employee has been created successfully");
@@ -123,6 +130,11 @@ public class SystemAdministratorDaoTest {
         address.setProvince("Laguna");
         address.setZipcode("4027");
         employee.setAddress(address);
+        Benefits benefit = new Benefits();
+        benefit.setBasicSalary(30000);
+        benefit.setGrossSemiMonthlyRate(15000);
+        benefit.setHourlyRate(125);
+        employee.setBenefits(benefit);
         employee.setLastName("Doe");
         employee.setFirstName("John");
         employee.setPhoneNumber("099-123-456");
@@ -131,7 +143,9 @@ public class SystemAdministratorDaoTest {
         employee.setTinNumber("22222222");
         employee.setPhilhealthNumber("321-4535-312");
         employee.setPagibigNumber("9999321");
+        employee.setStatus("Regular");
         employee.setPosition("Sales & Marketing");
+        employee.setImmediateSupervisor(10001);
         boolean result = systemAdministratorDao.addNewEmployee(employee);
         assertTrue(result);
         System.out.println("Employee has been created successfully");

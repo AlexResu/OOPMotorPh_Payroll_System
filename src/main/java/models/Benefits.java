@@ -13,6 +13,7 @@ package models;
 public class Benefits {
     
     // Instance variables representing the employee's benefits and salary details
+    private int benefitId;
     private double basicSalary;
     private double grossSemiMonthlyRate;
     private double hourlyRate;
@@ -44,6 +45,11 @@ public class Benefits {
     public Benefits(){}
     
     // Getter methods for each benefit field
+    
+    public int getBenefitId() {
+        return benefitId;
+    }
+
     public double getBasicSalary() {
         return basicSalary;
     }

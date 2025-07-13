@@ -13,7 +13,6 @@ import models.HRPersonnel;
 import models.SystemAdministrator;
 import dao.AccountAccessDao;
 import dao.UserDao;
-import gui.LoginGui;
 
 /**
  *
@@ -276,7 +275,7 @@ public class UserHomePage extends javax.swing.JFrame {
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         dispose();
-        LoginGui frame = new LoginGui();
+        LoginPage frame = new LoginPage();
         frame.setVisible(true);
     }//GEN-LAST:event_logoutActionPerformed
 

@@ -43,7 +43,7 @@ public class Dashboard extends javax.swing.JPanel {
         if(user instanceof SystemAdministrator){
             jLabel6.setText("Total Users");
             jLabel7.setText("New Users");
-            employeeList.setText("New Users");
+            newEmployeeList.setText("New Users");
         }
         loadEmployeeList();
     }
@@ -153,13 +153,14 @@ public class Dashboard extends javax.swing.JPanel {
         dateHiredLabelValue = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         EmpMngTable = new javax.swing.JTable();
-        employeeList = new javax.swing.JLabel();
+        newEmployeeList = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(860, 590));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        kGradientPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 255), 8, true));
         kGradientPanel1.setkEndColor(new java.awt.Color(0, 0, 204));
         kGradientPanel1.setkStartColor(new java.awt.Color(153, 0, 255));
         kGradientPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -177,45 +178,47 @@ public class Dashboard extends javax.swing.JPanel {
         jLabel5.setText("January 1, 2025");
         kGradientPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 150, 40));
 
-        add(kGradientPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 270, 160));
+        add(kGradientPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 270, 160));
 
+        kGradientPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 255), 8, true));
         kGradientPanel2.setkEndColor(new java.awt.Color(0, 0, 204));
         kGradientPanel2.setkStartColor(new java.awt.Color(153, 0, 255));
         kGradientPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/group.png"))); // NOI18N
-        kGradientPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 80, -1));
+        kGradientPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 110, 90));
 
-        jLabel3.setFont(new java.awt.Font("SimSun-ExtB", 1, 48)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("SimSun-ExtB", 1, 60)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("34");
-        kGradientPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 90, 50));
+        kGradientPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 110, 80));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Total Employees");
-        kGradientPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 150, 40));
+        kGradientPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 200, 40));
 
-        add(kGradientPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 220, 140));
+        add(kGradientPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 280, 160));
 
+        kGradientPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 255), 8, true));
         kGradientPanel3.setkEndColor(new java.awt.Color(0, 0, 204));
         kGradientPanel3.setkStartColor(new java.awt.Color(153, 0, 255));
         kGradientPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("New Employee");
-        kGradientPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 150, 40));
+        kGradientPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 170, 40));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new-employee.png"))); // NOI18N
-        kGradientPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 90, 60));
+        kGradientPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 90, 90));
 
-        jLabel9.setFont(new java.awt.Font("SimSun-ExtB", 1, 48)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("SimSun-ExtB", 1, 60)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("+2");
-        kGradientPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 100, 50));
+        kGradientPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 110, 80));
 
-        add(kGradientPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 210, 220, 140));
+        add(kGradientPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 200, 270, 160));
 
         empPhoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Employee Icon.png"))); // NOI18N
         empPhoto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -356,10 +359,10 @@ public class Dashboard extends javax.swing.JPanel {
 
         add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 860, 180));
 
-        employeeList.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        employeeList.setForeground(new java.awt.Color(0, 0, 204));
-        employeeList.setText("New Employee");
-        add(employeeList, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, 30));
+        newEmployeeList.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        newEmployeeList.setForeground(new java.awt.Color(0, 0, 204));
+        newEmployeeList.setText("New Employee");
+        add(newEmployeeList, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, 30));
 
         jSeparator7.setForeground(new java.awt.Color(187, 187, 187));
         add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 176, 860, 18));
@@ -388,7 +391,6 @@ public class Dashboard extends javax.swing.JPanel {
     private javax.swing.JLabel empNum;
     private javax.swing.JLabel empNumberValue;
     private javax.swing.JLabel empPhoto;
-    private javax.swing.JLabel employeeList;
     private javax.swing.JLabel firstName;
     private javax.swing.JLabel firstNameValue;
     private javax.swing.JLabel jLabel1;
@@ -407,6 +409,7 @@ public class Dashboard extends javax.swing.JPanel {
     private keeptoo.KGradientPanel kGradientPanel3;
     private javax.swing.JLabel lastName;
     private javax.swing.JLabel lastNameValue;
+    private javax.swing.JLabel newEmployeeList;
     private javax.swing.JLabel positionLabelValue1;
     // End of variables declaration//GEN-END:variables
 }

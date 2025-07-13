@@ -246,6 +246,22 @@ public class HRPersonnelDao {
         return rs.next() ? rs.getInt("role_id") : 0;
     }
     
+    private int getEmployeeAddressId(int employeeId) throws SQLException {
+        String query = "SELECT address_id FROM employees WHERE employee_id = ?";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, employeeId);
+        ResultSet rs = ps.executeQuery();
+        return rs.next() ? rs.getInt("address_id") : 0;
+    }
+    
+    private int getEmployeeSalaryId(int employeeId) throws SQLException {
+        String query = "SELECT salary_id FROM employees WHERE employee_id = ?";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, employeeId);
+        ResultSet rs = ps.executeQuery();
+        return rs.next() ? rs.getInt("salary_id") : 0;
+    }
+    
     /**
      * Updates an existing employee's details in the system.
      * 
@@ -272,7 +288,42 @@ public class HRPersonnelDao {
             preparedStatement.setInt(8, employee.getEmployeeID());
 
             System.out.println("Executing Query: " + preparedStatement.toString());
-            rowsAffected = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
+            
+            String addressQuery = "UPDATE address SET street = ?, barangay = ?, "
+                    + "city = ?, province = ?, zipcode = ? "
+                    + "WHERE address_id = ?";
+            PreparedStatement psAddress = connection.prepareStatement(addressQuery, Statement.RETURN_GENERATED_KEYS);
+            psAddress.setString(1, employee.getAddress().getStreet());
+            psAddress.setString(2, employee.getAddress().getBarangay());
+            psAddress.setString(3, employee.getAddress().getCity());
+            psAddress.setString(4, employee.getAddress().getProvince());
+            psAddress.setString(5, employee.getAddress().getZipcode());
+            psAddress.setInt(6, getEmployeeAddressId(employee.getEmployeeID()));
+            psAddress.executeUpdate();
+            
+            // Update salary
+            String salaryQuery = "UPDATE salary SET basic_salary = ?, "
+                    + "gross_semi_monthly_rate = ?, hourly_rate = ? "
+                    + "WHERE salary_id = ?";
+            PreparedStatement psSalary = connection.prepareStatement(salaryQuery, Statement.RETURN_GENERATED_KEYS);
+            Benefits benefit = ((Employee) employee).getBenefits();
+            psSalary.setDouble(1, benefit.getBasicSalary());
+            psSalary.setDouble(2, benefit.getGrossSemiMonthlyRate());
+            psSalary.setDouble(3, benefit.getHourlyRate());
+            psSalary.setInt(4, getEmployeeSalaryId(employee.getEmployeeID()));
+            psSalary.executeUpdate();
+            
+            String govQuery = "UPDATE gov_id SET sss_num = ?, philhealth = ?, tin = ?, pagibig = ? WHERE employee_id = ?";
+            PreparedStatement govStmt = connection.prepareStatement(govQuery);
+            govStmt.setString(1, employee.getSssNumber());
+            govStmt.setString(2, employee.getPhilhealthNumber());
+            govStmt.setString(3, employee.getTinNumber());
+            govStmt.setString(4, employee.getPagibigNumber());
+            govStmt.setInt(5, employee.getEmployeeID());
+
+            System.out.println("Executing Gov ID Update: " + govStmt);
+            rowsAffected = govStmt.executeUpdate();
 
         } catch (SQLException e) {
             System.err.println("Error while executing employee update SQL!");
@@ -579,10 +630,10 @@ public class HRPersonnelDao {
 
             Address address = new Address();
             address.setBarangay(result.getString("barangay"));
-            address.setCity(result.getString("date_hired"));
+            address.setCity(result.getString("city"));
             address.setProvince(result.getString("province"));
             address.setStreet(result.getString("street"));
-            address.setZipcode(result.getString("date_hired"));
+            address.setZipcode(result.getString("zipcode"));
             emp.setAddress(address);
         } catch (SQLException ex) {
             System.out.println(ex);

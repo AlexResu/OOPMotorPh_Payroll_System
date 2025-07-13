@@ -68,13 +68,13 @@ public class ConfirmationPopUp extends javax.swing.JFrame {
         deleteEmp.setBackground(new java.awt.Color(255, 255, 255));
         deleteEmp.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         deleteEmp.setForeground(new java.awt.Color(0, 0, 0));
-        deleteEmp.setText("Delete Employee?");
+        deleteEmp.setText("Delete User?");
         deletePopup.add(deleteEmp, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, -1, -1));
 
         confirmation.setBackground(new java.awt.Color(255, 255, 255));
         confirmation.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         confirmation.setForeground(new java.awt.Color(0, 0, 0));
-        confirmation.setText("Are you sure you want to delete employee ");
+        confirmation.setText("Are you sure you want to delete User");
         deletePopup.add(confirmation, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 340, 50));
 
         confirm.setBackground(new java.awt.Color(204, 0, 0));
@@ -103,7 +103,7 @@ public class ConfirmationPopUp extends javax.swing.JFrame {
 
         messagePrompt.setBackground(new java.awt.Color(255, 255, 255));
         messagePrompt.setForeground(new java.awt.Color(0, 0, 255));
-        messagePrompt.setText("Successfully deleted this employee. Automatically closing in 3 seconds.");
+        messagePrompt.setText("Successfully deleted this user. Automatically closing in 3 seconds.");
         deletePopup.add(messagePrompt, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 390, 40));
 
         kGradientPanel1.add(deletePopup, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 450, 270));

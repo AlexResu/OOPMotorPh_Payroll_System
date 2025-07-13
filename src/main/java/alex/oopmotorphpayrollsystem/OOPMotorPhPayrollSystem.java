@@ -4,7 +4,7 @@
 
 package alex.oopmotorphpayrollsystem;
 
-import gui.LoginGui;
+import gui.LoginPage;
 import java.util.Scanner;
 
 /**
@@ -16,7 +16,7 @@ public class OOPMotorPhPayrollSystem {
 
     public static void main(String[] args) {
           // Create an instance of your JFrame subclass
-        LoginGui frame = new LoginGui();
+        LoginPage frame = new LoginPage();
         
         // Display the frame
         frame.setVisible(true);

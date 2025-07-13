@@ -295,20 +295,6 @@ public class UserDao {
                     user = new SystemAdministrator();
                 } else {
                     user = new Employee(); // Assign Employee role
-                    // Set additional employee details
-                    ((Employee)user).setStatus(rs.getString("status"));
-                    ((Employee)user).setImmediateSupervisor(rs.getInt("immediate_supervisor"));
-                    
-                    // Create Benefits object and assign to Employee
-                    Benefits benefit = new Benefits(
-                        rs.getInt("basic_salary"),
-                        rs.getInt("gross_semi_monthly_rate"),
-                        rs.getInt("hourly_rate"),
-                        rs.getInt("rice_subsidy"),
-                        rs.getInt("phone_allowance"),
-                        rs.getInt("clothing_allowance")
-                    );
-                    ((Employee)user).setBenefits(benefit);
                 }
                 
                 // Set common employee details
@@ -324,14 +310,27 @@ public class UserDao {
                 user.setPosition(rs.getString("position"));
                 user.setDepartment(rs.getString("department"));
                 user.setDateHired(rs.getDate("date_hired"));
+                user.setStatus(rs.getString("status"));
+                    user.setImmediateSupervisor(rs.getInt("immediate_supervisor"));
+                    
+                    // Create Benefits object and assign to Employee
+                    Benefits benefit = new Benefits(
+                        rs.getInt("basic_salary"),
+                        rs.getInt("gross_semi_monthly_rate"),
+                        rs.getInt("hourly_rate"),
+                        rs.getInt("rice_subsidy"),
+                        rs.getInt("phone_allowance"),
+                        rs.getInt("clothing_allowance")
+                    );
+                    user.setBenefits(benefit);
                 
                 // Populate address
                 Address address = new Address();
                 address.setBarangay(rs.getString("barangay"));
-                address.setCity(rs.getString("date_hired"));
+                address.setCity(rs.getString("city"));
                 address.setProvince(rs.getString("province"));
                 address.setStreet(rs.getString("street"));
-                address.setZipcode(rs.getString("date_hired"));
+                address.setZipcode(rs.getString("zipcode"));
                 user.setAddress(address);
             } else {
                 System.out.println("No user");

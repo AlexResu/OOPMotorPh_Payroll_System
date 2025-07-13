@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import java.util.*;
 import javax.swing.JScrollBar;
 import dao.UserDao;
+import java.awt.Color;
 
 /**
  *
@@ -33,6 +34,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     private UserManagement parentPanel;
     private List<Helpers.FieldWithLabel> fields = new ArrayList<>();
     private List<Helpers.FieldWithLabel> empOnlyFields = new ArrayList<>();
+    private List<Helpers.FieldWithLabel> otherFields = new ArrayList<>();
 
     /**
      * Creates new form AdminAddNewEmp
@@ -52,6 +54,8 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         initializeForm();
         if(user instanceof SystemAdministrator){
             newEmpRoleValue.setEnabled(true);
+            addNewEmpLabel.setText("Add New User");
+            empInfo.setText("USER INFORMATION");
         }
     }
     
@@ -68,11 +72,9 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         initializeForm();
         defaultComponentView();
         if(action.equals("View")){
-            addNewEmpLabel.setText("View User");
+            Helpers.disableFields(otherFields);
             Helpers.disableFields(fields);
             Helpers.disableFields(empOnlyFields);
-        } else {
-            addNewEmpLabel.setText("Edit User");
         }
         if(user instanceof SystemAdministrator){
             newEmpRoleValue.setEnabled(true);
@@ -102,14 +104,24 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPhilhealthValue), addNewEmpWarnPhil, validation3));
         empOnlyFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPagIbigValue), addNewEmpWarnPag, validation3));
         
+        // non verification fields but need to disable for view only
+        otherFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPersonalEmailValue)));
+        otherFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(addressStreetValue)));
+        otherFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(addressBarangayValue)));
+        otherFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(addressCityValue)));
+        otherFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(addressProvinceValue)));
+        otherFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(addressZipcodeValue)));
+        otherFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpDateHiredValue)));
+        otherFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpStatusValue)));
+        otherFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpPositionValue)));
+        otherFields.add(new Helpers.FieldWithLabel(new Helpers.InputField(newEmpRoleValue)));
+
         addNewEmpSuccessCreatedLabel.setVisible(false);
         addNewEmpErrorFill.setVisible(false);
             
         if(action.equals("Update")){
             addNewEmpSuccessCreatedLabel.setText("Successfully updated information. This window will automatically close in 3 seconds.");
-            addNewEmpLabel.setText("Update Employee");
         } else if(action.equals("View")){
-            addNewEmpLabel.setText("Employee Information");
             newEmpSubmitButton.setVisible(false);
             newEmpCancelButton.setText("Go Back");
         }
@@ -122,7 +134,10 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     public void loadUserDetails(){
         UserDao userDao = new UserDao();
         newEmpIDValue.setText(String.valueOf(editableUser.getEmployeeID()));
-        newEmpRoleValue.setSelectedItem(userDao.getRoleName(editableUser.getEmployeeID()));
+        String role = userDao.getRoleName(editableUser.getEmployeeID());
+        addNewEmpLabel.setText(action + " "+ role);
+        empInfo.setText(role + " INFORMATION");
+        newEmpRoleValue.setSelectedItem(role);
         newEmpLastNameValue.setText(editableUser.getLastName());
         newEmpFirstNameValue.setText(editableUser.getFirstName());
         newEmpBirthValue.setDate(editableUser.getBirthday());
@@ -139,51 +154,14 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         newEmpTinValue.setText(editableUser.getTinNumber());
         newEmpPhilhealthValue.setText(editableUser.getPhilhealthNumber());
         newEmpPagIbigValue.setText(editableUser.getPagibigNumber());
-        if(editableUser instanceof Employee){
-            enableAllEmpOnlyFields();
-            newEmpStatusValue.setSelectedItem(((Employee) editableUser).getStatus());
-            newEmpImmediateSupValue1.setText(String.valueOf(((Employee) editableUser).getImmediateSupervisor()));
-            newEmpBasicSalaryValue.setText(String.valueOf(((Employee) editableUser).getBenefitsBasicSalary()));
-            newEmpGrossSemiValue.setText(String.valueOf(((Employee) editableUser).getBenefitsGrossSemiMonthlyRate()));
-            newEmpHourlyRateValue.setText(String.valueOf(((Employee) editableUser).getBenefitsHourlyRate()));
-            newEmpRiceSubValue.setText(String.valueOf(((Employee) editableUser).getBenefitsRiceSubsidy()));
-            newEmpPhoneAllowValue.setText(String.valueOf(((Employee) editableUser).getBenefitsPhoneAllowance()));
-            newEmpClothingAllowValue.setText(String.valueOf(((Employee) editableUser).getBenefitsClothingAllowance()));
-        } else {
-            disableAllEmpOnlyFields();
-        }
-    }
-    
-        
-    private void enableAllEmpOnlyFields(){
-        newEmpStatusValue.setEnabled(true);
-        newEmpImmediateSupValue1.setEnabled(true);
-        newEmpBasicSalaryValue.setEnabled(true);
-        newEmpGrossSemiValue.setEnabled(true);
-        newEmpHourlyRateValue.setEnabled(true);
-        newEmpRiceSubValue.setEnabled(true);
-        newEmpPhoneAllowValue.setEnabled(true);
-        newEmpClothingAllowValue.setEnabled(true);
-    }
-    
-    private void disableAllEmpOnlyFields(){
-        newEmpStatusValue.setEnabled(false);
-        newEmpImmediateSupValue1.setEnabled(false);
-        newEmpBasicSalaryValue.setEnabled(false);
-        newEmpGrossSemiValue.setEnabled(false);
-        newEmpHourlyRateValue.setEnabled(false);
-        newEmpRiceSubValue.setEnabled(false);
-        newEmpPhoneAllowValue.setEnabled(false);
-        newEmpClothingAllowValue.setEnabled(false);
-        
-        newEmpStatusValue.setSelectedItem(null);
-        newEmpImmediateSupValue1.setText(null);
-        newEmpBasicSalaryValue.setText(null);
-        newEmpGrossSemiValue.setText(null);
-        newEmpHourlyRateValue.setText(null);
-        newEmpRiceSubValue.setText(null);
-        newEmpPhoneAllowValue.setText(null);
-        newEmpClothingAllowValue.setText(null);
+        newEmpStatusValue.setSelectedItem(editableUser.getStatus());
+        newEmpImmediateSupValue1.setText(String.valueOf(editableUser.getImmediateSupervisor()));
+        newEmpBasicSalaryValue.setText(String.valueOf(editableUser.getBenefitsBasicSalary()));
+        newEmpGrossSemiValue.setText(String.valueOf(editableUser.getBenefitsGrossSemiMonthlyRate()));
+        newEmpHourlyRateValue.setText(String.valueOf(editableUser.getBenefitsHourlyRate()));
+        newEmpRiceSubValue.setText(String.valueOf(editableUser.getBenefitsRiceSubsidy()));
+        newEmpPhoneAllowValue.setText(String.valueOf(editableUser.getBenefitsPhoneAllowance()));
+        newEmpClothingAllowValue.setText(String.valueOf(editableUser.getBenefitsClothingAllowance()));
     }
     
     public void defaultComponentView(){
@@ -415,6 +393,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         newEmpIDValue.setEditable(false);
         newEmpIDValue.setBackground(new java.awt.Color(227, 227, 227));
         newEmpIDValue.setForeground(new java.awt.Color(0, 0, 0));
+        newEmpIDValue.setToolTipText("This field is automatically system generated");
         newEmpIDValue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         newEmpIDValue.setDisabledTextColor(new java.awt.Color(102, 102, 102));
         newEmpIDValue.addActionListener(new java.awt.event.ActionListener() {
@@ -504,7 +483,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
 
         newEmpBenefits.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         newEmpBenefits.setForeground(new java.awt.Color(0, 0, 204));
-        newEmpBenefits.setText("Benefits");
+        newEmpBenefits.setText("Government ID");
         addNewEmpForm.add(newEmpBenefits, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 1030, 90, 30));
 
         newEmpPhilhealth.setBackground(new java.awt.Color(255, 255, 255));
@@ -647,7 +626,6 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
         newEmpRoleValue.setBackground(new java.awt.Color(227, 227, 227));
         newEmpRoleValue.setForeground(new java.awt.Color(0, 0, 0));
         newEmpRoleValue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Employee", "HR Personnel", "System Admin" }));
-        newEmpRoleValue.setEnabled(false);
         newEmpRoleValue.setLightWeightPopupEnabled(false);
         newEmpRoleValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -678,7 +656,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
 
         addNewEmpSuccessCreatedLabel.setFont(new java.awt.Font("Arial", 3, 12)); // NOI18N
         addNewEmpSuccessCreatedLabel.setForeground(new java.awt.Color(0, 0, 255));
-        addNewEmpSuccessCreatedLabel.setText("Successfully created a new employee. This window will automatically close in 3 seconds.");
+        addNewEmpSuccessCreatedLabel.setText("Successfully created a new USER. This window will automatically close in 3 seconds.");
         addNewEmpForm.add(addNewEmpSuccessCreatedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 1330, -1, 20));
 
         newEmpUserRole.setBackground(new java.awt.Color(255, 255, 255));
@@ -954,12 +932,7 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
     }//GEN-LAST:event_newEmpCancelButtonActionPerformed
 
     private void newEmpRoleValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEmpRoleValueActionPerformed
-        String role = (String) newEmpRoleValue.getSelectedItem();
-        if(role.equals("Employee")){
-            enableAllEmpOnlyFields();
-        } else {
-            disableAllEmpOnlyFields();
-        }
+
     }//GEN-LAST:event_newEmpRoleValueActionPerformed
 
     
@@ -1004,19 +977,17 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
             editableUser.setPagibigNumber(newEmpPagIbigValue.getText());
             editableUser.setPosition((String) newEmpPositionValue.getSelectedItem());
             
-            if(role.equals("Employee")){
-                ((Employee) editableUser).setStatus((String) newEmpStatusValue.getSelectedItem());
-                ((Employee) editableUser).setImmediateSupervisor(Integer.parseInt(newEmpImmediateSupValue1.getText()));
-                Benefits benefit = new Benefits();
-                benefit.setBasicSalary(Double.parseDouble(newEmpBasicSalaryValue.getText()));
-                benefit.setGrossSemiMonthlyRate(Double.parseDouble(newEmpGrossSemiValue.getText()));
-                benefit.setHourlyRate(Double.parseDouble(newEmpHourlyRateValue.getText()));
-                benefit.setRiceSubsidy(Double.parseDouble(newEmpRiceSubValue.getText()));
-                benefit.setPhoneAllowance(Double.parseDouble(newEmpPhoneAllowValue.getText()));
-                benefit.setClothingAllowance(Double.parseDouble(newEmpClothingAllowValue.getText()));
-                
-                ((Employee) editableUser).setBenefits(benefit);
-            }
+            editableUser.setStatus((String) newEmpStatusValue.getSelectedItem());
+            editableUser.setImmediateSupervisor(Integer.parseInt(newEmpImmediateSupValue1.getText()));
+            Benefits benefit = new Benefits();
+            benefit.setBasicSalary(Double.parseDouble(newEmpBasicSalaryValue.getText()));
+            benefit.setGrossSemiMonthlyRate(Double.parseDouble(newEmpGrossSemiValue.getText()));
+            benefit.setHourlyRate(Double.parseDouble(newEmpHourlyRateValue.getText()));
+            benefit.setRiceSubsidy(Double.parseDouble(newEmpRiceSubValue.getText()));
+            benefit.setPhoneAllowance(Double.parseDouble(newEmpPhoneAllowValue.getText()));
+            benefit.setClothingAllowance(Double.parseDouble(newEmpClothingAllowValue.getText()));
+
+            editableUser.setBenefits(benefit);
             
             if(action.equals("Create")){
                 if(user instanceof HRPersonnel){
@@ -1024,6 +995,9 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
                 } else {
                     result = systemAdminDao.addNewEmployee(editableUser);
                 }
+                addNewEmpSuccessCreatedLabel.setText(
+                    "Successfully created a new user. "
+                    + "This window will automatically close in 3 seconds.");
             } else {
                 editableUser.setEmployeeID(Integer.parseInt(newEmpIDValue.getText()));
                 if(user instanceof HRPersonnel){
@@ -1031,6 +1005,9 @@ public class AdminAddNewEmp extends javax.swing.JFrame {
                 } else {
                     result = systemAdminDao.updateEmployee(editableUser);
                 }
+                addNewEmpSuccessCreatedLabel.setText(
+                    "Successfully updated user. "
+                    + "This window will automatically close in 3 seconds.");
             }
             if(result){
                 addNewEmpSuccessCreatedLabel.setVisible(true);

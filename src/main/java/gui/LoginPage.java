@@ -139,7 +139,8 @@ public class LoginPage extends javax.swing.JFrame {
         kGradientPanel1.add(login1);
         login1.setBounds(20, 80, 140, 46);
 
-        jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
+        jSeparator1.setBackground(new java.awt.Color(204, 204, 204));
+        jSeparator1.setForeground(new java.awt.Color(204, 204, 204));
         kGradientPanel1.add(jSeparator1);
         jSeparator1.setBounds(20, 50, 370, 20);
 
